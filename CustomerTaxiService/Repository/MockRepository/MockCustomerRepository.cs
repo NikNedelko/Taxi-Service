@@ -4,13 +4,34 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockCustomerRepository : ICustomerRepository
 {
-    public bool AddNewOrder(string str)
+    private List<string> MockRepository = new();
+    public async Task<bool> AddNewOrder(string str)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(str);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return false;
     }
 
-    public bool DeclineOrder(string str)
+    public async Task<bool> DeclineOrder(string str)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Remove(str);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return false;
     }
 }

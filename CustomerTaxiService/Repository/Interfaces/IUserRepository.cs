@@ -2,9 +2,9 @@ namespace CustomerTaxiService.Repository.Interfaces;
 
 public interface IUserRepository
 {
-    public string AddNewUser(string name);
-    public string RemoveUser(string name);
-    public string PermissionToRide(string name);
-    public string CheckOfExist(string name);
-    public string UpdateUser(string name);
+    public Task<string> AddNewUser(string name);
+    public Task<string> RemoveUser(string name);
+    public Task<string> PermissionToRide(string name);
+    public Task<string> CheckOfExist(string name);
+    public Task<string> UpdateUser(string name);
 }

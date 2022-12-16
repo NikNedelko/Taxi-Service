@@ -15,14 +15,14 @@ public class CreateOrderLogic
     
     public async Task<string> BeginNewOrder(string str)
     {
-        CheckInformationAboutCustomer("number");
-        CreateNewOrder("data");
+        //CheckInformationAboutCustomer("number");
+        _ = CreateNewOrder("data");
         return "";
     }
     
     private async Task<string> CreateNewOrder(string str)
     {
-        _customerRepository.AddNewOrder(str);
+        await _customerRepository.AddNewOrder(str);
         
         return "sdads";
     }

@@ -2,6 +2,6 @@ namespace CustomerTaxiService.Repository.Interfaces;
 
 public interface ICustomerRepository
 {
-    public bool AddNewOrder(string str);
-    public bool DeclineOrder(string str);
+    public Task<bool> AddNewOrder(string str);
+    public Task<bool> DeclineOrder(string str);
 }

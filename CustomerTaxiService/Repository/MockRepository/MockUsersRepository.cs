@@ -4,28 +4,80 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    public string AddNewUser(string name)
+    private List<string> MockRepository = new();
+
+    public async Task<string> AddNewUser(string name)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return "";
     }
 
-    public string RemoveUser(string name)
+    public async Task<string> RemoveUser(string name)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return "";
     }
 
-    public string PermissionToRide(string name)
+    public async Task<string> PermissionToRide(string name)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return "";
     }
 
-    public string CheckOfExist(string name)
+    public async Task<string> CheckOfExist(string name)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return "";
     }
 
-    public string UpdateUser(string name)
+    public async Task<string> UpdateUser(string name)
     {
-        throw new NotImplementedException();
+        try
+        {
+            MockRepository.Add(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return "";
     }
 }

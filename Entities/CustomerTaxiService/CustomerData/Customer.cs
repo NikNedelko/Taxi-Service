@@ -1,6 +1,6 @@
 using Entities.General;
 
-namespace Entities.CustomerTaxiService.User;
+namespace Entities.CustomerTaxiService.CustomerData;
 
 public class Customer
 {
