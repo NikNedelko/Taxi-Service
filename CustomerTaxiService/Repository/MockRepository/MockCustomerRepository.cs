@@ -20,7 +20,7 @@ public class MockCustomerRepository : ICustomerRepository
         return false;
     }
 
-    public async Task<bool> DeclineOrder(string str)
+    public async Task<bool> CancelOrder(string str)
     {
         try
         {

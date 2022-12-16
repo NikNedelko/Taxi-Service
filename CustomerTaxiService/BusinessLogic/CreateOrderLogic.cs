@@ -1,4 +1,5 @@
 using CustomerTaxiService.Repository.Interfaces;
+using Entities.CustomerTaxiService.Requests;
 
 namespace CustomerTaxiService.BusinessLogic;
 
@@ -13,9 +14,9 @@ public class CreateOrderLogic
         _customerRepository = customerRepository;
     }
     
-    public async Task<string> BeginNewOrder(string str)
+    public async Task<string> BeginNewOrder(Order order)
     {
-        //CheckInformationAboutCustomer("number");
+        var someResult =  await CheckInformationAboutCustomer(order.PhoneNumber);
         _ = CreateNewOrder("data");
         return "";
     }
@@ -23,6 +24,13 @@ public class CreateOrderLogic
     private async Task<string> CreateNewOrder(string str)
     {
         await _customerRepository.AddNewOrder(str);
+        
+        return "sdads";
+    }
+    
+    public async Task<string> CancelOrder(string str)
+    {
+        await _customerRepository.(str);
         
         return "sdads";
     }

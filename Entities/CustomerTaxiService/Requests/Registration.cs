@@ -1,6 +1,6 @@
 namespace Entities.CustomerTaxiService.Requests;
 
-public class RequestForRegistration
+public class Registration
 {
     public string Name { get; set; }
     public string Surname { get; set; }
