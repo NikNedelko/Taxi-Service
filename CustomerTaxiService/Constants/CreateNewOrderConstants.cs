@@ -2,6 +2,6 @@ namespace CustomerTaxiService.Constants;
 
 public static class CreateNewOrderConstants
 {
-    public static string Ok = "Ok";
-    public static string DataBaseProblems = "Can't add new order to Database";
+    public const string Ok = "Ok";
+    public const string DataBaseProblems = "Can't add new order to Database";
 }

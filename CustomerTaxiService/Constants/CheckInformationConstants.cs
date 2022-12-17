@@ -2,5 +2,6 @@ namespace CustomerTaxiService.Constants;
 
 public static class CheckInformationConstants
 {
-    public static string Accepted = "Ok";
+    public const string Ok = "Ok";
+    public const string UserNotFound = "User not found";
 }
