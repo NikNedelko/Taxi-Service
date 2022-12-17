@@ -1,5 +1,7 @@
+using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerTaxiService.Response;
 
 namespace CustomerTaxiService.BusinessLogic;
 
@@ -14,23 +16,29 @@ public class CreateOrderLogic
         _customerRepository = customerRepository;
     }
     
-    public async Task<string> BeginNewOrder(Order order)
+    public async Task<Response> BeginNewOrder(Order order)
     {
-        var someResult =  await CheckInformationAboutCustomer(order.PhoneNumber);
-        _ = CreateNewOrder("data");
-        return "";
+        var checkCustomerResult =  await CheckInformationAboutCustomer(order.PhoneNumber);
+        if (checkCustomerResult != CheckInformationConstants.Accepted)
+            return CreateResponse(checkCustomerResult, null);
+        var newOrderResponse = await CreateNewOrder("data");
+        return  CreateResponse(newOrderResponse,null);
     }
     
     private async Task<string> CreateNewOrder(string str)
     {
-        await _customerRepository.AddNewOrder(str);
-        
-        return "sdads";
+        //maybe check drivers
+        var dbResponse = await _customerRepository.AddNewOrder(str);
+        if (dbResponse != CreateNewOrderConstants.Ok)
+        {
+            //return one of bad results
+        }
+        return CreateNewOrderConstants.Ok;
     }
     
     public async Task<string> CancelOrder(string str)
     {
-        await _customerRepository.(str);
+        await _customerRepository.CancelOrder(str);
         
         return "sdads";
     }
@@ -40,5 +48,13 @@ public class CreateOrderLogic
         _userRepository.PermissionToRide(phoneNumber);
         return "";
     }
+
+    private Response CreateResponse(string message, string? additionalInformation)
+        => new Response
+        {
+            Message = message,
+            AdditionalInformation = additionalInformation ?? ""
+        };
+    
 
 }

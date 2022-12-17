@@ -4,11 +4,12 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockCustomerRepository : ICustomerRepository
 {
-    private List<string> MockRepository = new();
-    public async Task<bool> AddNewOrder(string str)
+    private List<string> MockRepository = new(); // CustomerDB
+    public async Task<string> AddNewOrder(string str)
     {
         try
         {
+            //convert*
             MockRepository.Add(str);
         }
         catch (Exception e)
@@ -17,13 +18,13 @@ public class MockCustomerRepository : ICustomerRepository
             throw;
         }
 
-        return false;
+        return "";
     }
 
     public async Task<bool> CancelOrder(string str)
     {
         try
-        {
+        { 
             MockRepository.Remove(str);
         }
         catch (Exception e)

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CustomerTaxiService.BusinessLogic;
 using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerTaxiService.Response;
 
 namespace CustomerTaxiService.Controllers;
 
@@ -15,10 +16,9 @@ public class OrderController : ControllerBase
     }
     
     [HttpPost("/RequestARide")]
-    public async Task<string> CreateOrder(Order order)
+    public async Task<Response> CreateOrder(Order order)
     {
-        _ = await _createOrderLogic.BeginNewOrder(order);
-        return "";
+        return await _createOrderLogic.BeginNewOrder(order);
     }
     
     [HttpPost("/CancelOrder")]
