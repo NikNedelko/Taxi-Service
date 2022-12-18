@@ -8,9 +8,9 @@ namespace CustomerTaxiService.Controllers;
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private readonly CreateOrderLogic _createOrderLogic;
+    private readonly OrderLogic _createOrderLogic;
 
-    public OrderController(CreateOrderLogic createOrderLogic)
+    public OrderController(OrderLogic createOrderLogic)
     {
         _createOrderLogic = createOrderLogic;
     }

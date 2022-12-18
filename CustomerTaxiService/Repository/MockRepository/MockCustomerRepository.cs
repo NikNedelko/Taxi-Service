@@ -1,16 +1,17 @@
 using CustomerTaxiService.Repository.Interfaces;
+using Entities.CustomerTaxiService.CustomerData;
 
 namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockCustomerRepository : ICustomerRepository
 {
-    private List<string> MockRepository = new(); // CustomerDB
-    public async Task<string> AddNewOrder(string str)
+    private List<CustomerDB> MockRepository = new(); // CustomerDB
+    public async Task<string> AddNewOrder(Customer customer)
     {
         try
         {
             //convert*
-            MockRepository.Add(str);
+            MockRepository.Add(new CustomerDB()); // model + id of user
         }
         catch (Exception e)
         {
@@ -25,7 +26,7 @@ public class MockCustomerRepository : ICustomerRepository
     {
         try
         { 
-            MockRepository.Remove(str);
+            MockRepository.Remove(new CustomerDB());
         }
         catch (Exception e)
         {

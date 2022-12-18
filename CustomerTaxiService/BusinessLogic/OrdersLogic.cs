@@ -1,37 +1,47 @@
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
+using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.CustomerTaxiService.Response;
 
 namespace CustomerTaxiService.BusinessLogic;
 
-public class CreateOrderLogic
+public class OrderLogic
 {
     private readonly IUserRepository _userRepository;
     private readonly ICustomerRepository _customerRepository;
     
-    public CreateOrderLogic(IUserRepository userRepository, ICustomerRepository customerRepository)
+    public OrderLogic(IUserRepository userRepository, ICustomerRepository customerRepository)
     {
         _userRepository = userRepository;
         _customerRepository = customerRepository;
     }
     
+    /// <summary>
+    /// Starts the order creation process with checks
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns>Process result</returns>
     public async Task<Response> BeginNewOrder(Order order)
     {
         var checkCustomerResult =  await CheckInformationAboutCustomer(order.PhoneNumber);
-        if (checkCustomerResult != CheckInformationConstants.Accepted)
+        if (checkCustomerResult != CheckInformationConstants.Ok)
             return CreateResponse(checkCustomerResult, null);
-        var newOrderResponse = await CreateNewOrder("data");
+
+        var userAccount = await GetUserByNumber(order.PhoneNumber);
+        
+        var newOrderResponse = await CreateNewOrder(userAccount);
+        
         return  CreateResponse(newOrderResponse,null);
     }
     
-    private async Task<string> CreateNewOrder(string str)
+    private async Task<string> CreateNewOrder(Customer customer)
     {
-        //maybe check drivers
-        var dbResponse = await _customerRepository.AddNewOrder(str);
+        // maybe check availability of drivers
+        var dbResponse = await _customerRepository.AddNewOrder(customer);
         if (dbResponse != CreateNewOrderConstants.Ok)
         {
-            //return one of bad results
+            //return one of bad results and cancel all actions
         }
         return CreateNewOrderConstants.Ok;
     }
@@ -41,6 +51,11 @@ public class CreateOrderLogic
         await _customerRepository.CancelOrder(str);
         
         return "sdads";
+    }
+
+    private async Task<Customer> GetUserByNumber(string number)
+    {
+        return new Customer();
     }
 
     private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
