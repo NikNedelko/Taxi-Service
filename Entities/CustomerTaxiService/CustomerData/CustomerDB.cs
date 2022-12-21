@@ -1,3 +1,5 @@
+using Entities.General;
+
 namespace Entities.CustomerTaxiService.CustomerData;
 
 public class CustomerDB
@@ -8,5 +10,6 @@ public class CustomerDB
     public string PhoneNumber { get; set; }
     public int FeedBack { get; set; }
     public int Status { get; set; }
+    public DateTime RegistrationDate { get; set; }
     public decimal AvailableMoney { get; set; }
 }
