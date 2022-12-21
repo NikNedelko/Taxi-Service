@@ -37,31 +37,26 @@ public class OrderLogic
     
     private async Task<string> CreateNewOrder(Customer customer)
     {
-        // maybe check availability of drivers
         var dbResponse = await _customerRepository.AddNewOrder(customer);
-        if (dbResponse != CreateNewOrderConstants.Ok)
-        {
-            //return one of bad results and cancel all actions
-        }
-        return CreateNewOrderConstants.Ok;
+        return dbResponse != true ? CreateNewOrderConstants.DataBaseProblems : CreateNewOrderConstants.Ok;
     }
     
     public async Task<string> CancelOrder(string str)
     {
         await _customerRepository.CancelOrder(str);
         
-        return "sdads";
+        return "cancel message";
     }
 
     private async Task<Customer> GetUserByNumber(string number)
     {
-        return new Customer();
+        return await _userRepository.GetUserByPhoneNumber(number);
     }
 
     private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
     {
-        _userRepository.PermissionToRide(phoneNumber);
-        return "";
+        var entityOfUser =  await _userRepository.PermissionToRide(phoneNumber);
+        return entityOfUser == null? CheckInformationConstants.UserNotFound : CheckInformationConstants.UserIsExist;
     }
 
     private Response CreateResponse(string message, string? additionalInformation)

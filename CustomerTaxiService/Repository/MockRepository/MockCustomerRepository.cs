@@ -6,20 +6,19 @@ namespace CustomerTaxiService.Repository.MockRepository;
 public class MockCustomerRepository : ICustomerRepository
 {
     private List<CustomerDB> MockRepository = new(); // CustomerDB
-    public async Task<string> AddNewOrder(Customer customer)
+    public async Task<bool> AddNewOrder(Customer customer)
     {
         try
-        {
-            //convert*
-            MockRepository.Add(new CustomerDB()); // model + id of user
+        { 
+            MockRepository.Add(await ConvertUserToDatabase(customer)); // model + id of user
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return false;
         }
 
-        return "";
+        return true;
     }
 
     public async Task<bool> CancelOrder(string str)
@@ -35,5 +34,19 @@ public class MockCustomerRepository : ICustomerRepository
         }
 
         return false;
+    }
+
+    private async Task<CustomerDB> ConvertUserToDatabase(Customer customer)
+    {
+        return new CustomerDB
+        {
+            Id = customer.id,
+            Name = customer.Name,
+            LastName = customer.LastName,
+            PhoneNumber = customer.PhoneNumber,
+            FeedBack = Convert.ToInt32(customer.FeedBack),
+            Status = Convert.ToInt32(customer.Status),
+            AvailableMoney = customer.AvailableMoney
+        };
     }
 }
