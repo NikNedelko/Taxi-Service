@@ -6,7 +6,7 @@ namespace CustomerTaxiService.Repository.MockRepository;
 public class MockCustomerRepository : IRideRepository
 {
     private List<CustomerDB> MockRepository = new(); // CustomerDB
-    public async Task<bool> AddNewOrder(Customer customer)
+    public async Task<bool> AddNewOrder(Customer? customer)
     {
         try
         { 
@@ -36,7 +36,7 @@ public class MockCustomerRepository : IRideRepository
         return false;
     }
 
-    private async Task<CustomerDB> ConvertUserToDatabase(Customer customer)
+    private async Task<CustomerDB> ConvertUserToDatabase(Customer? customer)
     {
         return new CustomerDB
         {

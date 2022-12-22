@@ -13,7 +13,7 @@ public class MockUsersRepository : IUserRepository
         throw new NotImplementedException();
     }
     
-    public async Task<Customer> GetUserByPhoneNumber(string number)
+    public async Task<Customer?> GetUserByPhoneNumber(string number)
     {
         var userFromDb = new CustomerDB();
         try
@@ -50,7 +50,7 @@ public class MockUsersRepository : IUserRepository
         throw new NotImplementedException();
     }
 
-    private async Task<Customer> ConvertUserFromDatabase(CustomerDB customerDb)
+    private async Task<Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
     {
         return new Customer
         {

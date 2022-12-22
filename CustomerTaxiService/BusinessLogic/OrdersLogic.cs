@@ -26,19 +26,24 @@ public class OrderLogic
     {
         var checkCustomerResult =  await CheckInformationAboutCustomer(order.PhoneNumber);
         if (checkCustomerResult != CheckInformationConstants.Ok)
-            return CreateResponse(checkCustomerResult, null);
-
+            return await CreateResponse(checkCustomerResult, null);
+        
         var userAccount = await GetUserByNumber(order.PhoneNumber);
+        if (userAccount == null)
+            return await CreateResponse(ResponseConstants.ProblemsWhenTryToTakeUser,
+                await TakeAdditionalInfoByMessage(ResponseConstants.ProblemsWhenTryToTakeUser));
         
         var newOrderResponse = await CreateNewOrder(userAccount);
-        
-        return  CreateResponse(newOrderResponse,null);
+        if (newOrderResponse != CreateNewOrderConstants.Ok )
+            return await CreateResponse(newOrderResponse,await TakeAdditionalInfoByMessage(newOrderResponse));
+
+        return await CreateResponse(ResponseConstants.RideAccepted, await TakeAdditionalInfoByMessage(ResponseConstants.RideAcceptedAdditionalText));
     }
     
-    private async Task<string> CreateNewOrder(Customer customer)
+    private async Task<string> CreateNewOrder(Customer? customer)
     {
         var dbResponse = await _rideRepository.AddNewOrder(customer);
-        return dbResponse != true ? CreateNewOrderConstants.DataBaseProblems : CreateNewOrderConstants.Ok;
+        return dbResponse ? CreateNewOrderConstants.Ok : CreateNewOrderConstants.DataBaseProblems;
     }
     
     public async Task<string> CancelOrder(string str)
@@ -48,7 +53,7 @@ public class OrderLogic
         return "cancel message";
     }
 
-    private async Task<Customer> GetUserByNumber(string number)
+    private async Task<Customer?> GetUserByNumber(string number)
     {
         return await _userRepository.GetUserByPhoneNumber(number);
     }
@@ -59,12 +64,25 @@ public class OrderLogic
         return entityOfUser == null? CheckInformationConstants.UserNotFound : CheckInformationConstants.UserIsExist;
     }
 
-    private Response CreateResponse(string message, string? additionalInformation)
+    private async Task<Response> CreateResponse(string message, string? additionalInformation)
         => new Response
         {
             Message = message,
             AdditionalInformation = additionalInformation ?? ""
         };
+
+    private async Task<string> TakeAdditionalInfoByMessage(string message)
+    {
+        switch (message)
+        {
+            case ResponseConstants.ProblemsWhenTryToTakeUser:
+                return ResponseConstants.ProblemsWhenTryToTakeUser;
+            default:
+                break;
+        }
+
+        return "";
+    }
     
 
 }
