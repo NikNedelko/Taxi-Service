@@ -14,17 +14,22 @@ public class OrderController : ControllerBase
     {
         _createOrderLogic = createOrderLogic;
     }
-    
+
     [HttpPost("/RequestARide")]
     public async Task<Response> CreateOrder(Order order)
     {
         return await _createOrderLogic.BeginNewOrder(order);
     }
-    
+
     [HttpPost("/CancelOrder")]
     public async Task<string> CancelOrder(string str)
     {
         _ = await _createOrderLogic.CancelOrder(str);
         return "";
+    }
+
+    public async Task<Response> GetInformationAboutRide(string rideId) // also by phone number
+    {
+        throw new NotImplementedException();
     }
 }
