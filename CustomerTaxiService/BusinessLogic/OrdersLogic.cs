@@ -9,12 +9,12 @@ namespace CustomerTaxiService.BusinessLogic;
 public class OrderLogic
 {
     private readonly IUserRepository _userRepository;
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IRideRepository _rideRepository;
     
-    public OrderLogic(IUserRepository userRepository, ICustomerRepository customerRepository)
+    public OrderLogic(IUserRepository userRepository, IRideRepository rideRepository)
     {
         _userRepository = userRepository;
-        _customerRepository = customerRepository;
+        _rideRepository = rideRepository;
     }
     
     /// <summary>
@@ -37,13 +37,13 @@ public class OrderLogic
     
     private async Task<string> CreateNewOrder(Customer customer)
     {
-        var dbResponse = await _customerRepository.AddNewOrder(customer);
+        var dbResponse = await _rideRepository.AddNewOrder(customer);
         return dbResponse != true ? CreateNewOrderConstants.DataBaseProblems : CreateNewOrderConstants.Ok;
     }
     
     public async Task<string> CancelOrder(string str)
     {
-        await _customerRepository.CancelOrder(str);
+        await _rideRepository.CancelOrder(str);
         
         return "cancel message";
     }

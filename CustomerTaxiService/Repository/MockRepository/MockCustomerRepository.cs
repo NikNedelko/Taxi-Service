@@ -3,7 +3,7 @@ using Entities.CustomerTaxiService.CustomerData;
 
 namespace CustomerTaxiService.Repository.MockRepository;
 
-public class MockCustomerRepository : ICustomerRepository
+public class MockCustomerRepository : IRideRepository
 {
     private List<CustomerDB> MockRepository = new(); // CustomerDB
     public async Task<bool> AddNewOrder(Customer customer)
