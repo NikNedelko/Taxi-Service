@@ -26,30 +26,28 @@ public class OrderLogic
     {
         var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
         if (checkCustomerResult != CheckInformationConstants.Ok)
-            return await CreateResponse(checkCustomerResult, null);
+            return await CreateResponse(checkCustomerResult);
 
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
-            return await CreateResponse(ResponseConstants.ProblemWithUsersEntity,
-                await TakeAdditionalInfoByMessage(ResponseConstants.ProblemWithUsersEntity));
+            return await CreateResponse(ResponseConstants.ProblemWithUsersEntity);
 
-        var newOrderResponse = await CreateNewOrder(userAccount);
+        var newOrderResponse = await CreateNewOrder(userAccount, order);
         if (newOrderResponse != CreateNewOrderConstants.Ok)
-            return await CreateResponse(newOrderResponse, await TakeAdditionalInfoByMessage(newOrderResponse));
+            return await CreateResponse(newOrderResponse);
 
-        return await CreateResponse(ResponseConstants.RideAccepted,
-            await TakeAdditionalInfoByMessage(ResponseConstants.RideAcceptedAdditionalText)); // add ride number/id
+        return await CreateResponse(ResponseConstants.RideAccepted);
     }
 
     /// <summary>
-    /// Add new Ride entity to the Database
+    /// Add new Ride to the Database
     /// </summary>
     /// <param name="customer"></param>
+    /// <param name="order"></param>
     /// <returns>Process result as string</returns>
-    private async Task<string> CreateNewOrder(Customer? customer)
+    private async Task<string> CreateNewOrder(Customer customer, Order order)
     {
-        var dbResponse = await _rideRepository.AddNewOrder(customer);
-        return dbResponse ? CreateNewOrderConstants.Ok : CreateNewOrderConstants.DataBaseProblems;
+        return await _rideRepository.AddNewOrder(customer.id, order.RideEndPoint);
     }
 
     /// <summary>
@@ -57,14 +55,17 @@ public class OrderLogic
     /// </summary>
     /// <param name="rideId"></param>
     /// <returns>Process result as string</returns>
-    public async Task<string> CancelOrder(string rideId)
+    public async Task<Response> CancelOrder(string rideId)
     {
-        await _rideRepository.CancelOrder(rideId);
+        var checkResult = await _rideRepository.CheckRideForExistence(rideId);
+        if (checkResult != CheckInformationConstants.Ok)
+            return await CreateResponse(checkResult);
 
-        return "cancel message";
+        var cancelOrderResult = await _rideRepository.CancelOrder(rideId);
+        return await CreateResponse(cancelOrderResult);
     }
 
-    private async Task<Customer?> GetUserByNumber(string number)
+    private async Task<Customer?> GetUserByNumber(string number) // in develop
     {
         return await _userRepository.GetUserByPhoneNumber(number);
     }
@@ -75,23 +76,22 @@ public class OrderLogic
         return entityOfUser == null ? CheckInformationConstants.UserNotFound : CheckInformationConstants.UserIsExist;
     }
 
-    private async Task<Response> CreateResponse(string message, string? additionalInformation)
+    private async Task<Response> CreateResponse(string message)
         => new Response
         {
             Message = message,
-            AdditionalInformation = additionalInformation ?? ""
+            AdditionalInformation = await TakeAdditionalInfoByMessage(message) ?? ""
         };
 
-    private async Task<string> TakeAdditionalInfoByMessage(string message)
+    private async Task<string?> TakeAdditionalInfoByMessage(string message)
     {
-        switch (message)
+        return message switch
         {
-            case ResponseConstants.ProblemWithUsersEntity:
-                return ResponseConstants.ProblemsWhenTryToTakeUser;
-            default:
-                break;
-        }
-
-        return "";
+            ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
+            CreateNewOrderConstants.DatabaseProblems => "",
+            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText // add ride number/id
+            ,
+            _ => ""
+        };
     }
 }

@@ -22,10 +22,9 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost("/CancelOrder")]
-    public async Task<string> CancelOrder(string str)
+    public async Task<Response> CancelOrder(string str)
     {
-        _ = await _createOrderLogic.CancelOrder(str);
-        return "";
+        return await _createOrderLogic.CancelOrder(str);
     }
 
     public async Task<Response> GetInformationAboutRide(string rideId) // also by phone number
