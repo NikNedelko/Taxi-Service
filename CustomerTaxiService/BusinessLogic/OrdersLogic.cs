@@ -65,7 +65,7 @@ public class OrderLogic
         return await CreateResponse(cancelOrderResult);
     }
 
-    private async Task<Customer?> GetUserByNumber(string number) // in develop
+    private async Task<Customer?> GetUserByNumber(string number)
     {
         return await _userRepository.GetUserByPhoneNumber(number);
     }

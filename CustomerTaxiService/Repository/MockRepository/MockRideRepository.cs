@@ -7,7 +7,7 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockRideRepository : IRideRepository
 {
-    private List<RideDb> _mockRepository = new(); // RideDB
+    private static List<RideDb> _mockRepository = new(); // RideDB
     public async Task<string> AddNewOrder(int userId, string endPoint)
     {
         try

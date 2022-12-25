@@ -1,3 +1,4 @@
+using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
@@ -6,19 +7,31 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    private List<CustomerDB> MockRepository = new();
+    private List<CustomerDB> _mockRepository = new();
 
     public async Task<string> AddNewUser(Customer customer)
     {
-        throw new NotImplementedException();
-    }
-    
-    public async Task<Customer?> GetUserByPhoneNumber(string number)
-    {
-        var userFromDb = new CustomerDB();
+        var checkResult = await CheckOfExist(customer.PhoneNumber);
+        if (checkResult != UserConstants.Ok)
+            return checkResult;
         try
         {
-             userFromDb = MockRepository.FirstOrDefault(x => x.PhoneNumber == number);
+            _mockRepository.Add(await ConvertUserToDatabase(customer));
+        }
+        catch (Exception e)
+        {
+            return UserConstants.DatabaseProblem;
+        }
+
+        return UserConstants.Ok;
+    }
+
+    public async Task<Customer?> GetUserByPhoneNumber(string number)
+    {
+        CustomerDB? userFromDb;
+        try
+        {
+            userFromDb = _mockRepository.FirstOrDefault(x => x.PhoneNumber == number);
         }
         catch (Exception e)
         {
@@ -29,25 +42,66 @@ public class MockUsersRepository : IUserRepository
         return userFromDb == null ? null : await ConvertUserFromDatabase(userFromDb);
     }
 
-    public async Task<string> RemoveUser(string name)
+    public async Task<string> RemoveUser(Customer customer)
     {
-        throw new NotImplementedException();
+        var checkResult = await CheckOfExist(customer.PhoneNumber);
+        if (checkResult != UserConstants.Ok)
+            return checkResult;
+        try
+        {
+            _mockRepository.Remove( await ConvertUserToDatabase(customer));
+        }
+        catch (Exception e)
+        {
+            return UserConstants.DatabaseProblem;
+        }
+
+        return UserConstants.Ok;
     }
 
-    public Task<string?> PermissionToRide(string name)
+    public async Task<string?> PermissionToRide(string phoneNumber)
     {
-        throw new NotImplementedException();
+        var userEntityDb = await GetUserByPhoneNumber(phoneNumber);
+        if (userEntityDb == null)
+            return UserConstants.ErrorWhileTryToGetUser;
+        return userEntityDb.Status == AccountStatus.Active
+            ? UserConstants.Ok
+            : UserConstants.UserDoesntHavePermissionToRide;
     }
 
-
-    public async Task<string> CheckOfExist(string name)
+    public async Task<string> CheckOfExist(string phoneNumber)
     {
-        throw new NotImplementedException();
+        CustomerDB? userEntity;
+        try
+        {
+            userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!;
+        }
+        catch (Exception e)
+        {
+            return UserConstants.DatabaseProblem;
+        }
+
+        return userEntity == null? UserConstants.UserNotFound: UserConstants.Ok;
     }
 
-    public async Task<string> UpdateUser(string name)
+    public async Task<Customer?> UpdateUser(Customer user, string existUserNumber)
     {
-        throw new NotImplementedException();
+        var userEntity = await GetUserByPhoneNumber(existUserNumber);
+        if (userEntity == null)
+            return userEntity;
+
+        var updatedUser = new Customer
+        {
+            id = user.id,
+            Name = user.Name,
+            LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber,
+            FeedBack = user.FeedBack,
+            Status = user.Status,
+            RegistrationDate = user.RegistrationDate,
+            AvailableMoney = user.AvailableMoney
+        };
+        return updatedUser;
     }
 
     private async Task<Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
@@ -61,11 +115,10 @@ public class MockUsersRepository : IUserRepository
             FeedBack = (FeedBack)customerDb.FeedBack,
             Status = AccountStatus.NoData,
             RegistrationDate = customerDb.RegistrationDate,
-            AvailableMoney = customerDb.AvailableMoney,
-
+            AvailableMoney = customerDb.AvailableMoney
         };
     }
-    
+
     private async Task<CustomerDB> ConvertUserToDatabase(Customer customer)
     {
         return new CustomerDB
