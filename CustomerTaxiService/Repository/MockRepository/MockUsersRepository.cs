@@ -7,7 +7,20 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    private List<CustomerDB> _mockRepository = new();
+    private List<CustomerDB> _mockRepository = new()
+    {
+        new CustomerDB
+        {
+            Id = 1,
+            Name = "Name",
+            LastName = "LastName",
+            PhoneNumber = "12345",
+            FeedBack = (int)FeedBack.Good,
+            Status = 1,
+            RegistrationDate = DateTime.Now,
+            AvailableMoney = 100
+        }
+    };
 
     public async Task<string> AddNewUser(Customer customer)
     {
@@ -63,7 +76,7 @@ public class MockUsersRepository : IUserRepository
     {
         var userEntityDb = await GetUserByPhoneNumber(phoneNumber);
         if (userEntityDb == null)
-            return UserConstants.ErrorWhileTryToGetUser;
+            return null;
         return userEntityDb.Status == AccountStatus.Active
             ? UserConstants.Ok
             : UserConstants.UserDoesntHavePermissionToRide;

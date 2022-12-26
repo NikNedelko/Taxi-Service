@@ -1,13 +1,24 @@
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
-using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.RideData;
+using Entities.General;
 
 namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockRideRepository : IRideRepository
 {
-    private static List<RideDb> _mockRepository = new(); // RideDB
+    private static List<RideDb> _mockRepository = new()
+    {
+        new RideDb
+        {
+            Id = 1,
+            CustomerId = 1,
+            EndPointOfRide = "Heaven",
+            RideDate = DateTime.Today,
+            DriverFeedBack = (int)FeedBack.Normal,
+            CustomerFeedBack = (int)FeedBack.Normal
+        }
+    }; 
     public async Task<string> AddNewOrder(int userId, string endPoint)
     {
         try
@@ -23,7 +34,7 @@ public class MockRideRepository : IRideRepository
         return CreateNewOrderConstants.Ok;
     }
 
-    public async Task<string> CheckRideForExistence(string rideId)
+    public async Task<string> CheckRideForExistence(int rideId)
     {
         var rideEntity = new RideDb();
         try
@@ -38,7 +49,7 @@ public class MockRideRepository : IRideRepository
         return rideEntity == null ? CheckInformationConstants.RideNotFound : CheckInformationConstants.Ok;
     }
 
-    private async Task<RideDb?> TakeRideDbEntity(string rideId)
+    private async Task<RideDb?> TakeRideDbEntity(int rideId)
     {
         RideDb rideEntity;
         try
@@ -53,7 +64,7 @@ public class MockRideRepository : IRideRepository
         return rideEntity;
     }
 
-    public async Task<string> CancelOrder(string rideId)
+    public async Task<string> CancelOrder(int rideId)
     {
         var rideEntity = await TakeRideDbEntity(rideId);
         if (rideEntity == null)

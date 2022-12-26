@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using CustomerTaxiService.BusinessLogic;
+using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.Requests;
 using Entities.CustomerTaxiService.Response;
 
@@ -8,23 +8,23 @@ namespace CustomerTaxiService.Controllers;
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private readonly OrderLogic _createOrderLogic;
+    private readonly IOrdersLogic _createOrdersLogic;
 
-    public OrderController(OrderLogic createOrderLogic)
+    public OrderController(IOrdersLogic createOrdersLogic)
     {
-        _createOrderLogic = createOrderLogic;
+        _createOrdersLogic = createOrdersLogic;
     }
 
     [HttpPost("/RequestARide")]
     public async Task<Response> CreateOrder(Order order)
     {
-        return await _createOrderLogic.BeginNewOrder(order);
+        return await _createOrdersLogic.BeginNewOrder(order);
     }
 
     [HttpPost("/CancelOrder")]
-    public async Task<Response> CancelOrder(string str)
+    public async Task<Response> CancelOrder(int rideId)
     {
-        return await _createOrderLogic.CancelOrder(str);
+        return await _createOrdersLogic.CancelOrder(rideId);
     }
 
     [HttpPost("/GetInformationAboutRide")]

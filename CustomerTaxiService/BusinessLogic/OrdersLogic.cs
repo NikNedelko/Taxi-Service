@@ -1,3 +1,4 @@
+using CustomerTaxiService.BusinessLogic.Interfaces;
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
@@ -6,12 +7,12 @@ using Entities.CustomerTaxiService.Response;
 
 namespace CustomerTaxiService.BusinessLogic;
 
-public class OrderLogic
+public class OrdersLogic : IOrdersLogic
 {
     private readonly IUserRepository _userRepository;
     private readonly IRideRepository _rideRepository;
 
-    public OrderLogic(IUserRepository userRepository, IRideRepository rideRepository)
+    public OrdersLogic(IUserRepository userRepository, IRideRepository rideRepository)
     {
         _userRepository = userRepository;
         _rideRepository = rideRepository;
@@ -55,7 +56,7 @@ public class OrderLogic
     /// </summary>
     /// <param name="rideId"></param>
     /// <returns>Process result as string</returns>
-    public async Task<Response> CancelOrder(string rideId)
+    public async Task<Response> CancelOrder(int rideId)
     {
         var checkResult = await _rideRepository.CheckRideForExistence(rideId);
         if (checkResult != CheckInformationConstants.Ok)
@@ -73,7 +74,7 @@ public class OrderLogic
     private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
     {
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
-        return entityOfUser == null ? CheckInformationConstants.UserNotFound : CheckInformationConstants.UserIsExist;
+        return entityOfUser == null ? CheckInformationConstants.UserNotFound : CheckInformationConstants.Ok;
     }
 
     private async Task<Response> CreateResponse(string message)
