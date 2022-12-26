@@ -30,7 +30,7 @@ public class MockRideRepository : IRideRepository
         {
             rideEntity = _mockRepository.FirstOrDefault(x => x.Id == rideId);
         }
-        catch (Exception e)
+        catch
         {
             return CheckInformationConstants.DatabaseProblems;
         }
@@ -45,7 +45,7 @@ public class MockRideRepository : IRideRepository
         {
             rideEntity = _mockRepository.FirstOrDefault(x => x.Id == rideId)!;
         }
-        catch (Exception e)
+        catch
         {
             return null;
         }
@@ -62,7 +62,7 @@ public class MockRideRepository : IRideRepository
         { 
            _mockRepository.Remove(rideEntity);
         }
-        catch (Exception e)
+        catch
         {
             return CheckInformationConstants.DatabaseProblems;
         }

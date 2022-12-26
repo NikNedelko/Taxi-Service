@@ -18,7 +18,7 @@ public class MockUsersRepository : IUserRepository
         {
             _mockRepository.Add(await ConvertUserToDatabase(customer));
         }
-        catch (Exception e)
+        catch
         {
             return UserConstants.DatabaseProblem;
         }
@@ -51,7 +51,7 @@ public class MockUsersRepository : IUserRepository
         {
             _mockRepository.Remove( await ConvertUserToDatabase(customer));
         }
-        catch (Exception e)
+        catch
         {
             return UserConstants.DatabaseProblem;
         }
@@ -76,7 +76,7 @@ public class MockUsersRepository : IUserRepository
         {
             userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!;
         }
-        catch (Exception e)
+        catch
         {
             return UserConstants.DatabaseProblem;
         }
