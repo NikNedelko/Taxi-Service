@@ -27,6 +27,7 @@ public class OrderController : ControllerBase
         return await _createOrderLogic.CancelOrder(str);
     }
 
+    [HttpPost("/GetInformationAboutRide")]
     public async Task<Response> GetInformationAboutRide(string rideId) // also by phone number
     {
         throw new NotImplementedException();

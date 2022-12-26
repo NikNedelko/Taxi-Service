@@ -1,12 +1,15 @@
+using CustomerTaxiService.Repository.Interfaces;
+using CustomerTaxiService.Repository.MockRepository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IRideRepository, MockRideRepository>();
+builder.Services.AddScoped<IUserRepository, MockUsersRepository>();
 
 var app = builder.Build();
-
-//builder.Services.AddScoped<>();
 
 if (app.Environment.IsDevelopment())
 {

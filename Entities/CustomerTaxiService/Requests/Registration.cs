@@ -1,5 +1,6 @@
 namespace Entities.CustomerTaxiService.Requests;
 
+[Serializable]
 public class Registration
 {
     public string Name { get; set; }
