@@ -7,6 +7,7 @@
         <RootNamespace>CustomerTaxiService</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'TaxiAPI' " />
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
