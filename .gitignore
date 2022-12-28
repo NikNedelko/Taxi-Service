@@ -2,4 +2,5 @@ bin
 obj
 .git
 .idea
+.vs
 ?DS_Store*
