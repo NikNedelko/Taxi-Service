@@ -10,7 +10,7 @@ public class Registration
     public string Name { get; set; }
     [Required]
     [StringLength(15)]
-    public string Surname { get; set; }
+    public string LastName { get; set; }
     [Required]
     [Range(100000,999999)]
     public string PhoneNumber { get; set; }
