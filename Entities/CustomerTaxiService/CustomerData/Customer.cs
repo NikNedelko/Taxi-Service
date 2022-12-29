@@ -4,7 +4,6 @@ namespace Entities.CustomerTaxiService.CustomerData;
 
 public class Customer
 {
-    public int id { get; set; }
     public string Name { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
