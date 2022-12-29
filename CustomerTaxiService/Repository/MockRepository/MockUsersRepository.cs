@@ -55,21 +55,22 @@ public class MockUsersRepository : IUserRepository
         return userFromDb == null ? null : await ConvertUserFromDatabase(userFromDb);
     }
 
-    public async Task<string> RemoveUser(Customer customer)
+    public async Task<string> RemoveUser(string phoneNumber)
     {
-        var checkResult = await CheckOfExist(customer.PhoneNumber);
-        if (checkResult != UserConstants.Ok)
-            return checkResult;
+        var entity = await GetUserByPhoneNumber(phoneNumber);
+        if (entity == null)
+            return UserConstants.UserNotFound;
+
         try
         {
-            _mockRepository.Remove( await ConvertUserToDatabase(customer));
+            _mockRepository.Remove(await ConvertUserToDatabase(entity));
         }
         catch
         {
             return UserConstants.DatabaseProblem;
         }
 
-        return UserConstants.Ok;
+        return UserConstants.UserWasDeleted;
     }
 
     public async Task<string?> PermissionToRide(string phoneNumber)
@@ -94,14 +95,14 @@ public class MockUsersRepository : IUserRepository
             return UserConstants.DatabaseProblem;
         }
 
-        return userEntity == null? UserConstants.UserNotFound: UserConstants.Ok;
+        return userEntity == null ? UserConstants.UserNotFound : UserConstants.Ok;
     }
 
-    public async Task<Customer?> UpdateUser(Customer user, string existUserNumber)
+    public async Task<string> UpdateUser(Customer user, string existUserNumber)
     {
         var userEntity = await GetUserByPhoneNumber(existUserNumber);
         if (userEntity == null)
-            return userEntity;
+            return UserConstants.UserNotFound;
 
         var updatedUser = new Customer
         {
@@ -114,7 +115,36 @@ public class MockUsersRepository : IUserRepository
             RegistrationDate = user.RegistrationDate,
             AvailableMoney = user.AvailableMoney
         };
-        return updatedUser;
+        try
+        {
+            _mockRepository.Remove(await ConvertUserToDatabase(user));
+            _mockRepository.Add(await ConvertUserToDatabase(updatedUser));
+        }
+        catch
+        {
+            //db problems
+        }
+
+        return UserConstants.Ok;
+    }
+
+    public async Task<string> AddMoneyToAccount(string phoneNumber, decimal money)
+    {
+        var userEntity = await GetUserByPhoneNumber(phoneNumber);
+        if (userEntity == null)
+            return UserConstants.UserNotFound;
+        userEntity.AvailableMoney += money;
+        try
+        {
+            _mockRepository.Remove(_mockRepository.First(db => db.PhoneNumber == phoneNumber));
+            _mockRepository.Add(await ConvertUserToDatabase(userEntity));
+        }
+        catch
+        {
+            return UserConstants.DatabaseProblem;
+        }
+
+        return UserConstants.Ok;
     }
 
     private async Task<Customer?> ConvertUserFromDatabase(CustomerDB customerDb)

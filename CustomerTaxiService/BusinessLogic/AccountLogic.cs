@@ -10,7 +10,6 @@ namespace CustomerTaxiService.BusinessLogic;
 
 public class AccountLogic : IAccountLogic
 {
-    
     private readonly IUserRepository _userRepository;
 
     public AccountLogic(IUserRepository userRepository)
@@ -35,24 +34,37 @@ public class AccountLogic : IAccountLogic
         if (responseFromCreate != UserConstants.Ok)
             await CreateResponse(responseFromCreate);
 
-        return await CreateResponse(UserConstants.Ok);
+        return await CreateResponse(UserConstants.MoneyWasAdded);
     }
 
-    public async Task<Response> DeleteAccount(string model)
+    public async Task<Response> DeleteAccount(string phoneNumber)
     {
-        throw new NotImplementedException();
+        return await CreateResponse(await _userRepository.RemoveUser(phoneNumber)); // user was deleted
     }
 
-    public async Task<Response> UpdateAccount(string model)
+    public async Task<Response> UpdateAccount(Customer model)
     {
-        throw new NotImplementedException();
+        var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(model.PhoneNumber);
+        if (userWithThisNumber == null)
+            return await CreateResponse(UserConstants.UserNotFound);
+        var updateResult = await _userRepository.UpdateUser(model, userWithThisNumber.PhoneNumber);
+        if (updateResult != UserConstants.Ok)
+            return await CreateResponse(updateResult);
+        return await CreateResponse(UserConstants.UserWasUpdated); // change to "user was suc@ updated"
     }
 
-    public async Task<Response> AddMoneyToAccount(string id)
+    public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal money)
     {
-        throw new NotImplementedException();
+        var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(phoneNumber);
+        if (userWithThisNumber == null)
+            return await CreateResponse(UserConstants.UserNotFound);
+        var addMoneyResult = await _userRepository.AddMoneyToAccount(phoneNumber, money);
+        if (addMoneyResult != UserConstants.Ok)
+            return await CreateResponse(addMoneyResult);
+
+        return await CreateResponse(UserConstants.MoneyWasAdded); // money was successful added
     }
-    
+
     private async Task<Response> CreateResponse(string message)
         => new Response
         {
@@ -64,11 +76,8 @@ public class AccountLogic : IAccountLogic
     {
         return message switch
         {
-            UserConstants.Ok => UserConstants.SuccessfulCreate,
-            UserConstants.UserIsAlreadyExist => "",
-            UserConstants.DatabaseProblem => UserConstants.DatabaseProblemResponse
-            
-            ,
+            UserConstants.UserWasCreated => UserConstants.SuccessfulCreate,
+            UserConstants.DatabaseProblem => UserConstants.DatabaseProblemResponse,
             _ => ""
         };
     }

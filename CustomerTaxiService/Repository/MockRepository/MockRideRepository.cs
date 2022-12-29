@@ -18,12 +18,13 @@ public class MockRideRepository : IRideRepository
             DriverFeedBack = (int)FeedBack.Normal,
             CustomerFeedBack = (int)FeedBack.Normal
         }
-    }; 
+    };
+
     public async Task<string> AddNewOrder(int userId, string endPoint)
     {
         try
-        { 
-            _mockRepository.Add( await CreateRideEntityForDb(userId,endPoint)); // model + id of user
+        {
+            _mockRepository.Add(await CreateRideEntityForDb(userId, endPoint)); // model + id of user
         }
         catch (Exception e)
         {
@@ -70,8 +71,8 @@ public class MockRideRepository : IRideRepository
         if (rideEntity == null)
             return CheckInformationConstants.DatabaseProblems;
         try
-        { 
-           _mockRepository.Remove(rideEntity);
+        {
+            _mockRepository.Remove(rideEntity);
         }
         catch
         {

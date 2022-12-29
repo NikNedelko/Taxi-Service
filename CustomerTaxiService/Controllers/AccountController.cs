@@ -1,4 +1,5 @@
 using CustomerTaxiService.BusinessLogic.Interfaces;
+using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.CustomerTaxiService.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +9,13 @@ namespace CustomerTaxiService.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-
     private readonly IAccountLogic _accountLogic;
-    
+
     public AccountController(IAccountLogic accountLogic)
     {
         _accountLogic = accountLogic;
     }
-    
+
     [HttpPost]
     public async Task<Response> CreateAccount(Registration newUser)
     {
@@ -25,18 +25,18 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
-        return new Response();
+        return await _accountLogic.DeleteAccount(phoneNumber);
     }
 
     [HttpPost]
-    public async Task<Response> UpdateAccount(string account)
+    public async Task<Response> UpdateAccount(Customer customerEntity)
     {
-        return new Response();
+        return await _accountLogic.UpdateAccount(customerEntity);
     }
 
     [HttpPost]
-    public async Task<Response> AddMoneyToAccount(decimal countOfMoney, string accountId)
+    public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal countOfMoney)
     {
-        return new Response();
+        return await _accountLogic.AddMoneyToAccount(phoneNumber, countOfMoney);
     }
 }
