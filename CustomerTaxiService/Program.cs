@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IOrdersLogic, OrdersLogic>();
+builder.Services.AddScoped<IAccountLogic, AccountLogic>();
 builder.Services.AddScoped<IRideRepository, MockRideRepository>();
 builder.Services.AddScoped<IUserRepository, MockUsersRepository>();
 builder.Services.AddHttpContextAccessor();
