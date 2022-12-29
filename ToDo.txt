@@ -1,0 +1,3 @@
+To do list
+Customer taxi service
+- Remove all try/catch EH and add general exception handler
