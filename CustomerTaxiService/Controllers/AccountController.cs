@@ -16,27 +16,33 @@ public class AccountController : ControllerBase
         _accountLogic = accountLogic;
     }
 
-    [HttpPost]
+    [HttpPost("/CreateAccount")]
     public async Task<Response> CreateAccount(Registration newUser)
     {
         return await _accountLogic.CreateAccount(newUser);
     }
 
-    [HttpPost]
+    [HttpPost("/DeleteAccount")]
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
         return await _accountLogic.DeleteAccount(phoneNumber);
     }
 
-    [HttpPost]
+    [HttpPost("/UpdateAccount")]
     public async Task<Response> UpdateAccount(Customer customerEntity)
     {
         return await _accountLogic.UpdateAccount(customerEntity);
     }
 
-    [HttpPost]
+    [HttpPost("/AddMoneyToAccount")]
     public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal countOfMoney)
     {
         return await _accountLogic.AddMoneyToAccount(phoneNumber, countOfMoney);
+    }
+    
+    [HttpPost("/GetAllUsers")]
+    public async Task<List<CustomerDB>> GetAllUsers()
+    {
+        return await _accountLogic.GetAllUsers();
     }
 }

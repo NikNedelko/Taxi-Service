@@ -1,5 +1,6 @@
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
+using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.RideData;
 using Entities.General;
 
@@ -12,7 +13,7 @@ public class MockRideRepository : IRideRepository
         new RideDb
         {
             Id = 1,
-            CustomerId = 1,
+            CustomerPhoneNumber = "1234",
             EndPointOfRide = "Heaven",
             RideDate = DateTime.Today,
             DriverFeedBack = (int)FeedBack.Normal,
@@ -20,11 +21,11 @@ public class MockRideRepository : IRideRepository
         }
     };
 
-    public async Task<string> AddNewOrder(int userId, string endPoint)
+    public async Task<string> AddNewOrder(string phoneNumber, string endPoint)
     {
         try
         {
-            _mockRepository.Add(await CreateRideEntityForDb(userId, endPoint)); // model + id of user
+            _mockRepository.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
         }
         catch (Exception e)
         {
@@ -35,12 +36,12 @@ public class MockRideRepository : IRideRepository
         return CreateNewOrderConstants.Ok;
     }
 
-    public async Task<string> CheckRideForExistence(int rideId)
+    public async Task<string> CheckRideForExistence(string phoneNumber)
     {
         var rideEntity = new RideDb();
         try
         {
-            rideEntity = _mockRepository.FirstOrDefault(x => x.Id == rideId);
+            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber );
         }
         catch
         {
@@ -50,12 +51,12 @@ public class MockRideRepository : IRideRepository
         return rideEntity == null ? CheckInformationConstants.RideNotFound : CheckInformationConstants.Ok;
     }
 
-    private async Task<RideDb?> TakeRideDbEntity(int rideId)
+    private async Task<RideDb?> TakeRideDbEntity(string phoneNumber)
     {
         RideDb rideEntity;
         try
         {
-            rideEntity = _mockRepository.FirstOrDefault(x => x.Id == rideId)!;
+            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber)!;
         }
         catch
         {
@@ -65,11 +66,11 @@ public class MockRideRepository : IRideRepository
         return rideEntity;
     }
 
-    public async Task<string> CancelOrder(int rideId)
+    public async Task<string> CancelOrder(string phoneNumber)
     {
-        var rideEntity = await TakeRideDbEntity(rideId);
+        var rideEntity = await TakeRideDbEntity(phoneNumber);
         if (rideEntity == null)
-            return CheckInformationConstants.DatabaseProblems;
+            return CheckInformationConstants.RideNotFound;
         try
         {
             _mockRepository.Remove(rideEntity);
@@ -82,13 +83,38 @@ public class MockRideRepository : IRideRepository
         return CheckInformationConstants.Ok;
     }
 
-    private async Task<RideDb> CreateRideEntityForDb(int userId, string endPoint)
+    public async Task<Ride?> GetRideInfo(string phoneNumber)
+    {
+        var rideEntity = await TakeRideDbEntity(phoneNumber);
+        if (rideEntity == null)
+            return null;
+        return await ConvertRideDbToRide(rideEntity);
+    }
+
+    public async Task<List<RideDb>> GetAllRides()
+    {
+        return _mockRepository;
+    }
+
+    private async Task<RideDb> CreateRideEntityForDb(string phoneNumber, string endPoint)
     {
         return new RideDb
         {
-            CustomerId = userId,
+            CustomerPhoneNumber = phoneNumber,
             EndPointOfRide = endPoint,
             RideDate = DateTime.Now
+        };
+    }
+    
+    private async Task<Ride?> ConvertRideDbToRide(RideDb rideDb)
+    {
+        return new Ride
+        {
+            CustomerPhoneNumber = rideDb.CustomerPhoneNumber,
+            EndPointOfRide = rideDb.EndPointOfRide,
+            RideDate = rideDb.RideDate,
+            DriverFeedBack = (FeedBack)rideDb.DriverFeedBack,
+            CustomerFeedBack = (FeedBack)rideDb.CustomerFeedBack
         };
     }
 }

@@ -11,4 +11,5 @@ public interface IUserRepository
     public Task<string> CheckOfExist(string phoneNumber);
     public Task<string> UpdateUser(Customer user, string existUserId);
     public Task<string> AddMoneyToAccount(string phoneNumber, decimal money);
+    public Task<List<CustomerDB>> GetAllUsers();
 }

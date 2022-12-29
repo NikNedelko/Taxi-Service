@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.Requests;
 using Entities.CustomerTaxiService.Response;
+using Entities.CustomerTaxiService.RideData;
 
 namespace CustomerTaxiService.Controllers;
 
@@ -22,14 +23,20 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost("/CancelOrder")]
-    public async Task<Response> CancelOrder(int rideId)
+    public async Task<Response> CancelOrder(string phoneNumber)
     {
-        return await _createOrdersLogic.CancelOrder(rideId);
+        return await _createOrdersLogic.CancelOrder(phoneNumber);
     }
 
     [HttpPost("/GetInformationAboutRide")]
-    public async Task<Response> GetInformationAboutRide(string rideId) // also by phone number
+    public async Task<Ride?> GetInformationAboutRide(string phoneNumber)
     {
-        throw new NotImplementedException();
+        return await _createOrdersLogic.GetRideInfo(phoneNumber);
+    }
+    
+    [HttpPost("/GetAllRIdes")]
+    public async Task<List<RideDb>> GetAllUsers()
+    {
+        return await _createOrdersLogic.GetAllRides();
     }
 }

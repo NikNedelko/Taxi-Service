@@ -7,7 +7,7 @@ namespace CustomerTaxiService.Repository.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    private List<CustomerDB> _mockRepository = new()
+    private static List<CustomerDB> _mockRepository = new()
     {
         new CustomerDB
         {
@@ -25,7 +25,7 @@ public class MockUsersRepository : IUserRepository
     public async Task<string> AddNewUser(Customer customer)
     {
         var checkResult = await CheckOfExist(customer.PhoneNumber);
-        if (checkResult != UserConstants.Ok)
+        if (checkResult != UserConstants.UserNotFound)
             return checkResult;
         try
         {
@@ -63,7 +63,7 @@ public class MockUsersRepository : IUserRepository
 
         try
         {
-            _mockRepository.Remove(await ConvertUserToDatabase(entity));
+            _mockRepository.Remove(_mockRepository.First(x => x.PhoneNumber == phoneNumber));
         }
         catch
         {
@@ -106,7 +106,6 @@ public class MockUsersRepository : IUserRepository
 
         var updatedUser = new Customer
         {
-            id = user.id,
             Name = user.Name,
             LastName = user.LastName,
             PhoneNumber = user.PhoneNumber,
@@ -147,11 +146,15 @@ public class MockUsersRepository : IUserRepository
         return UserConstants.Ok;
     }
 
+    public async Task<List<CustomerDB>> GetAllUsers()
+    {
+        return _mockRepository;
+    }
+
     private async Task<Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
     {
         return new Customer
         {
-            id = customerDb.Id,
             Name = customerDb.Name,
             LastName = customerDb.LastName,
             PhoneNumber = customerDb.PhoneNumber,
@@ -166,7 +169,6 @@ public class MockUsersRepository : IUserRepository
     {
         return new CustomerDB
         {
-            Id = customer.id,
             Name = customer.Name,
             LastName = customer.LastName,
             PhoneNumber = customer.PhoneNumber,
