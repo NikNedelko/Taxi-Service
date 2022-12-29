@@ -34,12 +34,12 @@ public class AccountLogic : IAccountLogic
         if (responseFromCreate != UserConstants.Ok)
             await CreateResponse(responseFromCreate);
 
-        return await CreateResponse(UserConstants.MoneyWasAdded);
+        return await CreateResponse(UserConstants.UserWasCreated);
     }
 
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
-        return await CreateResponse(await _userRepository.RemoveUser(phoneNumber)); // user was deleted
+        return await CreateResponse(await _userRepository.RemoveUser(phoneNumber));
     }
 
     public async Task<Response> UpdateAccount(Customer model)
@@ -50,7 +50,7 @@ public class AccountLogic : IAccountLogic
         var updateResult = await _userRepository.UpdateUser(model, userWithThisNumber.PhoneNumber);
         if (updateResult != UserConstants.Ok)
             return await CreateResponse(updateResult);
-        return await CreateResponse(UserConstants.UserWasUpdated); // change to "user was suc@ updated"
+        return await CreateResponse(UserConstants.UserWasUpdated);
     }
 
     public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal money)
@@ -62,7 +62,12 @@ public class AccountLogic : IAccountLogic
         if (addMoneyResult != UserConstants.Ok)
             return await CreateResponse(addMoneyResult);
 
-        return await CreateResponse(UserConstants.MoneyWasAdded); // money was successful added
+        return await CreateResponse(UserConstants.MoneyWasAdded);
+    }
+
+    public async Task<List<CustomerDB>> GetAllUsers()
+    {
+        return await _userRepository.GetAllUsers();
     }
 
     private async Task<Response> CreateResponse(string message)

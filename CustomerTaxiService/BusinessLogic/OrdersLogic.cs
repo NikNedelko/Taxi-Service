@@ -4,6 +4,7 @@ using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.CustomerTaxiService.Response;
+using Entities.CustomerTaxiService.RideData;
 
 namespace CustomerTaxiService.BusinessLogic;
 
@@ -18,11 +19,6 @@ public class OrdersLogic : IOrdersLogic
         _rideRepository = rideRepository;
     }
 
-    /// <summary>
-    /// Starts the order creation process with checks
-    /// </summary>
-    /// <param name="order"></param>
-    /// <returns>Process result as string</returns>
     public async Task<Response> BeginNewOrder(Order order)
     {
         var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
@@ -40,30 +36,29 @@ public class OrdersLogic : IOrdersLogic
         return await CreateResponse(ResponseConstants.RideAccepted);
     }
 
-    /// <summary>
-    /// Add new Ride to the Database
-    /// </summary>
-    /// <param name="customer"></param>
-    /// <param name="order"></param>
-    /// <returns>Process result as string</returns>
     private async Task<string> CreateNewOrder(Customer customer, Order order)
     {
-        return await _rideRepository.AddNewOrder(customer.id, order.RideEndPoint);
+        return await _rideRepository.AddNewOrder(customer.PhoneNumber, order.RideEndPoint);
     }
-
-    /// <summary>
-    /// Cancel exist order by id of ride
-    /// </summary>
-    /// <param name="rideId"></param>
-    /// <returns>Process result as string</returns>
-    public async Task<Response> CancelOrder(int rideId)
+    
+    public async Task<Response> CancelOrder(string phoneNumber)
     {
-        var checkResult = await _rideRepository.CheckRideForExistence(rideId);
+        var checkResult = await _rideRepository.CheckRideForExistence(phoneNumber);
         if (checkResult != CheckInformationConstants.Ok)
             return await CreateResponse(checkResult);
 
-        var cancelOrderResult = await _rideRepository.CancelOrder(rideId);
+        var cancelOrderResult = await _rideRepository.CancelOrder(phoneNumber);
         return await CreateResponse(cancelOrderResult);
+    }
+
+    public async Task<Ride?> GetRideInfo(string phoneNumber)
+    {
+        return await _rideRepository.GetRideInfo(phoneNumber);
+    }
+
+    public async Task<List<RideDb>> GetAllRides()
+    {
+        return await _rideRepository.GetAllRides();
     }
 
     private async Task<Customer?> GetUserByNumber(string number)
