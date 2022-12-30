@@ -38,10 +38,10 @@ public class MockRideRepository : IRideRepository
 
     public async Task<string> CheckRideForExistence(string phoneNumber)
     {
-        var rideEntity = new RideDb();
+        RideDb? rideEntity;
         try
         {
-            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber );
+            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
         }
         catch
         {
@@ -105,7 +105,7 @@ public class MockRideRepository : IRideRepository
             RideDate = DateTime.Now
         };
     }
-    
+
     private async Task<Ride?> ConvertRideDbToRide(RideDb rideDb)
     {
         return new Ride

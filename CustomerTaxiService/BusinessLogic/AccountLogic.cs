@@ -83,6 +83,7 @@ public class AccountLogic : IAccountLogic
         {
             UserConstants.UserWasCreated => UserConstants.SuccessfulCreate,
             UserConstants.DatabaseProblem => UserConstants.DatabaseProblemResponse,
+            UserConstants.UserWasDeleted => UserConstants.UserWasUpdatedAdditionalText,
             UserConstants.MoneyWasAdded =>"",
             _ => ""
         };
