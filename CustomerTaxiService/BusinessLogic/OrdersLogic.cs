@@ -84,10 +84,12 @@ public class OrdersLogic : IOrdersLogic
         return message switch
         {
             ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
-            CreateNewOrderConstants.DatabaseProblems => "",
-            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText // add ride number/id
+            CreateNewOrderConstants.DatabaseProblems => CreateNewOrderConstants.DatabaseProblemsAdditionalText,
+            CheckInformationConstants.UserNotFound => CheckInformationConstants.UserNotFoundAdditionalText,
+            CheckInformationConstants.RideNotFound => CheckInformationConstants.RideNotFoundAdditionalText,
+            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText 
             ,
-            _ => ""
+            _ => "Something went wrong"
         };
     }
 }
