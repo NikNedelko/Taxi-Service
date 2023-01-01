@@ -1,5 +1,6 @@
 using CustomerTaxiService.BusinessLogic.Interfaces;
 using CustomerTaxiService.Constants;
+using CustomerTaxiService.Constants.General;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
@@ -22,7 +23,7 @@ public class OrdersLogic : IOrdersLogic
     public async Task<Response> BeginNewOrder(Order order)
     {
         var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
-        if (checkCustomerResult != CheckInformationConstants.Ok)
+        if (checkCustomerResult != OrdersConstants.Ok)
             return await CreateResponse(checkCustomerResult);
 
         var userAccount = await GetUserByNumber(order.PhoneNumber);
@@ -30,7 +31,7 @@ public class OrdersLogic : IOrdersLogic
             return await CreateResponse(ResponseConstants.ProblemWithUsersEntity);
 
         var newOrderResponse = await CreateNewOrder(userAccount, order);
-        if (newOrderResponse != CreateNewOrderConstants.Ok)
+        if (newOrderResponse != OrdersConstants.Ok)
             return await CreateResponse(newOrderResponse);
 
         return await CreateResponse(ResponseConstants.RideAccepted);
@@ -44,7 +45,7 @@ public class OrdersLogic : IOrdersLogic
     public async Task<Response> CancelOrder(string phoneNumber)
     {
         var checkResult = await _rideRepository.CheckRideForExistence(phoneNumber);
-        if (checkResult != CheckInformationConstants.Ok)
+        if (checkResult != OrdersConstants.Ok)
             return await CreateResponse(checkResult);
 
         var cancelOrderResult = await _rideRepository.CancelOrder(phoneNumber);
@@ -69,7 +70,7 @@ public class OrdersLogic : IOrdersLogic
     private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
     {
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
-        return entityOfUser == null ? CheckInformationConstants.UserNotFound : CheckInformationConstants.Ok;
+        return entityOfUser == null ? OrdersConstants.UserNotFound : OrdersConstants.Ok;
     }
 
     private async Task<Response> CreateResponse(string message)
@@ -84,9 +85,9 @@ public class OrdersLogic : IOrdersLogic
         return message switch
         {
             ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
-            CreateNewOrderConstants.DatabaseProblems => CreateNewOrderConstants.DatabaseProblemsAdditionalText,
-            CheckInformationConstants.UserNotFound => CheckInformationConstants.UserNotFoundAdditionalText,
-            CheckInformationConstants.RideNotFound => CheckInformationConstants.RideNotFoundAdditionalText,
+            OrdersConstants.DatabaseProblems => OrdersConstants.DatabaseProblemsAdditionalText,
+            OrdersConstants.UserNotFound => OrdersConstants.UserNotFoundAdditionalText,
+            OrdersConstants.RideNotFound => OrdersConstants.RideNotFoundAdditionalText,
             ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText 
             ,
             _ => "Something went wrong"

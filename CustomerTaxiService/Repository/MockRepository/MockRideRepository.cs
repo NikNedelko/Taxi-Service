@@ -30,10 +30,10 @@ public class MockRideRepository : IRideRepository
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return CreateNewOrderConstants.DatabaseProblems;
+            return OrdersConstants.DatabaseProblems;
         }
 
-        return CreateNewOrderConstants.Ok;
+        return OrdersConstants.Ok;
     }
 
     public async Task<string> CheckRideForExistence(string phoneNumber)
@@ -45,10 +45,10 @@ public class MockRideRepository : IRideRepository
         }
         catch
         {
-            return CheckInformationConstants.DatabaseProblems;
+            return OrdersConstants.DatabaseProblems;
         }
 
-        return rideEntity == null ? CheckInformationConstants.RideNotFound : CheckInformationConstants.Ok;
+        return rideEntity == null ? OrdersConstants.RideNotFound : OrdersConstants.Ok;
     }
 
     private async Task<RideDb?> TakeRideDbEntity(string phoneNumber)
@@ -70,17 +70,17 @@ public class MockRideRepository : IRideRepository
     {
         var rideEntity = await TakeRideDbEntity(phoneNumber);
         if (rideEntity == null)
-            return CheckInformationConstants.RideNotFound;
+            return OrdersConstants.RideNotFound;
         try
         {
             _mockRepository.Remove(rideEntity);
         }
         catch
         {
-            return CheckInformationConstants.DatabaseProblems;
+            return OrdersConstants.DatabaseProblems;
         }
 
-        return CheckInformationConstants.Ok;
+        return OrdersConstants.Ok;
     }
 
     public async Task<Ride?> GetRideInfo(string phoneNumber)
