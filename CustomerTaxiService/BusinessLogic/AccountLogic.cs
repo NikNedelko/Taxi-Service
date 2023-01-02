@@ -82,7 +82,6 @@ public class AccountLogic : IAccountLogic
         return message switch
         {
             UserConstants.UserWasCreated => UserConstants.SuccessfulCreate,
-            UserConstants.DatabaseProblem => UserConstants.DatabaseProblemResponse,
             UserConstants.UserWasDeleted => UserConstants.UserWasUpdatedAdditionalText,
             UserConstants.MoneyWasAdded =>"",
             _ => ""

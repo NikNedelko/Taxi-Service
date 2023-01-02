@@ -27,31 +27,15 @@ public class MockUsersRepository : IUserRepository
         var checkResult = await CheckOfExist(customer.PhoneNumber);
         if (checkResult != UserConstants.UserNotFound)
             return checkResult;
-        try
-        {
-            _mockRepository.Add(await ConvertUserToDatabase(customer));
-        }
-        catch
-        {
-            return UserConstants.DatabaseProblem;
-        }
-
+        
+        _mockRepository.Add(await ConvertUserToDatabase(customer));
+        
         return UserConstants.Ok;
     }
 
     public async Task<Customer?> GetUserByPhoneNumber(string number)
     {
-        CustomerDB? userFromDb;
-        try
-        {
-            userFromDb = _mockRepository.FirstOrDefault(x => x.PhoneNumber == number);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
+        var userFromDb = _mockRepository.FirstOrDefault(x => x.PhoneNumber == number);
         return userFromDb == null ? null : await ConvertUserFromDatabase(userFromDb);
     }
 
@@ -60,15 +44,8 @@ public class MockUsersRepository : IUserRepository
         var entity = await GetUserByPhoneNumber(phoneNumber);
         if (entity == null)
             return UserConstants.UserNotFound;
-
-        try
-        {
-            _mockRepository.Remove(_mockRepository.First(x => x.PhoneNumber == phoneNumber));
-        }
-        catch
-        {
-            return UserConstants.DatabaseProblem;
-        }
+        
+        _mockRepository.Remove(_mockRepository.First(x => x.PhoneNumber == phoneNumber));
 
         return UserConstants.UserWasDeleted;
     }
@@ -85,16 +62,7 @@ public class MockUsersRepository : IUserRepository
 
     public async Task<string> CheckOfExist(string phoneNumber)
     {
-        CustomerDB? userEntity;
-        try
-        {
-            userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!;
-        }
-        catch
-        {
-            return UserConstants.DatabaseProblem;
-        }
-
+        var userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!;
         return userEntity == null ? UserConstants.UserNotFound : UserConstants.Ok;
     }
 
@@ -114,15 +82,8 @@ public class MockUsersRepository : IUserRepository
             RegistrationDate = user.RegistrationDate,
             AvailableMoney = user.AvailableMoney
         };
-        try
-        {
-            _mockRepository.Remove(await ConvertUserToDatabase(user));
-            _mockRepository.Add(await ConvertUserToDatabase(updatedUser));
-        }
-        catch
-        {
-            //db problems
-        }
+        _mockRepository.Remove(await ConvertUserToDatabase(user));
+        _mockRepository.Add(await ConvertUserToDatabase(updatedUser));
 
         return UserConstants.Ok;
     }
@@ -133,15 +94,9 @@ public class MockUsersRepository : IUserRepository
         if (userEntity == null)
             return UserConstants.UserNotFound;
         userEntity.AvailableMoney += money;
-        try
-        {
-            _mockRepository.Remove(_mockRepository.First(db => db.PhoneNumber == phoneNumber));
-            _mockRepository.Add(await ConvertUserToDatabase(userEntity));
-        }
-        catch
-        {
-            return UserConstants.DatabaseProblem;
-        }
+
+        _mockRepository.Remove(_mockRepository.First(db => db.PhoneNumber == phoneNumber));
+        _mockRepository.Add(await ConvertUserToDatabase(userEntity));
 
         return UserConstants.Ok;
     }

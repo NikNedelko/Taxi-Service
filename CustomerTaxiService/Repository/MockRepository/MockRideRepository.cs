@@ -1,6 +1,5 @@
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
-using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.RideData;
 using Entities.General;
 
@@ -23,46 +22,20 @@ public class MockRideRepository : IRideRepository
 
     public async Task<string> AddNewOrder(string phoneNumber, string endPoint)
     {
-        try
-        {
-            _mockRepository.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return OrdersConstants.DatabaseProblems;
-        }
-
+        _mockRepository.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
         return OrdersConstants.Ok;
     }
 
     public async Task<string> CheckRideForExistence(string phoneNumber)
     {
-        RideDb? rideEntity;
-        try
-        {
-            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
-        }
-        catch
-        {
-            return OrdersConstants.DatabaseProblems;
-        }
+        var rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
 
         return rideEntity == null ? OrdersConstants.RideNotFound : OrdersConstants.Ok;
     }
 
     private async Task<RideDb?> TakeRideDbEntity(string phoneNumber)
     {
-        RideDb rideEntity;
-        try
-        {
-            rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber)!;
-        }
-        catch
-        {
-            return null;
-        }
-
+        var rideEntity = _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber)!;
         return rideEntity;
     }
 
@@ -71,15 +44,7 @@ public class MockRideRepository : IRideRepository
         var rideEntity = await TakeRideDbEntity(phoneNumber);
         if (rideEntity == null)
             return OrdersConstants.RideNotFound;
-        try
-        {
-            _mockRepository.Remove(rideEntity);
-        }
-        catch
-        {
-            return OrdersConstants.DatabaseProblems;
-        }
-
+        _mockRepository.Remove(rideEntity);
         return OrdersConstants.Ok;
     }
 

@@ -85,7 +85,6 @@ public class OrdersLogic : IOrdersLogic
         return message switch
         {
             ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
-            OrdersConstants.DatabaseProblems => OrdersConstants.DatabaseProblemsAdditionalText,
             OrdersConstants.UserNotFound => OrdersConstants.UserNotFoundAdditionalText,
             OrdersConstants.RideNotFound => OrdersConstants.RideNotFoundAdditionalText,
             ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText 
