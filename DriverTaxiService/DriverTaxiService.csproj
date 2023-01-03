@@ -12,7 +12,8 @@
 
     <ItemGroup>
       <Folder Include="BusinessLogic" />
-      <Folder Include="Repository" />
+      <Folder Include="Constants" />
+      <Folder Include="Repository\MockRepository" />
     </ItemGroup>
 
 </Project>
