@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Entities.CustomerTaxiService.Requests;
 
 [Serializable]
-public class Registration
+public class RegistrationForUser
 {
     [Required]
     [StringLength(15)]
