@@ -17,7 +17,7 @@ public class AccountLogic : IAccountLogic
         _userRepository = userRepository;
     }
 
-    public async Task<Response> CreateAccount(Registration newUser)
+    public async Task<Response> CreateAccount(RegistrationForUser newUser)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(newUser.PhoneNumber);
         if (userWithThisNumber != null)

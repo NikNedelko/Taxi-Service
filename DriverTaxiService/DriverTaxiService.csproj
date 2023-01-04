@@ -11,9 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="BusinessLogic" />
-      <Folder Include="Constants" />
-      <Folder Include="Repository\MockRepository" />
+      <ProjectReference Include="..\Entities\Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions" />
     </ItemGroup>
 
 </Project>

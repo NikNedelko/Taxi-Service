@@ -17,7 +17,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("/CreateAccount")]
-    public async Task<Response> CreateAccount(Registration newUser)
+    public async Task<Response> CreateAccount(RegistrationForUser newUser)
     {
         return await _accountLogic.CreateAccount(newUser);
     }
