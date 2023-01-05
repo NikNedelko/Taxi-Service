@@ -1,6 +1,6 @@
 using Entities.CustomerTaxiService.Requests;
-using Entities.CustomerTaxiService.Response;
 using Entities.CustomerTaxiService.RideData;
+using Entities.General;
 
 namespace CustomerTaxiService.BusinessLogic.Interfaces;
 

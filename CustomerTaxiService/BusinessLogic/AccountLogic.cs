@@ -3,7 +3,6 @@ using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
-using Entities.CustomerTaxiService.Response;
 using Entities.General;
 
 namespace CustomerTaxiService.BusinessLogic;
