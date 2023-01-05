@@ -1,9 +1,10 @@
 using Entities.DriverApi.Driver;
+using Entities.General;
 
 namespace DriverTaxiService.BusinessLogic.Interface;
 
 public interface IAccountLogic
 {
-    public Task<string> AddNewDriver(RegistrationForDriver registrationDriver);
-    public Task<string> DeleteDriver(string phoneNumber);
+    public Task<Response> AddNewDriver(RegistrationForDriver registrationDriver);
+    public Task<Response> DeleteDriver(string phoneNumber);
 }

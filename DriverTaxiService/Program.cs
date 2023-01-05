@@ -1,3 +1,4 @@
+using DriverTaxiService.BusinessLogic;
 using DriverTaxiService.BusinessLogic.Interface;
 using DriverTaxiService.Repository.Interfaces;
 using DriverTaxiService.Repository.MockRepository;
@@ -9,8 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IAccountLogic, IAccountLogic>();
-builder.Services.AddScoped<IDriveLogic, IDriveLogic>();
+builder.Services.AddScoped<IAccountLogic, AccountLogic>();
+builder.Services.AddScoped<IDriveLogic, DriveLogic>();
 builder.Services.AddScoped<IAccountRepository, MockAccountRepository>();
 builder.Services.AddScoped<IDriveRepository, MockDriveRepository>();
 

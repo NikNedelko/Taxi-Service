@@ -1,4 +1,6 @@
+using DriverTaxiService.BusinessLogic.Interface;
 using Entities.DriverApi.Driver;
+using Entities.General;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DriverTaxiService.Controllers;
@@ -6,13 +8,22 @@ namespace DriverTaxiService.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    public async Task<string> CreateDriverAccount(RegistrationForDriver registrationDriver)
+    private readonly IAccountLogic _accountLogic;
+    
+    public AccountController(IAccountLogic accountLogic)
     {
-        return "";
+        _accountLogic = accountLogic;
     }
     
-    public async Task<string> DeleteDriverAccount(string phoneNumber)
+    [HttpPost("/CreateDriverAccount")]
+    public async Task<Response> CreateDriverAccount(RegistrationForDriver registrationDriver)
     {
-        return  "";
+        return await _accountLogic.AddNewDriver(registrationDriver);
+    }
+    
+    [HttpPost("/DeleteDriverAccount")]
+    public async Task<Response> DeleteDriverAccount(string phoneNumber)
+    {
+        return  await _accountLogic.DeleteDriver(phoneNumber);
     }
 }

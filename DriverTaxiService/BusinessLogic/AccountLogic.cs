@@ -1,17 +1,75 @@
 using DriverTaxiService.BusinessLogic.Interface;
+using DriverTaxiService.Constants;
+using DriverTaxiService.Repository.Interfaces;
 using Entities.DriverApi.Driver;
+using Entities.General;
 
 namespace DriverTaxiService.BusinessLogic;
 
 public class AccountLogic : IAccountLogic
 {
-    public async Task<string> AddNewDriver(RegistrationForDriver registrationDriver)
+    private readonly IAccountRepository _accountRepository;
+
+    public AccountLogic(IAccountRepository accountRepository)
     {
-        throw new NotImplementedException();
+        _accountRepository = accountRepository;
     }
 
-    public async Task<string> DeleteDriver(string phoneNumber)
+    public async Task<Response> AddNewDriver(RegistrationForDriver registrationDriver)
     {
-        throw new NotImplementedException();
+        var checkNumber = await CheckDriverByPhoneNumber(registrationDriver.PhoneNumber);
+        if (checkNumber == AccountConstants.DriverIsExist)
+            return await CreateResponse(AccountConstants.DriverIsExist);
+        
+        var checkLicense = await CheckDriverByLicenseNumber(registrationDriver.DriverLicenseNumber);
+        if (checkLicense == AccountConstants.Ok)
+            return await CreateResponse(AccountConstants.DriverIsExist);
+        
+        var addResult = await AddNewDriverToDatabase(registrationDriver);
+        return await CreateResponse(addResult);
+    }
+
+    public async Task<Response> DeleteDriver(string phoneNumber)
+    {
+        var checkNumber = await CheckDriverByPhoneNumber(phoneNumber);
+        if (checkNumber == AccountConstants.DriverNotExist)
+            return await CreateResponse(AccountConstants.DriverIsExist);
+        
+        return await CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
+    }
+
+    private async Task<string> AddNewDriverToDatabase(RegistrationForDriver registrationForDriver)
+    {
+        return await _accountRepository.AddNewDriver(registrationForDriver);
+    }
+
+    private async Task<string> CheckDriverByPhoneNumber(string phoneNumber)
+    {
+        var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
+        return driverEntity == null ? AccountConstants.DriverNotExist : AccountConstants.DriverIsExist;
+    }
+    
+    private async Task<string> CheckDriverByLicenseNumber(string licenseNumber)
+    {
+        var driverEntity = await _accountRepository.GetDriverByLicense(licenseNumber);
+        return driverEntity == null ? AccountConstants.DriverNotExist : AccountConstants.Ok;
+    }
+    
+    private async Task<Response> CreateResponse(string message)
+        => new Response
+        {
+            Message = message,
+            AdditionalInformation = await TakeAdditionalInfoByMessage(message) ?? ""
+        };
+
+    private async Task<string?> TakeAdditionalInfoByMessage(string message)
+    {
+        return message switch
+        {
+            AccountConstants.DriverWasAdded => AccountConstants.DriverWasAddedAdditionalInfo,
+            AccountConstants.DriverWasDeleted => AccountConstants.DriverWasDeletedAdditionalInfo
+            ,
+            _ => ""
+        };
     }
 }
