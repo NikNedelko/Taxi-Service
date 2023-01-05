@@ -1,4 +1,4 @@
-namespace Entities.CustomerTaxiService.Response;
+namespace Entities.General;
 
 [Serializable]
 public class Response
