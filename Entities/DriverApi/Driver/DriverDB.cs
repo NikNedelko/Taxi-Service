@@ -8,6 +8,7 @@ public class DriverDB
     public string PhoneNumber { get; set; }
     public string DriverLicenseNumber { get; set; }
     public string Car { get; set; }
+    public bool IsWorking { get; set; }
     public int DriveClass { get; set; }
     public int Status { get; set; }
     public int FeedBack { get; set; }
