@@ -1,6 +1,5 @@
 using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
-using Entities.CustomerTaxiService.RideData;
 using Entities.DriverApi;
 using Entities.DriverApi.Driver;
 using Entities.General;

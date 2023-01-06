@@ -1,8 +1,6 @@
-using System.Runtime.CompilerServices;
 using DriverTaxiService.BusinessLogic.Interface;
 using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
-using Entities.DriverApi.Driver;
 using Entities.General;
 
 namespace DriverTaxiService.BusinessLogic;

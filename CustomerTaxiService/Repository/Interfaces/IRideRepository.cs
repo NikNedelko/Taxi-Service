@@ -1,5 +1,5 @@
 using Entities.CustomerTaxiService.CustomerData;
-using Entities.CustomerTaxiService.RideData;
+using Entities.General.RideData;
 
 namespace CustomerTaxiService.Repository.Interfaces;
 

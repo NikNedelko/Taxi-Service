@@ -1,7 +1,7 @@
 using CustomerTaxiService.Constants;
 using CustomerTaxiService.Repository.Interfaces;
-using Entities.CustomerTaxiService.RideData;
 using Entities.General;
+using Entities.General.RideData;
 
 namespace CustomerTaxiService.Repository.MockRepository;
 

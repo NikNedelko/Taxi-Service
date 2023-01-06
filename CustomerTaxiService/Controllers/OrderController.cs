@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.Requests;
-using Entities.CustomerTaxiService.RideData;
 using Entities.General;
+using Entities.General.RideData;
 
 namespace CustomerTaxiService.Controllers;
 
