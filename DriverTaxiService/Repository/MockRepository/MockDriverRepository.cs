@@ -1,26 +1,52 @@
+using System.Runtime.CompilerServices;
+using CustomerTaxiService.Repository.Interfaces;
+using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
+using Entities.General.RideData;
 
 namespace DriverTaxiService.Repository.MockRepository;
 
 public class MockDriveRepository : IDriveRepository
 {
-    public Task<string> StartWork(string phoneNumber)
+    private readonly IRideRepository _rideRepository;
+    private readonly IAccountRepository _accountRepository;
+
+    public MockDriveRepository(IRideRepository rideRepository, IAccountRepository accountRepository)
     {
-        throw new NotImplementedException();
+        _rideRepository = rideRepository;
+        _accountRepository = accountRepository;
     }
 
-    public Task<string> EndWork(string phoneNumber)
+    public async Task<string> StartWork(string phoneNumber)
     {
-        throw new NotImplementedException();
+        var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
+        if (riderEntity == null)
+            return AccountConstants.DriverNotExist;
+        riderEntity.IsWorking = true;
+        return await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
     }
 
-    public Task<string> GetAllAvailableOrders(string phoneNumber)
+    public async Task<string> EndWork(string phoneNumber)
     {
-        throw new NotImplementedException();
+        var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
+        if (riderEntity == null)
+            return AccountConstants.DriverNotExist;
+        riderEntity.IsWorking = false;
+        return await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
     }
 
-    public Task<string> TakeOrderById(string phoneNumber)
+    public async Task<List<RideDb>> GetAllAvailableOrders(string phoneNumber)
     {
-        throw new NotImplementedException();
+        return await _rideRepository.GetAllRides();
+    }
+
+    public async Task<string> TakeOrderById(int rideId, string phoneNumber)
+    {
+        return await _rideRepository.TakeRideById(rideId, phoneNumber);
+    }
+
+    public async Task<string> EndOrder(string phoneNumber)
+    {
+        return await _rideRepository.EndRide(phoneNumber);
     }
 }

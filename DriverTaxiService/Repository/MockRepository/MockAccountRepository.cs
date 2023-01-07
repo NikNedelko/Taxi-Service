@@ -41,23 +41,28 @@ public class MockAccountRepository : IAccountRepository
             RegistrationDate = DateTime.Now,
             Balance = 0
         };
-        _mockRepository.Add( await ConvertToDatabase(newDriver));
+        _mockRepository.Add(await ConvertToDatabase(newDriver));
         return AccountConstants.DriverWasAdded;
     }
 
-    public Task<Driver?> GetDriverByNumber(string phoneNumber)
+    public async Task<Driver?> GetDriverByNumber(string phoneNumber)
     {
-        throw new NotImplementedException();
+        var entity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
+        return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public Task<Driver?> GetDriverByLicense(string licenseNumber)
+    public async Task<Driver?> GetDriverByLicense(string licenseNumber)
     {
-        throw new NotImplementedException();
+        var entity = _mockRepository.FirstOrDefault(x => x.DriverLicenseNumber == licenseNumber);
+        return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public Task<string> UpdateDriver()
+    public async Task<string> UpdateDriver(Driver newDriver, string phoneNumber)
     {
-        throw new NotImplementedException();
+        var oldEntity = await GetDriverByNumber(phoneNumber);
+        _ = await DeleteDriver(oldEntity.PhoneNumber);
+        _mockRepository.Add(await ConvertToDatabase(newDriver));
+        return AccountConstants.Ok;
     }
 
     public async Task<string> DeleteDriver(string phoneNumber)
@@ -67,18 +72,18 @@ public class MockAccountRepository : IAccountRepository
         return AccountConstants.DriverWasAdded;
     }
 
-    public Task<List<DriverDB>> GetAllDrivers()
+    public async Task<List<DriverDB>> GetAllDrivers()
     {
-        throw new NotImplementedException();
+        return _mockRepository;
     }
 
     private async Task<DriveClass> TakeDriveClassByCar(string carName)
     {
         return carName switch
         {
-            nameof(CarTypes.Ford)=> DriveClass.Economic,
-            nameof(CarTypes.Toyota)=> DriveClass.Medium,
-            nameof(CarTypes.Mercedes)=> DriveClass.Premium,
+            nameof(CarTypes.Ford) => DriveClass.Economic,
+            nameof(CarTypes.Toyota) => DriveClass.Medium,
+            nameof(CarTypes.Mercedes) => DriveClass.Premium,
 
             _ => throw new ArgumentOutOfRangeException(nameof(carName), carName, "Unsupported car")
         };
@@ -86,7 +91,7 @@ public class MockAccountRepository : IAccountRepository
 
     private async Task<DriverDB> ConvertToDatabase(Driver driver)
     {
-        return  new DriverDB
+        return new DriverDB
         {
             Name = driver.Name,
             LastName = driver.LastName,
@@ -101,10 +106,10 @@ public class MockAccountRepository : IAccountRepository
             Balance = driver.Balance
         };
     }
-    
-    private async Task<DriverDB> ConvertFromDatabase(DriverDB driverDb)
+
+    private async Task<Driver> ConvertFromDatabase(DriverDB driverDb)
     {
-        return  new DriverDB
+        return new Driver
         {
             Name = driverDb.Name,
             LastName = driverDb.LastName,
@@ -112,9 +117,9 @@ public class MockAccountRepository : IAccountRepository
             DriverLicenseNumber = driverDb.DriverLicenseNumber,
             Car = driverDb.Car,
             IsWorking = driverDb.IsWorking,
-            DriveClass = driverDb.DriveClass,
-            Status = driverDb.Status,
-            FeedBack = driverDb.FeedBack,
+            DriveClass = (DriveClass)driverDb.DriveClass,
+            Status = (AccountStatus)driverDb.Status,
+            FeedBack = (FeedBack)driverDb.FeedBack,
             RegistrationDate = driverDb.RegistrationDate,
             Balance = driverDb.Balance
         };
