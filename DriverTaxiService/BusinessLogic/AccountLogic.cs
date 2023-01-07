@@ -38,6 +38,11 @@ public class AccountLogic : IAccountLogic
         return await CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
     }
 
+    public async Task<List<DriverDB>> GetAllDrivers()
+    {
+        return await _accountRepository.GetAllDrivers();
+    }
+
     private async Task<string> AddNewDriverToDatabase(RegistrationForDriver registrationForDriver)
     {
         return await _accountRepository.AddNewDriver(registrationForDriver);

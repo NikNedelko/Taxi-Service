@@ -7,4 +7,5 @@ public interface IAccountLogic
 {
     public Task<Response> AddNewDriver(RegistrationForDriver registrationDriver);
     public Task<Response> DeleteDriver(string phoneNumber);
+    public Task<List<DriverDB>> GetAllDrivers();
 }

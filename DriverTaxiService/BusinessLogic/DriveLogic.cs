@@ -2,6 +2,7 @@ using DriverTaxiService.BusinessLogic.Interface;
 using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
 using Entities.General;
+using Entities.General.RideData;
 
 namespace DriverTaxiService.BusinessLogic;
 
@@ -34,14 +35,19 @@ public class DriveLogic : IDriveLogic
         throw new NotImplementedException();
     }
 
-    public async Task<Response> GetAllAvailableOrders(string phoneNumber)
+    public async Task<List<RideDb>> GetAllAvailableOrders(string phoneNumber)
     {
-        throw new NotImplementedException();
+       return await _driveRepository.GetAllAvailableOrders(phoneNumber);
     }
 
-    public async Task<Response> TakeOrderById(string phoneNumber)
+    public async Task<Response> TakeOrderById(int rideId,string phoneNumber)
     {
-        throw new NotImplementedException();
+        return await CreateResponse(await _driveRepository.TakeOrderById(rideId, phoneNumber));
+    }
+
+    public async Task<Response> EndOrder(string phoneNumber)
+    {
+        return await CreateResponse(await _driveRepository.EndOrder(phoneNumber));
     }
 
     private async Task<string> CheckDriverForExistence(string phoneNumber)

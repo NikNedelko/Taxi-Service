@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace DriverTaxiService.Controllers;
 
 [ApiController]
-public class AccountController : ControllerBase
+public class DriverAccountController : ControllerBase
 {
     private readonly IAccountLogic _accountLogic;
     
-    public AccountController(IAccountLogic accountLogic)
+    public DriverAccountController(IAccountLogic accountLogic)
     {
         _accountLogic = accountLogic;
     }
@@ -25,5 +25,11 @@ public class AccountController : ControllerBase
     public async Task<Response> DeleteDriverAccount(string phoneNumber)
     {
         return  await _accountLogic.DeleteDriver(phoneNumber);
+    }
+    
+    [HttpPost("/GetAllDrivers")]
+    public async Task<List<DriverDB>> GetAllDrivers()
+    {
+        return await _accountLogic.GetAllDrivers();
     }
 }

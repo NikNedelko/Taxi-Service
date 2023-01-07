@@ -1,5 +1,6 @@
 using DriverTaxiService.BusinessLogic.Interface;
 using Entities.General;
+using Entities.General.RideData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DriverTaxiService.Controllers;
@@ -13,29 +14,37 @@ public class DriveController : ControllerBase
     {
         _driveLogic = driveLogic;
     }
-
+    
+    [HttpPost("/StartWork")]
     public async Task<Response> StartWork(string phoneNumber)
     {
         return await _driveLogic.StartWork(phoneNumber);
     }
     
+    [HttpPost("/EndWork")]
+
     public async Task<Response> EndWork(string phoneNumber)
     {
         return await _driveLogic.EndWork(phoneNumber);
     }
     
-    public async Task<Response> GetAllAvailableRequests(string phoneNumber)
+    [HttpPost("/GetAllAvailableRequests")]
+
+    public async Task<List<RideDb>> GetAllAvailableRequests(string phoneNumber)
     {
-        return await _driveLogic.StartWork(phoneNumber);
+        return await _driveLogic.GetAllAvailableOrders(phoneNumber);
     }
     
-    public async Task<Response> TakeOrderById(string id)
+    [HttpPost("/TakeOrderById")]
+
+    public async Task<Response> TakeOrderById(int rideId, string phoneNumber)
     {
-        
+        return await _driveLogic.TakeOrderById(rideId,phoneNumber);
     }
     
+    [HttpPost("/EndOrder")]
     public async Task<Response> EndOrder(string phoneNumber)
     {
-
+        return await _driveLogic.EndOrder(phoneNumber);
     }
 }
