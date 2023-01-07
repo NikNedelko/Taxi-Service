@@ -27,9 +27,9 @@ public class MockUsersRepository : IUserRepository
         var checkResult = await CheckOfExist(customer.PhoneNumber);
         if (checkResult != UserConstants.UserNotFound)
             return checkResult;
-        
+
         _mockRepository.Add(await ConvertUserToDatabase(customer));
-        
+
         return UserConstants.Ok;
     }
 
@@ -44,7 +44,7 @@ public class MockUsersRepository : IUserRepository
         var entity = await GetUserByPhoneNumber(phoneNumber);
         if (entity == null)
             return UserConstants.UserNotFound;
-        
+
         _mockRepository.Remove(_mockRepository.First(x => x.PhoneNumber == phoneNumber));
 
         return UserConstants.UserWasDeleted;
@@ -83,6 +83,7 @@ public class MockUsersRepository : IUserRepository
             AvailableMoney = user.AvailableMoney
         };
         _mockRepository.Remove(await ConvertUserToDatabase(user));
+
         _mockRepository.Add(await ConvertUserToDatabase(updatedUser));
 
         return UserConstants.Ok;

@@ -12,7 +12,10 @@ public class MockRideRepository : IRideRepository
         new RideDb
         {
             Id = 1,
+            DriverPhoneNumber = "1234",
             CustomerPhoneNumber = "1234",
+            IsTaken = false,
+            IsEnd = false,
             EndPointOfRide = "Heaven",
             RideDate = DateTime.Today,
             DriverFeedBack = (int)FeedBack.Normal,
@@ -59,6 +62,29 @@ public class MockRideRepository : IRideRepository
     public async Task<List<RideDb>> GetAllRides()
     {
         return _mockRepository;
+    }
+
+    public async Task<string> TakeRideById(int rideId, string phoneNumber)
+    {
+        var rideEntity =  _mockRepository.FirstOrDefault(x=>x.Id == rideId);
+        rideEntity.IsTaken = true;
+        rideEntity.IsEnd = true;
+        rideEntity.DriverPhoneNumber = phoneNumber;
+        rideEntity.StartTime = DateTime.Now;
+        _mockRepository.Remove(
+            _mockRepository.FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber)!);
+        _mockRepository.Add(rideEntity);
+        return "Ok";
+    }
+
+    public async Task<string> EndRide(string phoneNumber)
+    {
+        var rideEntity = _mockRepository.FirstOrDefault(x=>x.DriverPhoneNumber == phoneNumber);
+        rideEntity.EndTime = DateTime.Now;
+        rideEntity.IsEnd = true;
+        _mockRepository.Remove(_mockRepository.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber)!);
+        _mockRepository.Add(rideEntity);
+        return "Ok";
     }
 
     private async Task<RideDb> CreateRideEntityForDb(string phoneNumber, string endPoint)
