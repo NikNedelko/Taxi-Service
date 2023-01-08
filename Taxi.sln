@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverTaxiService", "DriverTaxiService\DriverTaxiService.csproj", "{C0B76F51-229A-4325-A3E8-A97A4CA7944C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{030562DF-F338-4A70-A499-E72F2C027290}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{C0B76F51-229A-4325-A3E8-A97A4CA7944C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B76F51-229A-4325-A3E8-A97A4CA7944C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B76F51-229A-4325-A3E8-A97A4CA7944C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{030562DF-F338-4A70-A499-E72F2C027290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{030562DF-F338-4A70-A499-E72F2C027290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{030562DF-F338-4A70-A499-E72F2C027290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{030562DF-F338-4A70-A499-E72F2C027290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
