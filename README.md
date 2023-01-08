@@ -4,10 +4,8 @@
 - Develop a simple taxi service
 ## Structure
 - Service for customers
-###### API for order / cancel / info operation 
-- Service for drivers (Soon)
-- Database (Soon)
+- Service for drivers 
+- Database
 - Entities
-- ....
 ## Stack
 - C# 6
