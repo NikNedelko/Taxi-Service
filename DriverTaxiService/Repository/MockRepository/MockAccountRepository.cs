@@ -18,6 +18,7 @@ public class MockAccountRepository : IAccountRepository
             PhoneNumber = "12345",
             DriverLicenseNumber = "EU12345",
             Car = "Ford",
+            IsWorking = false,
             DriveClass = 1,
             Status = 2,
             FeedBack = 0,
@@ -67,9 +68,8 @@ public class MockAccountRepository : IAccountRepository
 
     public async Task<string> DeleteDriver(string phoneNumber)
     {
-        var driverEntity = await GetDriverByNumber(phoneNumber);
         _mockRepository.Remove(_mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!);
-        return AccountConstants.DriverWasAdded;
+        return AccountConstants.DriverWasDeleted;
     }
 
     public async Task<List<DriverDB>> GetAllDrivers()
@@ -93,12 +93,13 @@ public class MockAccountRepository : IAccountRepository
     {
         return new DriverDB
         {
+            Id = new Random().Next(1,99),
             Name = driver.Name,
             LastName = driver.LastName,
             PhoneNumber = driver.PhoneNumber,
             DriverLicenseNumber = driver.DriverLicenseNumber,
             Car = driver.Car,
-            IsWorking = false,
+            IsWorking = driver.IsWorking,
             DriveClass = (int)driver.DriveClass,
             Status = (int)driver.Status,
             FeedBack = (int)driver.FeedBack,
@@ -111,6 +112,7 @@ public class MockAccountRepository : IAccountRepository
     {
         return new Driver
         {
+            
             Name = driverDb.Name,
             LastName = driverDb.LastName,
             PhoneNumber = driverDb.PhoneNumber,

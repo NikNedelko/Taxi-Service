@@ -1,5 +1,4 @@
-using System.Runtime.CompilerServices;
-using CustomerTaxiService.Repository.Interfaces;
+using Database.MockDatabase;
 using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
 using Entities.General.RideData;
@@ -8,20 +7,16 @@ namespace DriverTaxiService.Repository.MockRepository;
 
 public class MockDriveRepository : IDriveRepository
 {
-    private readonly IRideRepository _rideRepository;
     private readonly IAccountRepository _accountRepository;
 
-    public MockDriveRepository(IRideRepository rideRepository, IAccountRepository accountRepository)
+    public MockDriveRepository(IAccountRepository accountRepository)
     {
-        _rideRepository = rideRepository;
         _accountRepository = accountRepository;
     }
 
     public async Task<string> StartWork(string phoneNumber)
     {
         var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
-        if (riderEntity == null)
-            return AccountConstants.DriverNotExist;
         riderEntity.IsWorking = true;
         return await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
     }
@@ -29,24 +24,38 @@ public class MockDriveRepository : IDriveRepository
     public async Task<string> EndWork(string phoneNumber)
     {
         var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
-        if (riderEntity == null)
-            return AccountConstants.DriverNotExist;
         riderEntity.IsWorking = false;
         return await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
     }
 
     public async Task<List<RideDb>> GetAllAvailableOrders(string phoneNumber)
     {
-        return await _rideRepository.GetAllRides();
+        return MockRideDatabase.RideList;
     }
 
     public async Task<string> TakeOrderById(int rideId, string phoneNumber)
     {
-        return await _rideRepository.TakeRideById(rideId, phoneNumber);
+        var rideEntity = MockRideDatabase.RideList.FirstOrDefault(x => x.Id == rideId);
+        rideEntity.IsTaken = true;
+        rideEntity.DriverPhoneNumber = phoneNumber;
+        rideEntity.StartTime = DateTime.Now;
+        MockRideDatabase.RideList
+            .Remove(MockRideDatabase.RideList
+                .FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber)!);
+        MockRideDatabase.RideList.Add(rideEntity);
+        return "Ok";
     }
 
     public async Task<string> EndOrder(string phoneNumber)
     {
-        return await _rideRepository.EndRide(phoneNumber);
+        var rideEntity = MockRideDatabase.RideList
+            .FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
+        rideEntity.EndTime = DateTime.Now;
+        rideEntity.IsEnd = true;
+        MockRideDatabase.RideList
+            .Remove(MockRideDatabase.RideList
+                .FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber)!);
+        MockRideDatabase.RideList.Add(rideEntity);
+        return "Ok";
     }
 }
