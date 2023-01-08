@@ -10,6 +10,4 @@ public interface IRideRepository
     public Task<string> CancelOrder(string phoneNumber);
     public Task<Ride?> GetRideInfo(string phoneNumber);
     public Task<List<RideDb>> GetAllRides();
-    public Task<string> TakeRideById(int rideId, string phoneNumber);
-    public Task<string> EndRide(string phoneNumber);
 }
