@@ -32,7 +32,7 @@ public class AccountLogic : IAccountLogic
     public async Task<Response> DeleteDriver(string phoneNumber)
     {
         var checkNumber = await CheckDriverByPhoneNumber(phoneNumber);
-        if (checkNumber == AccountConstants.DriverNotExist)
+        if (checkNumber == AccountConstants.DriverIsNotExist)
             return await CreateResponse(AccountConstants.DriverIsExist);
         
         return await CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
@@ -51,13 +51,13 @@ public class AccountLogic : IAccountLogic
     private async Task<string> CheckDriverByPhoneNumber(string phoneNumber)
     {
         var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
-        return driverEntity == null ? AccountConstants.DriverNotExist : AccountConstants.DriverIsExist;
+        return driverEntity == null ? AccountConstants.DriverIsNotExist : AccountConstants.DriverIsExist;
     }
     
     private async Task<string> CheckDriverByLicenseNumber(string licenseNumber)
     {
         var driverEntity = await _accountRepository.GetDriverByLicense(licenseNumber);
-        return driverEntity == null ? AccountConstants.DriverNotExist : AccountConstants.Ok;
+        return driverEntity == null ? AccountConstants.DriverIsNotExist : AccountConstants.Ok;
     }
     
     private async Task<Response> CreateResponse(string message)
@@ -71,7 +71,9 @@ public class AccountLogic : IAccountLogic
     {
         return message switch
         {
+            AccountConstants.DriverIsExist => AccountConstants.DriverIsExistAdditionalInfo,
             AccountConstants.DriverWasAdded => AccountConstants.DriverWasAddedAdditionalInfo,
+            AccountConstants.DriverIsNotExist => AccountConstants.DriverIsNotExistAdditionalInfo,
             AccountConstants.DriverWasDeleted => AccountConstants.DriverWasDeletedAdditionalInfo
             ,
             _ => ""

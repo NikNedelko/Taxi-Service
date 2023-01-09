@@ -20,8 +20,8 @@ public class DriveLogic : IDriveLogic
     public async Task<Response> StartWork(string phoneNumber)
     {
         var checkExistence = await CheckDriverForExistence(phoneNumber);
-        if (checkExistence == AccountConstants.DriverNotExist)
-            return await CreateResponse(AccountConstants.DriverNotExist);
+        if (checkExistence == AccountConstants.DriverIsNotExist)
+            return await CreateResponse(AccountConstants.DriverIsNotExist);
 
         var checkDriverIsWorkingNow = await CheckIsDriverWorkNow(phoneNumber);
         if (checkDriverIsWorkingNow == AccountConstants.DriverIsAlreadyWorking)
@@ -33,25 +33,25 @@ public class DriveLogic : IDriveLogic
     public async Task<Response> EndWork(string phoneNumber)
     {
         var checkExistence = await CheckDriverForExistence(phoneNumber);
-        if (checkExistence == AccountConstants.DriverNotExist)
-            return await CreateResponse(AccountConstants.DriverNotExist);
+        if (checkExistence == AccountConstants.DriverIsNotExist)
+            return await CreateResponse(AccountConstants.DriverIsNotExist);
 
         if (await CheckIsDriverWorkNow(phoneNumber) == AccountConstants.DriverIsNotWorking)
             return await CreateResponse("Driver is already not working");
 
         var allRides = await GetAllAvailableOrders(phoneNumber);
-        var ride = allRides.FirstOrDefault(x=>x.DriverPhoneNumber == phoneNumber);
+        var ride = allRides.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
         if (ride != null)
-            if(!ride.IsEnd)
+            if (!ride.IsEnd)
                 return await CreateResponse("You can not delete account while you in a ride");
-        
+
         return await CreateResponse(await _driveRepository.EndWork(phoneNumber));
     }
 
     private async Task<string> CheckDriverForExistence(string phoneNumber)
     {
         var entity = await _accountRepository.GetDriverByNumber(phoneNumber);
-        return entity == null ? AccountConstants.DriverNotExist : AccountConstants.DriverIsExist;
+        return entity == null ? AccountConstants.DriverIsNotExist : AccountConstants.DriverIsExist;
     }
 
     private async Task<string> CheckIsDriverWorkNow(string phoneNumber)
@@ -69,7 +69,7 @@ public class DriveLogic : IDriveLogic
     {
         var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
         if (driverEntity == null)
-            return await CreateResponse(AccountConstants.DriverNotExist);
+            return await CreateResponse(AccountConstants.DriverIsNotExist);
 
         if (!driverEntity.IsWorking)
             return await CreateResponse("Driver is not working");

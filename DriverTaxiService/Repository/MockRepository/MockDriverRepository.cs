@@ -1,5 +1,5 @@
 using Database.MockDatabase;
-using DriverTaxiService.Constants;
+using DriverTaxiService.Constants.DriverConstants;
 using DriverTaxiService.Repository.Interfaces;
 using Entities.General.RideData;
 
@@ -43,7 +43,7 @@ public class MockDriveRepository : IDriveRepository
             .Remove(MockRideDatabase.RideList
                 .FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber)!);
         MockRideDatabase.RideList.Add(rideEntity);
-        return "Ok";
+        return DriverConstants.Ok;
     }
 
     public async Task<string> EndOrder(string phoneNumber)
@@ -56,6 +56,6 @@ public class MockDriveRepository : IDriveRepository
             .Remove(MockRideDatabase.RideList
                 .FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber)!);
         MockRideDatabase.RideList.Add(rideEntity);
-        return "Ok";
+        return DriverConstants.Ok;
     }
 }
