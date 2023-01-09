@@ -10,10 +10,12 @@ namespace CustomerTaxiService.BusinessLogic;
 public class AccountLogic : IAccountLogic
 {
     private readonly IUserRepository _userRepository;
+    private readonly IRideRepository _rideRepository;
 
-    public AccountLogic(IUserRepository userRepository)
+    public AccountLogic(IUserRepository userRepository, IRideRepository rideRepository)
     {
         _userRepository = userRepository;
+        _rideRepository = rideRepository;
     }
 
     public async Task<Response> CreateAccount(RegistrationForUser newUser)
@@ -38,6 +40,10 @@ public class AccountLogic : IAccountLogic
 
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
+        var checkIfInRideResult = await CheckIfUserInRide(phoneNumber);
+        if (checkIfInRideResult != UserConstants.Ok)
+            return await CreateResponse(checkIfInRideResult);
+        
         return await CreateResponse(await _userRepository.RemoveUser(phoneNumber));
     }
 
@@ -64,6 +70,15 @@ public class AccountLogic : IAccountLogic
         return await CreateResponse(UserConstants.MoneyWasAdded);
     }
 
+    private async Task<string> CheckIfUserInRide(string phoneNumber)
+    {
+        var allRides = await _rideRepository.GetAllRides();
+        var rideWithThisNumber = allRides
+            .FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber
+                                 && x is { IsTaken: true, IsEnd: false });
+        return rideWithThisNumber == null ? UserConstants.UserIsInRide : UserConstants.Ok;
+    }
+
     public async Task<List<CustomerDB>> GetAllUsers()
     {
         return await _userRepository.GetAllUsers();
@@ -83,6 +98,7 @@ public class AccountLogic : IAccountLogic
             UserConstants.UserWasCreated => UserConstants.SuccessfulCreate,
             UserConstants.UserWasDeleted => UserConstants.UserWasUpdatedAdditionalText,
             UserConstants.MoneyWasAdded =>"",
+            UserConstants.UserIsInRide => UserConstants.UserIsInRideAdditionalText,
             _ => ""
         };
     }

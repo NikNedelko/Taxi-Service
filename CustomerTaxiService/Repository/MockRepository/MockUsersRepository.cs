@@ -62,7 +62,7 @@ public class MockUsersRepository : IUserRepository
 
     public async Task<string> CheckOfExist(string phoneNumber)
     {
-        var userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!;
+        var userEntity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
         return userEntity == null ? UserConstants.UserNotFound : UserConstants.Ok;
     }
 
