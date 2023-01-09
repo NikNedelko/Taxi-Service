@@ -16,5 +16,8 @@ public static class UserConstants
     public const string UserWasCreated = "User was successfuly created";
     public const string UserWasUpdated = "User was successfuly updated";
     
+    public const string UserIsInRide = "This account in ride now";
+    public const string UserIsInRideAdditionalText = "You can't delete your account while you in ride";
+
     public const string UserWasUpdatedAdditionalText = "We hope to see you again!";
 }
