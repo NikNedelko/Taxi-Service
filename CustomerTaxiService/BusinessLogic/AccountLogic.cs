@@ -76,7 +76,7 @@ public class AccountLogic : IAccountLogic
         var rideWithThisNumber = allRides
             .FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber
                                  && x is { IsTaken: true, IsEnd: false });
-        return rideWithThisNumber == null ? UserConstants.UserIsInRide : UserConstants.Ok;
+        return rideWithThisNumber == null ? UserConstants.Ok : UserConstants.UserIsInRide;
     }
 
     public async Task<List<CustomerDB>> GetAllUsers()

@@ -26,6 +26,10 @@ public class OrdersLogic : IOrdersLogic
         if (checkCustomerResult != OrdersConstants.Ok)
             return await CreateResponse(checkCustomerResult);
 
+        var checkIfUserAlreadyHaveARide = await CheckIsAlreadyHaveAOrder(order.PhoneNumber);
+        if (checkIfUserAlreadyHaveARide == OrdersConstants.UserIsAlreadyHaveAOrder)
+            return await CreateResponse(OrdersConstants.UserIsAlreadyHaveAOrder);
+        
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
             return await CreateResponse(ResponseConstants.ProblemWithUsersEntity);
@@ -41,7 +45,7 @@ public class OrdersLogic : IOrdersLogic
     {
         return await _rideRepository.AddNewOrder(customer.PhoneNumber, order.RideEndPoint);
     }
-    
+
     public async Task<Response> CancelOrder(string phoneNumber)
     {
         var checkResult = await _rideRepository.CheckRideForExistence(phoneNumber);
@@ -60,6 +64,16 @@ public class OrdersLogic : IOrdersLogic
     public async Task<List<RideDb>> GetAllRides()
     {
         return await _rideRepository.GetAllRides();
+    }
+
+    private async Task<string> CheckIsAlreadyHaveAOrder(string phoneNumber)
+    {
+        var allRides = await _rideRepository.GetAllRides();
+        var rideEntity = allRides
+            .FirstOrDefault(ride => ride.CustomerPhoneNumber == phoneNumber
+                                    && ride.IsEnd != true);
+        
+        return rideEntity == null ? OrdersConstants.RideNotFound  : OrdersConstants.UserIsAlreadyHaveAOrder;
     }
 
     private async Task<Customer?> GetUserByNumber(string number)
@@ -87,7 +101,8 @@ public class OrdersLogic : IOrdersLogic
             ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
             OrdersConstants.UserNotFound => OrdersConstants.UserNotFoundAdditionalText,
             OrdersConstants.RideNotFound => OrdersConstants.RideNotFoundAdditionalText,
-            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText 
+            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText,
+            OrdersConstants.UserIsAlreadyHaveAOrder => OrdersConstants.UserIsAlreadyHaveAOrderAdditionalText
             ,
             _ => "Something went wrong"
         };
