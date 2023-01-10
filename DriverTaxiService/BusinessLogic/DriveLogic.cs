@@ -1,5 +1,6 @@
 using DriverTaxiService.BusinessLogic.Interface;
 using DriverTaxiService.Constants;
+using DriverTaxiService.Constants.DriverConstants;
 using DriverTaxiService.Repository.Interfaces;
 using Entities.General;
 using Entities.General.RideData;
@@ -37,13 +38,13 @@ public class DriveLogic : IDriveLogic
             return await CreateResponse(AccountConstants.DriverIsNotExist);
 
         if (await CheckIsDriverWorkNow(phoneNumber) == AccountConstants.DriverIsNotWorking)
-            return await CreateResponse("Driver is already not working");
+            return await CreateResponse(DriverConstants.DriverIsNotWorking);
 
         var allRides = await GetAllAvailableOrders(phoneNumber);
         var ride = allRides.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
         if (ride != null)
             if (!ride.IsEnd)
-                return await CreateResponse("You can not delete account while you in a ride");
+                return await CreateResponse(DriverConstants.CanNotDeleteWhileInRide);
 
         return await CreateResponse(await _driveRepository.EndWork(phoneNumber));
     }
@@ -72,15 +73,15 @@ public class DriveLogic : IDriveLogic
             return await CreateResponse(AccountConstants.DriverIsNotExist);
 
         if (!driverEntity.IsWorking)
-            return await CreateResponse("Driver is not working");
+            return await CreateResponse(DriverConstants.DriverIsNotWorking);
 
         var rideEntities = await GetAllAvailableOrders(phoneNumber);
         var rideEntity = rideEntities.FirstOrDefault(x => x.Id == rideId);
         if (rideEntity == null)
-            return await CreateResponse("Order with this id is not exist");
+            return await CreateResponse(DriverConstants.OrderByIdIsNotExist);
 
         if (rideEntity.IsTaken)
-            return await CreateResponse("Is already taken");
+            return await CreateResponse(DriverConstants.OrderIsAlreadyTaken);
 
         return await CreateResponse(await _driveRepository.TakeOrderById(rideId, phoneNumber));
     }
@@ -91,7 +92,7 @@ public class DriveLogic : IDriveLogic
         var rideEntity = rideEntities.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
 
         if (rideEntity == null)
-            return await CreateResponse("Order with this id is not exist");
+            return await CreateResponse(DriverConstants.OrderByNumberIsNotExist);
 
         return await CreateResponse(await _driveRepository.EndOrder(phoneNumber));
     }
@@ -107,6 +108,9 @@ public class DriveLogic : IDriveLogic
     {
         return message switch
         {
+            DriverConstants.OrderByIdIsNotExist => DriverConstants.OrderByIdIsNotExistAdditionalText,
+            DriverConstants.OrderByNumberIsNotExist => DriverConstants.OrderByNumberIsNotExistAdditionalText
+            ,
             _ => ""
         };
     }
