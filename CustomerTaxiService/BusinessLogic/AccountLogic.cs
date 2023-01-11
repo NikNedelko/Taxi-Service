@@ -1,5 +1,6 @@
 using CustomerTaxiService.BusinessLogic.Interfaces;
 using CustomerTaxiService.Constants;
+using CustomerTaxiService.Constants.Account;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
