@@ -1,9 +1,11 @@
-﻿using Entities.General;
+﻿using Entities.CustomerTaxiService.CustomerData;
+using Entities.DriverApi.Driver;
+using Entities.General;
 using Entities.General.RideData;
 
 namespace Database.MockDatabase;
 
-public static class MockRideDatabase
+public static class MockDatabases
 {
     public static List<RideDb> RideList = new()
     {
@@ -18,6 +20,40 @@ public static class MockRideDatabase
             RideDate = DateTime.Today,
             DriverFeedBack = (int)FeedBack.Normal,
             CustomerFeedBack = (int)FeedBack.Normal
+        }
+    };
+    
+    public static List<CustomerDB> CustomerList = new()
+    {
+        new CustomerDB
+        {
+            Id = 1,
+            Name = "Name",
+            LastName = "LastName",
+            PhoneNumber = "12345",
+            FeedBack = (int)FeedBack.Good,
+            Status = 1,
+            RegistrationDate = DateTime.Now,
+            AvailableMoney = 100
+        }
+    };
+    
+    public static List<DriverDB> DriverList = new()
+    {
+        new DriverDB
+        {
+            Id = 0,
+            Name = "Jacob",
+            LastName = "Sally",
+            PhoneNumber = "12345",
+            DriverLicenseNumber = "EU12345",
+            Car = "Ford",
+            IsWorking = false,
+            DriveClass = 1,
+            Status = 2,
+            FeedBack = 0,
+            RegistrationDate = DateTime.Now,
+            Balance = 1000
         }
     };
 }
