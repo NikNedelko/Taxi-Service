@@ -1,3 +1,4 @@
+using Database.MockDatabase;
 using DriverTaxiService.Constants;
 using DriverTaxiService.Repository.Interfaces;
 using Entities.DriverApi;
@@ -8,25 +9,6 @@ namespace DriverTaxiService.Repository.MockRepository;
 
 public class MockAccountRepository : IAccountRepository
 {
-    private static List<DriverDB> _mockRepository = new()
-    {
-        new DriverDB
-        {
-            Id = 0,
-            Name = "Jacob",
-            LastName = "Sally",
-            PhoneNumber = "12345",
-            DriverLicenseNumber = "EU12345",
-            Car = "Ford",
-            IsWorking = false,
-            DriveClass = 1,
-            Status = 2,
-            FeedBack = 0,
-            RegistrationDate = DateTime.Now,
-            Balance = 1000
-        }
-    };
-
     public async Task<string> AddNewDriver(RegistrationForDriver registrationForDriver)
     {
         var newDriver = new Driver
@@ -42,19 +24,19 @@ public class MockAccountRepository : IAccountRepository
             RegistrationDate = DateTime.Now,
             Balance = 0
         };
-        _mockRepository.Add(await ConvertToDatabase(newDriver));
+        MockDatabases.DriverList.Add(await ConvertToDatabase(newDriver));
         return AccountConstants.DriverWasAdded;
     }
 
     public async Task<Driver?> GetDriverByNumber(string phoneNumber)
     {
-        var entity = _mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
+        var entity = MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
     public async Task<Driver?> GetDriverByLicense(string licenseNumber)
     {
-        var entity = _mockRepository.FirstOrDefault(x => x.DriverLicenseNumber == licenseNumber);
+        var entity = MockDatabases.DriverList.FirstOrDefault(x => x.DriverLicenseNumber == licenseNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
@@ -62,19 +44,19 @@ public class MockAccountRepository : IAccountRepository
     {
         var oldEntity = await GetDriverByNumber(phoneNumber);
         _ = await DeleteDriver(oldEntity.PhoneNumber);
-        _mockRepository.Add(await ConvertToDatabase(newDriver));
+        MockDatabases.DriverList.Add(await ConvertToDatabase(newDriver));
         return AccountConstants.Ok;
     }
 
     public async Task<string> DeleteDriver(string phoneNumber)
     {
-        _mockRepository.Remove(_mockRepository.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!);
+        MockDatabases.DriverList.Remove(MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!);
         return AccountConstants.DriverWasDeleted;
     }
 
     public async Task<List<DriverDB>> GetAllDrivers()
     {
-        return _mockRepository;
+        return MockDatabases.DriverList;
     }
 
     private async Task<DriveClass> TakeDriveClassByCar(string carName)

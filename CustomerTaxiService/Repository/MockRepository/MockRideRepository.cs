@@ -10,20 +10,20 @@ public class MockRideRepository : IRideRepository
 {
     public async Task<string> AddNewOrder(string phoneNumber, string endPoint)
     {
-        MockRideDatabase.RideList.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
+        MockDatabases.RideList.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
         return OrdersConstants.Ok;
     }
 
     public async Task<string> CheckRideForExistence(string phoneNumber)
     {
-        var rideEntity = MockRideDatabase.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
+        var rideEntity = MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
 
         return rideEntity == null ? OrdersConstants.RideNotFound : OrdersConstants.Ok;
     }
 
     private async Task<RideDb?> TakeRideDbEntity(string phoneNumber)
     {
-        var rideEntity = MockRideDatabase.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber)!;
+        var rideEntity = MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber)!;
         return rideEntity;
     }
 
@@ -32,7 +32,7 @@ public class MockRideRepository : IRideRepository
         var rideEntity = await TakeRideDbEntity(phoneNumber);
         if (rideEntity == null)
             return OrdersConstants.RideNotFound;
-        MockRideDatabase.RideList.Remove(rideEntity);
+        MockDatabases.RideList.Remove(rideEntity);
         return OrdersConstants.Ok;
     }
 
@@ -46,7 +46,7 @@ public class MockRideRepository : IRideRepository
 
     public async Task<List<RideDb>> GetAllRides()
     {
-        return MockRideDatabase.RideList;
+        return MockDatabases.RideList;
     }
 
     private async Task<RideDb> CreateRideEntityForDb(string phoneNumber, string endPoint)
