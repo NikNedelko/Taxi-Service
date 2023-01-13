@@ -4,6 +4,7 @@ using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.General;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminControlPanel;
 
@@ -21,7 +22,9 @@ internal abstract class CustomerControlLogic : IAccountLogicForAdmin
 
     public async Task<Response> DeleteUserById(int id)
     {
-        
+        var isUserExist = await CheckUserIsExistById(id);
+        if (isUserExist != "Ok")
+            return await CreateResponse(isUserExist);
         return await CreateResponse( await _customerAdminRepository.DeleteUserById(id));
     }
 
@@ -36,6 +39,12 @@ internal abstract class CustomerControlLogic : IAccountLogicForAdmin
        if (userWithThisNumber == "User with this phone number is not exist")
            return await CreateResponse("");
        return await CreateResponse(await _customerAdminRepository.ChangeCustomerStatus(phoneNumber, newAccountStatus));
+    }
+
+    private async Task<string> CheckUserIsExistById(int id)
+    {
+        var entity = await _customerAdminRepository.GetUserById(id);
+        return entity == null ? "User is not exist" : "Ok";
     }
     
     private async Task<Response> CreateResponse(string message)

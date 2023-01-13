@@ -19,18 +19,18 @@ public class CustomerControlPanel : ControllerBase
     [HttpPost("/GetAllCustomersWithId")]
     public async Task<List<CustomerDB>> GetAllCustomersWithId()
     { 
-        return await _accountLogicForAdmin.GetAllUsers();
+        return await _accountLogicForAdmin.GetAllUsersWithId();
     }
     
     [HttpPost("/ChangeStatusOfUser")]
-    public async Task<List<CustomerDB>> ChangeStatusOfUser(string userId, AccountStatus newStatus)
+    public async Task<Response> ChangeStatusOfUser(string phoneNumber, AccountStatus newStatus)
     {
-        return View();
+        return await _accountLogicForAdmin.ChangeAccountStatus(phoneNumber, newStatus);
     }
     
     [HttpPost("/DeleteUser")]
-    public async Task<List<CustomerDB>> DeleteUser(string userId)
+    public async Task<Response> DeleteUser(string userId)
     {
-        return View();
+        return await _accountLogicForAdmin.DeleteUserById(userId);
     }
 }
