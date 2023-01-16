@@ -79,11 +79,7 @@ public class AccountLogic : IAccountLogic
                                  && x is { IsTaken: true, IsEnd: false });
         return rideWithThisNumber == null ? UserConstants.Ok : UserConstants.UserIsInRide;
     }
-
-    public async Task<List<CustomerDB>> GetAllUsers()
-    {
-        return await _userRepository.GetAllUsers();
-    }
+    
 
     private async Task<Response> CreateResponse(string message)
         => new Response

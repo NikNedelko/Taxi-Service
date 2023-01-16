@@ -8,9 +8,9 @@ namespace DriverTaxiService.Controllers;
 [ApiController]
 public class DriverAccountController : ControllerBase
 {
-    private readonly IAccountLogic _accountLogic;
+    private readonly IDriverAccountLogic _accountLogic;
     
-    public DriverAccountController(IAccountLogic accountLogic)
+    public DriverAccountController(IDriverAccountLogic accountLogic)
     {
         _accountLogic = accountLogic;
     }
@@ -25,11 +25,5 @@ public class DriverAccountController : ControllerBase
     public async Task<Response> DeleteDriverAccount(string phoneNumber)
     {
         return  await _accountLogic.DeleteDriver(phoneNumber);
-    }
-    
-    [HttpPost("/GetAllDrivers")]
-    public async Task<List<DriverDB>> GetAllDrivers()
-    {
-        return await _accountLogic.GetAllDrivers();
     }
 }

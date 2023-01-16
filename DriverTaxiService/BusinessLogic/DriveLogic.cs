@@ -10,9 +10,9 @@ namespace DriverTaxiService.BusinessLogic;
 public class DriveLogic : IDriveLogic
 {
     private readonly IDriveRepository _driveRepository;
-    private readonly IAccountRepository _accountRepository;
+    private readonly IDriverAccountRepository _accountRepository;
 
-    public DriveLogic(IDriveRepository driveRepository, IAccountRepository accountRepository)
+    public DriveLogic(IDriveRepository driveRepository, IDriverAccountRepository accountRepository)
     {
         _driveRepository = driveRepository;
         _accountRepository = accountRepository;

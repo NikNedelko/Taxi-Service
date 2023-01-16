@@ -10,5 +10,4 @@ public interface IAccountLogic
     public Task<Response> DeleteAccount(string phoneNumber);
     public Task<Response> UpdateAccount(Customer model);
     public Task<Response> AddMoneyToAccount(string id, decimal money);
-    public Task<List<CustomerDB>> GetAllUsers();
 }

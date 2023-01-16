@@ -39,10 +39,4 @@ public class AccountController : ControllerBase
     {
         return await _accountLogic.AddMoneyToAccount(phoneNumber, countOfMoney);
     }
-    
-    [HttpPost("/GetAllUsers")]
-    public async Task<List<CustomerDB>> GetAllUsers()
-    {
-        return await _accountLogic.GetAllUsers();
-    }
 }

@@ -6,11 +6,11 @@ using Entities.General;
 
 namespace DriverTaxiService.BusinessLogic;
 
-public class AccountLogic : IAccountLogic
+public class AccountLogic : IDriverAccountLogic
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IDriverAccountRepository _accountRepository;
 
-    public AccountLogic(IAccountRepository accountRepository)
+    public AccountLogic(IDriverAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
@@ -36,11 +36,6 @@ public class AccountLogic : IAccountLogic
             return await CreateResponse(AccountConstants.DriverIsExist);
         
         return await CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
-    }
-
-    public async Task<List<DriverDB>> GetAllDrivers()
-    {
-        return await _accountRepository.GetAllDrivers();
     }
 
     private async Task<string> AddNewDriverToDatabase(RegistrationForDriver registrationForDriver)
