@@ -1,5 +1,4 @@
-using System.Text.RegularExpressions;
-using AdminControlPanel.Interfaces;
+using AdminControlPanel.BL.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +28,7 @@ public class CustomerControlPanel : ControllerBase
     }
     
     [HttpPost("/DeleteUser")]
-    public async Task<Response> DeleteUser(string userId)
+    public async Task<Response> DeleteUser(int userId)
     {
         return await _accountLogicForAdmin.DeleteUserById(userId);
     }
