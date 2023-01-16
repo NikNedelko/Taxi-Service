@@ -7,9 +7,9 @@ namespace DriverTaxiService.Repository.MockRepository;
 
 public class MockDriveRepository : IDriveRepository
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IDriverAccountRepository _accountRepository;
 
-    public MockDriveRepository(IAccountRepository accountRepository)
+    public MockDriveRepository(IDriverAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }

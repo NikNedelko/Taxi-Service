@@ -9,5 +9,4 @@ public interface IDriverAccountRepository
     public Task<Driver?> GetDriverByLicense(string licenseNumber);
     public Task<string> UpdateDriver(Driver newDriver, string phoneNumber);
     public Task<string> DeleteDriver(string phoneNumber);
-    public Task<List<DriverDB>> GetAllDrivers();
 }

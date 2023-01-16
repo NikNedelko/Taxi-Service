@@ -7,7 +7,7 @@ using Entities.General;
 
 namespace DriverTaxiService.Repository.MockRepository;
 
-public class MockDriverAccountRepository : IAccountRepository
+public class MockDriverAccountRepository : IDriverAccountRepository
 {
     public async Task<string> AddNewDriver(RegistrationForDriver registrationForDriver)
     {
@@ -54,7 +54,7 @@ public class MockDriverAccountRepository : IAccountRepository
         return AccountConstants.DriverWasDeleted;
     }
 
-    public async Task<List<DriverDB>> GetAllDrivers()
+    private async Task<List<DriverDB>> GetAllDriversWithId()
     {
         return MockDatabases.DriverList;
     }
