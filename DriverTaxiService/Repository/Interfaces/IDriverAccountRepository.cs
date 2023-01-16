@@ -2,7 +2,7 @@ using Entities.DriverApi.Driver;
 
 namespace DriverTaxiService.Repository.Interfaces;
 
-public interface IAccountRepository
+public interface IDriverAccountRepository
 {
     public Task<string> AddNewDriver(RegistrationForDriver registrationForDriver);
     public Task<Driver?> GetDriverByNumber(string phoneNumber);

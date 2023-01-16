@@ -7,7 +7,7 @@ using Entities.General;
 
 namespace DriverTaxiService.Repository.MockRepository;
 
-public class MockAccountRepository : IAccountRepository
+public class MockDriverAccountRepository : IAccountRepository
 {
     public async Task<string> AddNewDriver(RegistrationForDriver registrationForDriver)
     {
