@@ -2,7 +2,7 @@ using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
 
-namespace AdminControlPanel.Interfaces;
+namespace AdminControlPanel.BL.Interfaces;
 
 public interface IAccountLogicForAdmin : IAccountLogic
 {

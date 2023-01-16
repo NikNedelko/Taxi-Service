@@ -1,18 +1,16 @@
-using AdminControlPanel.Interfaces;
+using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository.Interfaces;
 using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.General;
-using Microsoft.AspNetCore.Mvc;
 
-namespace AdminControlPanel;
+namespace AdminControlPanel.BL;
 
 internal abstract class CustomerControlLogic : IAccountLogicForAdmin
 {
     private readonly ICustomerAdminRepository _customerAdminRepository;
     private readonly IUserRepository _userRepository;
-
 
     protected CustomerControlLogic(ICustomerAdminRepository customerAdminRepository, IUserRepository userRepository)
     {
@@ -58,7 +56,6 @@ internal abstract class CustomerControlLogic : IAccountLogicForAdmin
     {
         return message switch
         {
-           
             _ => ""
         };
     }
