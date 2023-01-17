@@ -6,11 +6,11 @@ using Entities.General;
 
 namespace DriverTaxiService.BusinessLogic;
 
-public class AccountLogic : IDriverAccountLogic
+public class DriverAccountLogic : IDriverAccountLogic
 {
     private readonly IDriverAccountRepository _accountRepository;
 
-    public AccountLogic(IDriverAccountRepository accountRepository)
+    public DriverAccountLogic(IDriverAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }

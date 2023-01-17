@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IDriverAccountLogic, AccountLogic>();
+builder.Services.AddScoped<IDriverAccountLogic, DriverAccountLogic>();
 builder.Services.AddScoped<IDriveLogic, DriveLogic>();
 builder.Services.AddScoped<IDriverAccountRepository, MockDriverAccountRepository>();
 builder.Services.AddScoped<IDriveRepository, MockDriveRepository>();
