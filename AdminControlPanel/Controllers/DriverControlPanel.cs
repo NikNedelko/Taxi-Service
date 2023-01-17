@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using AdminControlPanel.BL.Interfaces;
 using Entities.DriverApi.Driver;
 using Entities.General;
@@ -8,7 +9,7 @@ namespace AdminControlPanel.Controllers;
 [ApiController]
 public class DriverControlPanel : ControllerBase
 {
-   private IDriversLogicForAdmin _driversLogicForAdmin;
+   private readonly IDriversLogicForAdmin _driversLogicForAdmin;
 
    public DriverControlPanel(IDriversLogicForAdmin driversLogicForAdmin)
    {
@@ -25,5 +26,17 @@ public class DriverControlPanel : ControllerBase
    public async Task<Response> DeleteDriverById(int id)
    {
       return await _driversLogicForAdmin.DeleteDriverById(id);
+   }
+   
+   [HttpPost("/StopWorkForDriver")]
+   public async Task<Response> StopWorkForDriver(int id)
+   {
+      throw new NotImplementedException();
+   }
+   
+   [HttpPost("/StartWorkForDriver")]
+   public async Task<Response> StartWorkForDriver(int id)
+   {
+      throw new NotImplementedException();
    }
 }

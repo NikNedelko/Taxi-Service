@@ -8,7 +8,7 @@ namespace AdminControlPanel.Controllers;
 [ApiController]
 public class CustomerControlPanel : ControllerBase
 {
-    private IAccountLogicForAdmin _accountLogicForAdmin;
+    private readonly IAccountLogicForAdmin _accountLogicForAdmin;
 
     public CustomerControlPanel(IAccountLogicForAdmin accountLogicForAdmin)
     {
