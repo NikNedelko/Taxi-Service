@@ -6,15 +6,8 @@ using Entities.General;
 
 namespace AdminControlPanel.Repository;
 
-public abstract class MockCustomerAdminRepository : ICustomerAdminRepository
+public class MockCustomerAdminRepository : ICustomerAdminRepository
 {
-    private IUserRepository _customerRepository;
-
-    protected MockCustomerAdminRepository(IUserRepository customerRepository)
-    {
-        _customerRepository = customerRepository;
-    }
-
     public async Task<List<CustomerDB>> GetAllUserWIthId()
     {
         return MockDatabases.CustomerList;
@@ -39,19 +32,49 @@ public abstract class MockCustomerAdminRepository : ICustomerAdminRepository
         MockDatabases.CustomerList.Add(entity);
         return "Ok";
     }
-    
+
     private async Task<CustomerDB?> GetCustomerDbByPhoneNumber(string phoneNumber)
     {
         return MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
     }
 
+    async Task<string> IUserRepository.AddNewUser(Customer customer)
+    {
+        throw new NotImplementedException();
+    }
 
-    public abstract Task<string> AddNewUser(Customer customer);
-    public abstract Task<string> RemoveUser(string phoneNumber);
-    public abstract Task<Customer?> GetUserByPhoneNumber(string number);
-    public abstract Task<string?> PermissionToRide(string userId);
-    public abstract Task<string> CheckOfExist(string phoneNumber);
-    public abstract Task<string> UpdateUser(Customer user, string existUserId);
-    public abstract Task<string> AddMoneyToAccount(string phoneNumber, decimal money);
-    public abstract Task<List<CustomerDB>> GetAllUsers();
+    async Task<string> IUserRepository.RemoveUser(string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<Customer?> IUserRepository.GetUserByPhoneNumber(string number)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string?> IUserRepository.PermissionToRide(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string> IUserRepository.CheckOfExist(string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string> IUserRepository.UpdateUser(Customer user, string existUserId)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string> IUserRepository.AddMoneyToAccount(string phoneNumber, decimal money)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<List<CustomerDB>> IUserRepository.GetAllUsers()
+    {
+        throw new NotImplementedException();
+    }
 }

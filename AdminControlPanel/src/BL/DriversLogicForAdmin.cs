@@ -1,15 +1,16 @@
 using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository.Interfaces;
+using DriverTaxiService.BusinessLogic.Interface;
 using Entities.DriverApi.Driver;
 using Entities.General;
 
 namespace AdminControlPanel.BL;
 
-public abstract class DriversLogicForAdmin : IDriversLogicForAdmin
+public class DriversLogicForAdmin : IDriversLogicForAdmin
 {
-    private IDriverAdminRepository _driverAdminRepository;
+    private readonly IDriverAdminRepository _driverAdminRepository;
 
-    protected DriversLogicForAdmin(IDriverAdminRepository driverAdminRepository)
+    public DriversLogicForAdmin(IDriverAdminRepository driverAdminRepository)
     {
         _driverAdminRepository = driverAdminRepository;
     }
@@ -49,6 +50,14 @@ public abstract class DriversLogicForAdmin : IDriversLogicForAdmin
         };
     }
 
-    public abstract Task<Response> AddNewDriver(RegistrationForDriver registrationDriver);
-    public abstract Task<Response> DeleteDriver(string phoneNumber);
+
+    Task<Response> IDriverAccountLogic.AddNewDriver(RegistrationForDriver registrationDriver)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<Response> IDriverAccountLogic.DeleteDriver(string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
 }

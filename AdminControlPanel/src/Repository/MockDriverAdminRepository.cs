@@ -1,10 +1,11 @@
 using AdminControlPanel.Repository.Interfaces;
 using Database.MockDatabase;
+using DriverTaxiService.Repository.Interfaces;
 using Entities.DriverApi.Driver;
 
 namespace AdminControlPanel.Repository;
 
-public abstract class MockDriverAdminRepository : IDriverAdminRepository
+public class MockDriverAdminRepository : IDriverAdminRepository
 {
     public async Task<List<DriverDB>> GetAllDriversWithId()
     {
@@ -22,9 +23,28 @@ public abstract class MockDriverAdminRepository : IDriverAdminRepository
         return "Ok";
     }
 
-    public abstract Task<string> AddNewDriver(RegistrationForDriver registrationForDriver);
-    public abstract Task<Driver?> GetDriverByNumber(string phoneNumber);
-    public abstract Task<Driver?> GetDriverByLicense(string licenseNumber);
-    public abstract Task<string> UpdateDriver(Driver newDriver, string phoneNumber);
-    public abstract Task<string> DeleteDriver(string phoneNumber);
+    async Task<string> IDriverAccountRepository.AddNewDriver(RegistrationForDriver registrationForDriver)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<Driver?> IDriverAccountRepository.GetDriverByNumber(string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<Driver?> IDriverAccountRepository.GetDriverByLicense(string licenseNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string> IDriverAccountRepository.UpdateDriver(Driver newDriver, string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    async Task<string> IDriverAccountRepository.DeleteDriver(string phoneNumber)
+    {
+        throw new NotImplementedException();
+    }
 }
