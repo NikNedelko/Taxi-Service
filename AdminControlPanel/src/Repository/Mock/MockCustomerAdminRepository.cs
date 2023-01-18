@@ -4,7 +4,7 @@ using Database.MockDatabase;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
 
-namespace AdminControlPanel.Repository;
+namespace AdminControlPanel.Repository.Mock;
 
 public class MockCustomerAdminRepository : ICustomerAdminRepository
 {

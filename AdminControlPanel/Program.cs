@@ -2,6 +2,7 @@ using AdminControlPanel.BL;
 using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository;
 using AdminControlPanel.Repository.Interfaces;
+using AdminControlPanel.Repository.Mock;
 using CustomerTaxiService.Repository.Interfaces;
 using CustomerTaxiService.Repository.MockRepository;
 using DriverTaxiService.Repository.Interfaces;
@@ -14,7 +15,7 @@ builder.Services.AddScoped<IUserRepository, MockUsersRepository>();
 builder.Services.AddScoped<IAccountLogicForAdmin, CustomerControlLogic>();
 
 builder.Services.AddScoped<IDriverAccountRepository, MockDriverAccountRepository>();
-builder.Services.AddScoped<IDriversLogicForAdmin, DriversLogicForAdmin>();    
+builder.Services.AddScoped<IDriversLogicForAdmin, DriversControlLogic>();    
 
 builder.Services.AddScoped<ICustomerAdminRepository, MockCustomerAdminRepository>();
 builder.Services.AddScoped<IDriverAdminRepository, MockDriverAdminRepository>();

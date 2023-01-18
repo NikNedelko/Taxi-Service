@@ -6,11 +6,11 @@ using Entities.General;
 
 namespace AdminControlPanel.BL;
 
-public class DriversLogicForAdmin : IDriversLogicForAdmin
+public class DriversControlLogic : IDriversLogicForAdmin
 {
     private readonly IDriverAdminRepository _driverAdminRepository;
 
-    public DriversLogicForAdmin(IDriverAdminRepository driverAdminRepository)
+    public DriversControlLogic(IDriverAdminRepository driverAdminRepository)
     {
         _driverAdminRepository = driverAdminRepository;
     }
