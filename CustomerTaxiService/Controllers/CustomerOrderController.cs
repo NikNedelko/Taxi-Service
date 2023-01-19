@@ -7,11 +7,11 @@ using Entities.General.RideData;
 namespace CustomerTaxiService.Controllers;
 
 [ApiController]
-public class OrderController : ControllerBase
+public class CustomerOrderController : ControllerBase
 {
     private readonly IOrdersLogic _createOrdersLogic;
 
-    public OrderController(IOrdersLogic createOrdersLogic)
+    public CustomerOrderController(IOrdersLogic createOrdersLogic)
     {
         _createOrdersLogic = createOrdersLogic;
     }

@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerTaxiService.Controllers;
 
 [ApiController]
-public class AccountController : ControllerBase
+public class CustomerAccountController : ControllerBase
 {
     private readonly IAccountLogic _accountLogic;
 
-    public AccountController(IAccountLogic accountLogic)
+    public CustomerAccountController(IAccountLogic accountLogic)
     {
         _accountLogic = accountLogic;
     }

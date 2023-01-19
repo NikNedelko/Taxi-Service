@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace DriverTaxiService.Controllers;
 
 [ApiController]
-public class DriveController : ControllerBase
+public class DriverDriveController : ControllerBase
 {
     private readonly IDriveLogic _driveLogic;
 
-    public DriveController(IDriveLogic driveLogic)
+    public DriverDriveController(IDriveLogic driveLogic)
     {
         _driveLogic = driveLogic;
     }
