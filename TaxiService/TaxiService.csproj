@@ -19,4 +19,11 @@
       <ProjectReference Include="..\Entities\Entities.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Constants\Customer" />
+      <Folder Include="Constants\Driver" />
+      <Folder Include="Repository\Customer" />
+      <Folder Include="Repository\Driver" />
+    </ItemGroup>
+
 </Project>

@@ -1,9 +1,9 @@
+using CustomerTaxiService.Constants.Driver.DriverConstants;
+using CustomerTaxiService.Repository.Driver.Interfaces;
 using Database.MockDatabase;
-using DriverTaxiService.Constants.DriverConstants;
-using DriverTaxiService.Repository.Interfaces;
 using Entities.General.RideData;
 
-namespace DriverTaxiService.Repository.MockRepository;
+namespace CustomerTaxiService.Repository.Driver.MockRepository;
 
 public class MockDriveRepository : IDriveRepository
 {

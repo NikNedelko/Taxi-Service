@@ -1,6 +1,6 @@
 using Entities.General.RideData;
 
-namespace DriverTaxiService.Repository.Interfaces;
+namespace CustomerTaxiService.Repository.Driver.Interfaces;
 
 public interface IDriveRepository
 {
