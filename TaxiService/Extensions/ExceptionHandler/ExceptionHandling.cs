@@ -1,9 +1,9 @@
 using System.Net;
-using CustomerTaxiService.Extensions.Interfaces;
 using Entities.General;
 using Microsoft.AspNetCore.Diagnostics;
+using TaxiService.Extensions.ExceptionHandler.Interfaces;
 
-namespace CustomerTaxiService.Extensions;
+namespace TaxiService.Extensions.ExceptionHandler;
 
 public static class ExceptionHandling
 {

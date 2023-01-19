@@ -1,6 +1,6 @@
-namespace CustomerTaxiService.Constants;
+namespace TaxiService.Constants.Customer.OrdersLogic;
 
-public class OrdersConstants
+public static class OrdersConstants
 {
     public const string Ok = "Ok";
     public const string UserNotFound = "User not found";

@@ -1,7 +1,6 @@
-using Entities.CustomerTaxiService.CustomerData;
 using Entities.General.RideData;
 
-namespace CustomerTaxiService.Repository.Interfaces;
+namespace TaxiService.Repository.Customer.Interfaces;
 
 public interface IRideRepository
 {

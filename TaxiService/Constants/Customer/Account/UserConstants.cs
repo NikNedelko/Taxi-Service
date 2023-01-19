@@ -1,4 +1,4 @@
-namespace CustomerTaxiService.Constants.Account;
+namespace TaxiService.Constants.Customer.Account;
 
 public static class UserConstants
 {

@@ -1,8 +1,8 @@
 using AdminControlPanel.Repository.Interfaces;
-using CustomerTaxiService.Repository.Interfaces;
 using Database.MockDatabase;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
+using TaxiService.Repository.Customer.Interfaces;
 
 namespace AdminControlPanel.Repository.Mock;
 

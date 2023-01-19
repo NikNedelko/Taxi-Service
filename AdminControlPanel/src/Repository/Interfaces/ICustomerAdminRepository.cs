@@ -1,6 +1,6 @@
-using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
+using TaxiService.Repository.Customer.Interfaces;
 
 namespace AdminControlPanel.Repository.Interfaces;
 

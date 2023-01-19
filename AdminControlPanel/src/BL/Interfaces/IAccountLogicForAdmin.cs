@@ -1,6 +1,6 @@
-using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
+using TaxiService.BusinessLogic.Customer.Interfaces;
 
 namespace AdminControlPanel.BL.Interfaces;
 

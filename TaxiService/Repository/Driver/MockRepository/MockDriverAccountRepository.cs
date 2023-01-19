@@ -1,11 +1,11 @@
-using CustomerTaxiService.Constants.Driver.AccountConstants;
-using CustomerTaxiService.Repository.Driver.Interfaces;
 using Database.MockDatabase;
 using Entities.DriverApi;
 using Entities.DriverApi.Driver;
 using Entities.General;
+using TaxiService.Constants.Driver.AccountConstants;
+using TaxiService.Repository.Driver.Interfaces;
 
-namespace CustomerTaxiService.Repository.Driver.MockRepository;
+namespace TaxiService.Repository.Driver.MockRepository;
 
 public class MockDriverAccountRepository : IDriverAccountRepository
 {

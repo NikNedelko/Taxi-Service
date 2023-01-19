@@ -2,7 +2,7 @@ using Entities.CustomerTaxiService.Requests;
 using Entities.General;
 using Entities.General.RideData;
 
-namespace CustomerTaxiService.BusinessLogic.Interfaces;
+namespace TaxiService.BusinessLogic.Customer.Interfaces;
 
 public interface IOrdersLogic
 {

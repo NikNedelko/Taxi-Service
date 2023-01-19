@@ -1,14 +1,14 @@
-using CustomerTaxiService.BusinessLogic;
-using CustomerTaxiService.BusinessLogic.Driver;
-using CustomerTaxiService.BusinessLogic.Driver.Interface;
-using CustomerTaxiService.BusinessLogic.Interfaces;
-using CustomerTaxiService.Extensions;
-using CustomerTaxiService.Extensions.Contracts;
-using CustomerTaxiService.Extensions.Interfaces;
-using CustomerTaxiService.Repository.Driver.Interfaces;
-using CustomerTaxiService.Repository.Driver.MockRepository;
-using CustomerTaxiService.Repository.Interfaces;
-using CustomerTaxiService.Repository.MockRepository;
+using TaxiService.BusinessLogic.Customer;
+using TaxiService.BusinessLogic.Customer.Interfaces;
+using TaxiService.BusinessLogic.Driver;
+using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.Extensions.ExceptionHandler;
+using TaxiService.Extensions.ExceptionHandler.Contracts;
+using TaxiService.Extensions.ExceptionHandler.Interfaces;
+using TaxiService.Repository.Customer.Interfaces;
+using TaxiService.Repository.Customer.MockRepository;
+using TaxiService.Repository.Driver.Interfaces;
+using TaxiService.Repository.Driver.MockRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

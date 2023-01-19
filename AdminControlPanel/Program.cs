@@ -3,10 +3,10 @@ using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository;
 using AdminControlPanel.Repository.Interfaces;
 using AdminControlPanel.Repository.Mock;
-using CustomerTaxiService.Repository.Interfaces;
-using CustomerTaxiService.Repository.MockRepository;
-using DriverTaxiService.Repository.Interfaces;
-using DriverTaxiService.Repository.MockRepository;
+using TaxiService.Repository.Customer.Interfaces;
+using TaxiService.Repository.Customer.MockRepository;
+using TaxiService.Repository.Driver.Interfaces;
+using TaxiService.Repository.Driver.MockRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);

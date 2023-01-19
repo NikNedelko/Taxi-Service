@@ -1,4 +1,4 @@
-namespace CustomerTaxiService.Constants.Driver.AccountConstants;
+namespace TaxiService.Constants.Driver.AccountConstants;
 
 public static class AccountConstants
 {

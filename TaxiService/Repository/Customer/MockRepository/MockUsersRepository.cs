@@ -1,14 +1,14 @@
-using CustomerTaxiService.Constants.Account;
-using CustomerTaxiService.Repository.Interfaces;
 using Database.MockDatabase;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.General;
+using TaxiService.Constants.Customer.Account;
+using TaxiService.Repository.Customer.Interfaces;
 
-namespace CustomerTaxiService.Repository.MockRepository;
+namespace TaxiService.Repository.Customer.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    public async Task<string> AddNewUser(Customer customer)
+    public async Task<string> AddNewUser(Entities.CustomerTaxiService.CustomerData.Customer customer)
     {
         var checkResult = await CheckOfExist(customer.PhoneNumber);
         if (checkResult != UserConstants.UserNotFound)
@@ -19,7 +19,7 @@ public class MockUsersRepository : IUserRepository
         return UserConstants.Ok;
     }
 
-    public async Task<Customer?> GetUserByPhoneNumber(string number)
+    public async Task<Entities.CustomerTaxiService.CustomerData.Customer?> GetUserByPhoneNumber(string number)
     {
         var userFromDb = MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == number);
         return userFromDb == null ? null : await ConvertUserFromDatabase(userFromDb);
@@ -52,13 +52,13 @@ public class MockUsersRepository : IUserRepository
         return userEntity == null ? UserConstants.UserNotFound : UserConstants.Ok;
     }
 
-    public async Task<string> UpdateUser(Customer user, string existUserNumber)
+    public async Task<string> UpdateUser(Entities.CustomerTaxiService.CustomerData.Customer user, string existUserNumber)
     {
         var userEntity = await GetUserByPhoneNumber(existUserNumber);
         if (userEntity == null)
             return UserConstants.UserNotFound;
 
-        var updatedUser = new Customer
+        var updatedUser = new Entities.CustomerTaxiService.CustomerData.Customer
         {
             Name = user.Name,
             LastName = user.LastName,
@@ -93,9 +93,9 @@ public class MockUsersRepository : IUserRepository
         return MockDatabases.CustomerList;
     }
 
-    private async Task<Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
+    private async Task<Entities.CustomerTaxiService.CustomerData.Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
     {
-        return new Customer
+        return new Entities.CustomerTaxiService.CustomerData.Customer
         {
             Name = customerDb.Name,
             LastName = customerDb.LastName,
@@ -107,7 +107,7 @@ public class MockUsersRepository : IUserRepository
         };
     }
 
-    private async Task<CustomerDB> ConvertUserToDatabase(Customer customer)
+    private async Task<CustomerDB> ConvertUserToDatabase(Entities.CustomerTaxiService.CustomerData.Customer customer)
     {
         return new CustomerDB
         {

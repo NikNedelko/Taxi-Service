@@ -11,8 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CustomerTaxiService\CustomerTaxiService.csproj" />
-      <ProjectReference Include="..\DriverTaxiService\DriverTaxiService.csproj" />
+      <ProjectReference Include="..\TaxiService\TaxiService.csproj" />
       <ProjectReference Include="..\Entities\Entities.csproj" />
     </ItemGroup>
 

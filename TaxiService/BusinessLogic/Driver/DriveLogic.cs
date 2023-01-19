@@ -1,11 +1,11 @@
-using CustomerTaxiService.BusinessLogic.Driver.Interface;
-using CustomerTaxiService.Constants.Driver.AccountConstants;
-using CustomerTaxiService.Constants.Driver.DriverConstants;
-using CustomerTaxiService.Repository.Driver.Interfaces;
 using Entities.General;
 using Entities.General.RideData;
+using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.Constants.Driver.AccountConstants;
+using TaxiService.Constants.Driver.DriverConstants;
+using TaxiService.Repository.Driver.Interfaces;
 
-namespace CustomerTaxiService.BusinessLogic.Driver;
+namespace TaxiService.BusinessLogic.Driver;
 
 public class DriveLogic : IDriveLogic
 {

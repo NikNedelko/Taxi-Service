@@ -1,7 +1,7 @@
 using AdminControlPanel.Repository.Interfaces;
 using Database.MockDatabase;
-using DriverTaxiService.Repository.Interfaces;
 using Entities.DriverApi.Driver;
+using TaxiService.Repository.Driver.Interfaces;
 
 namespace AdminControlPanel.Repository;
 

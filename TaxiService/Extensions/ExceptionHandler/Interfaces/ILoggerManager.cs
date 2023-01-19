@@ -1,4 +1,4 @@
-namespace CustomerTaxiService.Extensions.Interfaces;
+namespace TaxiService.Extensions.ExceptionHandler.Interfaces;
 
 public interface ILoggerManager
 {

@@ -1,12 +1,10 @@
-using CustomerTaxiService.BusinessLogic.Interfaces;
-using CustomerTaxiService.Constants;
-using CustomerTaxiService.Constants.Account;
-using CustomerTaxiService.Repository.Interfaces;
-using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.General;
+using TaxiService.BusinessLogic.Customer.Interfaces;
+using TaxiService.Constants.Customer.Account;
+using TaxiService.Repository.Customer.Interfaces;
 
-namespace CustomerTaxiService.BusinessLogic;
+namespace TaxiService.BusinessLogic.Customer;
 
 public class AccountLogic : IAccountLogic
 {
@@ -24,7 +22,7 @@ public class AccountLogic : IAccountLogic
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(newUser.PhoneNumber);
         if (userWithThisNumber != null)
             return await CreateResponse(UserConstants.UserIsAlreadyExist);
-        var responseFromCreate = await _userRepository.AddNewUser(new Customer
+        var responseFromCreate = await _userRepository.AddNewUser(new Entities.CustomerTaxiService.CustomerData.Customer
         {
             Name = newUser.Name,
             LastName = newUser.LastName,
@@ -48,7 +46,7 @@ public class AccountLogic : IAccountLogic
         return await CreateResponse(await _userRepository.RemoveUser(phoneNumber));
     }
 
-    public async Task<Response> UpdateAccount(Customer model)
+    public async Task<Response> UpdateAccount(Entities.CustomerTaxiService.CustomerData.Customer model)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(model.PhoneNumber);
         if (userWithThisNumber == null)

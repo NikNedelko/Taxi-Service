@@ -1,9 +1,9 @@
-using CustomerTaxiService.BusinessLogic.Driver.Interface;
 using Entities.DriverApi.Driver;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.BusinessLogic.Driver.Interface;
 
-namespace CustomerTaxiService.Controllers;
+namespace TaxiService.Controllers;
 
 [ApiController]
 public class DriverAccountController : ControllerBase

@@ -1,5 +1,5 @@
-using DriverTaxiService.Repository.Interfaces;
 using Entities.DriverApi.Driver;
+using TaxiService.Repository.Driver.Interfaces;
 
 namespace AdminControlPanel.Repository.Interfaces;
 

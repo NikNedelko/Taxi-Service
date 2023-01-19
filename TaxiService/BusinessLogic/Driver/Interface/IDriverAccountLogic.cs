@@ -1,7 +1,7 @@
 using Entities.DriverApi.Driver;
 using Entities.General;
 
-namespace CustomerTaxiService.BusinessLogic.Driver.Interface;
+namespace TaxiService.BusinessLogic.Driver.Interface;
 
 public interface IDriverAccountLogic
 {

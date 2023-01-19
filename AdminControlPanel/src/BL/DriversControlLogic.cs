@@ -1,8 +1,8 @@
 using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository.Interfaces;
-using DriverTaxiService.BusinessLogic.Interface;
 using Entities.DriverApi.Driver;
 using Entities.General;
+using TaxiService.BusinessLogic.Driver.Interface;
 
 namespace AdminControlPanel.BL;
 

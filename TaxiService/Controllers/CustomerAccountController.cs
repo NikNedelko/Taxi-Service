@@ -1,10 +1,10 @@
-using CustomerTaxiService.BusinessLogic.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.BusinessLogic.Customer.Interfaces;
 
-namespace CustomerTaxiService.Controllers;
+namespace TaxiService.Controllers;
 
 [ApiController]
 public class CustomerAccountController : ControllerBase

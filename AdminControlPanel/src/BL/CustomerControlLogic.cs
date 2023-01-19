@@ -1,10 +1,10 @@
 using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository.Interfaces;
-using CustomerTaxiService.BusinessLogic.Interfaces;
-using CustomerTaxiService.Repository.Interfaces;
 using Entities.CustomerTaxiService.CustomerData;
 using Entities.CustomerTaxiService.Requests;
 using Entities.General;
+using TaxiService.BusinessLogic.Customer.Interfaces;
+using TaxiService.Repository.Customer.Interfaces;
 
 namespace AdminControlPanel.BL;
 

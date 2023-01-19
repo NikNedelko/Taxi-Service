@@ -1,4 +1,4 @@
-namespace CustomerTaxiService.Constants.Driver.DriverConstants;
+namespace TaxiService.Constants.Driver.DriverConstants;
 
 public static class DriverConstants
 {

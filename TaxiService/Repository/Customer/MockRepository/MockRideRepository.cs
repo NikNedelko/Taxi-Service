@@ -1,10 +1,11 @@
 using CustomerTaxiService.Constants;
-using CustomerTaxiService.Repository.Interfaces;
 using Database.MockDatabase;
 using Entities.General;
 using Entities.General.RideData;
+using TaxiService.Constants.Customer.OrdersLogic;
+using TaxiService.Repository.Customer.Interfaces;
 
-namespace CustomerTaxiService.Repository.MockRepository;
+namespace TaxiService.Repository.Customer.MockRepository;
 
 public class MockRideRepository : IRideRepository
 {

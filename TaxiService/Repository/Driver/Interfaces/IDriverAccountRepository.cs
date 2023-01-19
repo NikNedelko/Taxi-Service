@@ -1,6 +1,6 @@
 using Entities.DriverApi.Driver;
 
-namespace CustomerTaxiService.Repository.Driver.Interfaces;
+namespace TaxiService.Repository.Driver.Interfaces;
 
 public interface IDriverAccountRepository
 {

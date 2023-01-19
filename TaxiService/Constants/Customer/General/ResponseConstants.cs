@@ -1,4 +1,4 @@
-namespace CustomerTaxiService.Constants.General;
+namespace TaxiService.Constants.Customer.General;
 
 public static class ResponseConstants
 {
