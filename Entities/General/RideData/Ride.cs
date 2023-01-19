@@ -1,4 +1,3 @@
-using System.Data;
 
 namespace Entities.General.RideData;
 

@@ -15,7 +15,7 @@ public class DriversControlLogic : IDriversLogicForAdmin
         _driverAdminRepository = driverAdminRepository;
     }
 
-    public async Task<List<DriverDB>> GetAllDrivers()
+    public async Task<List<DriverDb>> GetAllDrivers()
     {
         return await _driverAdminRepository.GetAllDriversWithId();
     }

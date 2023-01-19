@@ -1,6 +1,6 @@
 using AdminControlPanel.Repository.Interfaces;
 using Database.MockDatabase;
-using Entities.CustomerTaxiService.CustomerData;
+using Entities.CustomerApi.CustomerData;
 using Entities.General;
 using TaxiService.Repository.Customer.Interfaces;
 

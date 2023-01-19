@@ -1,6 +1,4 @@
-using Entities.General;
-
-namespace Entities.CustomerTaxiService.CustomerData;
+namespace Entities.CustomerApi.CustomerData;
 
 public class CustomerDB
 {

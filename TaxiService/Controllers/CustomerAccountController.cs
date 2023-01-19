@@ -1,5 +1,5 @@
-using Entities.CustomerTaxiService.CustomerData;
-using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerApi.CustomerData;
+using Entities.CustomerApi.Requests;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
 using TaxiService.BusinessLogic.Customer.Interfaces;

@@ -1,4 +1,4 @@
-using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerApi.Requests;
 using Entities.General;
 using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer.Interfaces;
@@ -40,7 +40,7 @@ public class OrdersLogic : IOrdersLogic
         return await CreateResponse(ResponseConstants.RideAccepted);
     }
 
-    private async Task<string> CreateNewOrder(Entities.CustomerTaxiService.CustomerData.Customer customer, Order order)
+    private async Task<string> CreateNewOrder(Entities.CustomerApi.CustomerData.Customer customer, Order order)
     {
         return await _rideRepository.AddNewOrder(customer.PhoneNumber, order.RideEndPoint);
     }
@@ -75,7 +75,7 @@ public class OrdersLogic : IOrdersLogic
         return rideEntity == null ? OrdersConstants.RideNotFound  : OrdersConstants.UserIsAlreadyHaveAOrder;
     }
 
-    private async Task<Entities.CustomerTaxiService.CustomerData.Customer?> GetUserByNumber(string number)
+    private async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByNumber(string number)
     {
         return await _userRepository.GetUserByPhoneNumber(number);
     }

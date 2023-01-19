@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.CustomerTaxiService.Requests;
+namespace Entities.CustomerApi.Requests;
 
 [Serializable]
 public class RegistrationForUser

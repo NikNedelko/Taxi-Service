@@ -1,6 +1,6 @@
 namespace Entities.DriverApi.Driver;
 
-public class DriverDB
+public class DriverDb
 {
     public int Id { get; set; }
     public string Name { get; set; }

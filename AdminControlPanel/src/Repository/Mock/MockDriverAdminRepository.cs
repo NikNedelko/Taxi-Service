@@ -7,12 +7,12 @@ namespace AdminControlPanel.Repository;
 
 public class MockDriverAdminRepository : IDriverAdminRepository
 {
-    public async Task<List<DriverDB>> GetAllDriversWithId()
+    public async Task<List<DriverDb>> GetAllDriversWithId()
     {
         return MockDatabases.DriverList;
     }
 
-    public async Task<DriverDB?> GetDriverById(int id)
+    public async Task<DriverDb?> GetDriverById(int id)
     {
         return MockDatabases.DriverList.FirstOrDefault(x => x.Id == id);
     }

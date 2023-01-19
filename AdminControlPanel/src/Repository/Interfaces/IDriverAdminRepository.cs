@@ -5,7 +5,7 @@ namespace AdminControlPanel.Repository.Interfaces;
 
 public interface IDriverAdminRepository : IDriverAccountRepository
 {
-    public Task<List<DriverDB>> GetAllDriversWithId();
-    public Task<DriverDB?> GetDriverById(int id);
+    public Task<List<DriverDb>> GetAllDriversWithId();
+    public Task<DriverDb?> GetDriverById(int id);
     public Task<string> DeleteDriverById(int id);
 }

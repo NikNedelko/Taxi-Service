@@ -6,6 +6,6 @@ namespace AdminControlPanel.BL.Interfaces;
 
 public interface IDriversLogicForAdmin : IDriverAccountLogic
 {
-    public Task<List<DriverDB>> GetAllDrivers();
+    public Task<List<DriverDb>> GetAllDrivers();
     public Task<Response> DeleteDriverById(int id);
 }

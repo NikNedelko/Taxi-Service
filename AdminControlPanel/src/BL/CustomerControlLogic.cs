@@ -1,7 +1,7 @@
 using AdminControlPanel.BL.Interfaces;
 using AdminControlPanel.Repository.Interfaces;
-using Entities.CustomerTaxiService.CustomerData;
-using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerApi.CustomerData;
+using Entities.CustomerApi.Requests;
 using Entities.General;
 using TaxiService.BusinessLogic.Customer.Interfaces;
 using TaxiService.Repository.Customer.Interfaces;

@@ -1,4 +1,4 @@
-﻿using Entities.CustomerTaxiService.CustomerData;
+﻿using Entities.CustomerApi.CustomerData;
 using Entities.DriverApi.Driver;
 using Entities.General;
 using Entities.General.RideData;
@@ -38,9 +38,9 @@ public static class MockDatabases
         }
     };
     
-    public static List<DriverDB> DriverList = new()
+    public static List<DriverDb> DriverList = new()
     {
-        new DriverDB
+        new DriverDb
         {
             Id = 0,
             Name = "Jacob",

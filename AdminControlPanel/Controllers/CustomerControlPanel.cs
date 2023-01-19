@@ -1,5 +1,5 @@
 using AdminControlPanel.BL.Interfaces;
-using Entities.CustomerTaxiService.CustomerData;
+using Entities.CustomerApi.CustomerData;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
 

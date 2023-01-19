@@ -54,7 +54,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         return AccountConstants.DriverWasDeleted;
     }
 
-    private async Task<List<DriverDB>> GetAllDriversWithId()
+    private async Task<List<DriverDb>> GetAllDriversWithId()
     {
         return MockDatabases.DriverList;
     }
@@ -71,9 +71,9 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<DriverDB> ConvertToDatabase(Entities.DriverApi.Driver.Driver driver)
+    private async Task<DriverDb> ConvertToDatabase(Entities.DriverApi.Driver.Driver driver)
     {
-        return new DriverDB
+        return new DriverDb
         {
             Id = new Random().Next(1,99),
             Name = driver.Name,
@@ -90,7 +90,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<Entities.DriverApi.Driver.Driver> ConvertFromDatabase(DriverDB driverDb)
+    private async Task<Entities.DriverApi.Driver.Driver> ConvertFromDatabase(DriverDb driverDb)
     {
         return new Entities.DriverApi.Driver.Driver
         {

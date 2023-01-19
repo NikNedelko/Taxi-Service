@@ -1,4 +1,3 @@
-using CustomerTaxiService.Constants;
 using Database.MockDatabase;
 using Entities.General;
 using Entities.General.RideData;

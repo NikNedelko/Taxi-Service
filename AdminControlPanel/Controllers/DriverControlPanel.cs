@@ -17,7 +17,7 @@ public class DriverControlPanel : ControllerBase
    }
 
    [HttpPost("/GetAllDrivers")]
-   public async Task<List<DriverDB>> GetAllDrivers()
+   public async Task<List<DriverDb>> GetAllDrivers()
    {
       return await _driversLogicForAdmin.GetAllDrivers();
    }

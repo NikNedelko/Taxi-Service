@@ -1,4 +1,4 @@
-using Entities.CustomerTaxiService.CustomerData;
+using Entities.CustomerApi.CustomerData;
 using Entities.General;
 using TaxiService.BusinessLogic.Customer.Interfaces;
 

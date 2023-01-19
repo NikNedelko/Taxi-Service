@@ -1,4 +1,4 @@
-using Entities.CustomerTaxiService.Requests;
+using Entities.CustomerApi.Requests;
 using Entities.General;
 using Entities.General.RideData;
 
