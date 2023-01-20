@@ -2,6 +2,7 @@ using Entities.CustomerApi.Requests;
 using Entities.General;
 using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer.Interfaces;
+using TaxiService.BusinessLogic.General;
 using TaxiService.Constants.Customer.General;
 using TaxiService.Constants.Customer.OrdersLogic;
 using TaxiService.Repository.Customer.Interfaces;
@@ -23,21 +24,21 @@ public class OrdersLogic : IOrdersLogic
     {
         var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
         if (checkCustomerResult != OrdersConstants.Ok)
-            return await CreateResponse(checkCustomerResult);
+            return await GeneralMethods.CreateResponse(checkCustomerResult);
 
         var checkIfUserAlreadyHaveARide = await CheckIsAlreadyHaveAOrder(order.PhoneNumber);
         if (checkIfUserAlreadyHaveARide == OrdersConstants.UserIsAlreadyHaveAOrder)
-            return await CreateResponse(OrdersConstants.UserIsAlreadyHaveAOrder);
+            return await GeneralMethods.CreateResponse(OrdersConstants.UserIsAlreadyHaveAOrder);
         
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
-            return await CreateResponse(ResponseConstants.ProblemWithUsersEntity);
+            return await GeneralMethods.CreateResponse(ResponseConstants.ProblemWithUsersEntity);
 
         var newOrderResponse = await CreateNewOrder(userAccount, order);
         if (newOrderResponse != OrdersConstants.Ok)
-            return await CreateResponse(newOrderResponse);
+            return await GeneralMethods.CreateResponse(newOrderResponse);
 
-        return await CreateResponse(ResponseConstants.RideAccepted);
+        return await GeneralMethods.CreateResponse(ResponseConstants.RideAccepted);
     }
 
     private async Task<string> CreateNewOrder(Entities.CustomerApi.CustomerData.Customer customer, Order order)
@@ -49,10 +50,10 @@ public class OrdersLogic : IOrdersLogic
     {
         var checkResult = await _rideRepository.CheckRideForExistence(phoneNumber);
         if (checkResult != OrdersConstants.Ok)
-            return await CreateResponse(checkResult);
+            return await GeneralMethods.CreateResponse(checkResult);
 
         var cancelOrderResult = await _rideRepository.CancelOrder(phoneNumber);
-        return await CreateResponse(cancelOrderResult);
+        return await GeneralMethods.CreateResponse(cancelOrderResult);
     }
 
     public async Task<Ride?> GetRideInfo(string phoneNumber)
@@ -84,26 +85,5 @@ public class OrdersLogic : IOrdersLogic
     {
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
         return entityOfUser == null ? OrdersConstants.UserNotFound : OrdersConstants.Ok;
-    }
-
-    private async Task<Response> CreateResponse(string message)
-        => new Response
-        {
-            Message = message,
-            AdditionalInformation = await TakeAdditionalInfoByMessage(message) ?? ""
-        };
-
-    private async Task<string?> TakeAdditionalInfoByMessage(string message)
-    {
-        return message switch
-        {
-            ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
-            OrdersConstants.UserNotFound => OrdersConstants.UserNotFoundAdditionalText,
-            OrdersConstants.RideNotFound => OrdersConstants.RideNotFoundAdditionalText,
-            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText,
-            OrdersConstants.UserIsAlreadyHaveAOrder => OrdersConstants.UserIsAlreadyHaveAOrderAdditionalText
-            ,
-            _ => "Something went wrong"
-        };
     }
 }

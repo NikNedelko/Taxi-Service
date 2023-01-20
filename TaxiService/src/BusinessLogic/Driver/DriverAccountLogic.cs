@@ -1,6 +1,7 @@
 using Entities.DriverApi.Driver;
 using Entities.General;
 using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.BusinessLogic.General;
 using TaxiService.Constants.Driver.AccountConstants;
 using TaxiService.Repository.Driver.Interfaces;
 
@@ -19,23 +20,23 @@ public class DriverAccountLogic : IDriverAccountLogic
     {
         var checkNumber = await CheckDriverByPhoneNumber(registrationDriver.PhoneNumber);
         if (checkNumber == AccountConstants.DriverIsExist)
-            return await CreateResponse(AccountConstants.DriverIsExist);
+            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
         
         var checkLicense = await CheckDriverByLicenseNumber(registrationDriver.DriverLicenseNumber);
         if (checkLicense == AccountConstants.Ok)
-            return await CreateResponse(AccountConstants.DriverIsExist);
+            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
         
         var addResult = await AddNewDriverToDatabase(registrationDriver);
-        return await CreateResponse(addResult);
+        return await GeneralMethods.CreateResponse(addResult);
     }
 
     public async Task<Response> DeleteDriver(string phoneNumber)
     {
         var checkNumber = await CheckDriverByPhoneNumber(phoneNumber);
         if (checkNumber == AccountConstants.DriverIsNotExist)
-            return await CreateResponse(AccountConstants.DriverIsExist);
+            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
         
-        return await CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
+        return await GeneralMethods.CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
     }
 
     private async Task<string> AddNewDriverToDatabase(RegistrationForDriver registrationForDriver)
@@ -53,25 +54,5 @@ public class DriverAccountLogic : IDriverAccountLogic
     {
         var driverEntity = await _accountRepository.GetDriverByLicense(licenseNumber);
         return driverEntity == null ? AccountConstants.DriverIsNotExist : AccountConstants.Ok;
-    }
-    
-    private async Task<Response> CreateResponse(string message)
-        => new Response
-        {
-            Message = message,
-            AdditionalInformation = await TakeAdditionalInfoByMessage(message) ?? ""
-        };
-
-    private async Task<string?> TakeAdditionalInfoByMessage(string message)
-    {
-        return message switch
-        {
-            AccountConstants.DriverIsExist => AccountConstants.DriverIsExistAdditionalInfo,
-            AccountConstants.DriverWasAdded => AccountConstants.DriverWasAddedAdditionalInfo,
-            AccountConstants.DriverIsNotExist => AccountConstants.DriverIsNotExistAdditionalInfo,
-            AccountConstants.DriverWasDeleted => AccountConstants.DriverWasDeletedAdditionalInfo
-            ,
-            _ => ""
-        };
     }
 }
