@@ -3,8 +3,8 @@
 ## Goal
 - Develop a simple taxi service
 ## Structure
-- Service for customers
-- Service for drivers 
+- Taxi service
+- Admin tools 
 - Database
 - Entities
 ## Stack
