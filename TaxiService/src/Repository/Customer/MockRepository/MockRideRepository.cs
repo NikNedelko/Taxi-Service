@@ -1,7 +1,7 @@
 using Database.MockDatabase;
 using Entities.General;
 using Entities.General.RideData;
-using TaxiService.Constants.Customer.OrdersLogic;
+using TaxiService.Constants.Customer;
 using TaxiService.Repository.Customer.Interfaces;
 
 namespace TaxiService.Repository.Customer.MockRepository;
@@ -11,14 +11,14 @@ public class MockRideRepository : IRideRepository
     public async Task<string> AddNewOrder(string phoneNumber, string endPoint)
     {
         MockDatabases.RideList.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
-        return OrdersConstants.Ok;
+        return CustomerConstants.Ok;
     }
 
     public async Task<string> CheckRideForExistence(string phoneNumber)
     {
         var rideEntity = MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber);
 
-        return rideEntity == null ? OrdersConstants.RideNotFound : OrdersConstants.Ok;
+        return rideEntity == null ? CustomerConstants.RideNotFound : CustomerConstants.Ok;
     }
 
     private async Task<RideDb?> TakeRideDbEntity(string phoneNumber)
@@ -31,9 +31,9 @@ public class MockRideRepository : IRideRepository
     {
         var rideEntity = await TakeRideDbEntity(phoneNumber);
         if (rideEntity == null)
-            return OrdersConstants.RideNotFound;
+            return CustomerConstants.RideNotFound;
         MockDatabases.RideList.Remove(rideEntity);
-        return OrdersConstants.Ok;
+        return CustomerConstants.Ok;
     }
 
     public async Task<Ride?> GetRideInfo(string phoneNumber)

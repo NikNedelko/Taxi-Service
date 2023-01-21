@@ -1,7 +1,7 @@
 using Database.MockDatabase;
 using Entities.CustomerApi.CustomerData;
 using Entities.General;
-using TaxiService.Constants.Customer.Account;
+using TaxiService.Constants.Customer;
 using TaxiService.Repository.Customer.Interfaces;
 
 namespace TaxiService.Repository.Customer.MockRepository;
@@ -11,12 +11,12 @@ public class MockUsersRepository : IUserRepository
     public async Task<string> AddNewUser(Entities.CustomerApi.CustomerData.Customer customer)
     {
         var checkResult = await CheckOfExist(customer.PhoneNumber);
-        if (checkResult != UserConstants.UserNotFound)
+        if (checkResult != CustomerConstants.UserNotFound)
             return checkResult;
 
         MockDatabases.CustomerList.Add(await ConvertUserToDatabase(customer));
 
-        return UserConstants.Ok;
+        return CustomerConstants.Ok;
     }
 
     public async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByPhoneNumber(string number)
@@ -29,11 +29,11 @@ public class MockUsersRepository : IUserRepository
     {
         var entity = await GetUserByPhoneNumber(phoneNumber);
         if (entity == null)
-            return UserConstants.UserNotFound;
+            return CustomerConstants.UserNotFound;
 
         MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.First(x => x.PhoneNumber == phoneNumber));
 
-        return UserConstants.UserWasDeleted;
+        return CustomerConstants.UserWasDeleted;
     }
 
     public async Task<string?> PermissionToRide(string phoneNumber)
@@ -42,21 +42,21 @@ public class MockUsersRepository : IUserRepository
         if (userEntityDb == null)
             return null;
         return userEntityDb.Status == AccountStatus.Active
-            ? UserConstants.Ok
-            : UserConstants.UserDoesntHavePermissionToRide;
+            ? CustomerConstants.Ok
+            : CustomerConstants.UserDoesntHavePermissionToRide;
     }
 
     public async Task<string> CheckOfExist(string phoneNumber)
     {
         var userEntity = MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
-        return userEntity == null ? UserConstants.UserNotFound : UserConstants.Ok;
+        return userEntity == null ? CustomerConstants.UserNotFound : CustomerConstants.Ok;
     }
 
     public async Task<string> UpdateUser(Entities.CustomerApi.CustomerData.Customer user, string existUserNumber)
     {
         var userEntity = await GetUserByPhoneNumber(existUserNumber);
         if (userEntity == null)
-            return UserConstants.UserNotFound;
+            return CustomerConstants.UserNotFound;
 
         var updatedUser = new Entities.CustomerApi.CustomerData.Customer
         {
@@ -72,20 +72,20 @@ public class MockUsersRepository : IUserRepository
 
         MockDatabases.CustomerList.Add(await ConvertUserToDatabase(updatedUser));
 
-        return UserConstants.Ok;
+        return CustomerConstants.Ok;
     }
 
     public async Task<string> AddMoneyToAccount(string phoneNumber, decimal money)
     {
         var userEntity = await GetUserByPhoneNumber(phoneNumber);
         if (userEntity == null)
-            return UserConstants.UserNotFound;
+            return CustomerConstants.UserNotFound;
         userEntity.AvailableMoney += money;
 
         MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.First(db => db.PhoneNumber == phoneNumber));
         MockDatabases.CustomerList.Add(await ConvertUserToDatabase(userEntity));
 
-        return UserConstants.Ok;
+        return CustomerConstants.Ok;
     }
 
     public async Task<List<CustomerDB>> GetAllUsers()

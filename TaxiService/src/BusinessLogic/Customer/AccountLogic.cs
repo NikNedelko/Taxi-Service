@@ -2,7 +2,7 @@ using Entities.CustomerApi.Requests;
 using Entities.General;
 using TaxiService.BusinessLogic.Customer.Interfaces;
 using TaxiService.BusinessLogic.General;
-using TaxiService.Constants.Customer.Account;
+using TaxiService.Constants.Customer;
 using TaxiService.Repository.Customer.Interfaces;
 
 namespace TaxiService.BusinessLogic.Customer;
@@ -22,7 +22,7 @@ public class AccountLogic : IAccountLogic
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(newUser.PhoneNumber);
         if (userWithThisNumber != null)
-            return await GeneralMethods.CreateResponse(UserConstants.UserIsAlreadyExist);
+            return await GeneralMethods.CreateResponse(CustomerConstants.UserIsAlreadyExist);
         var responseFromCreate = await _userRepository.AddNewUser(new Entities.CustomerApi.CustomerData.Customer
         {
             Name = newUser.Name,
@@ -32,16 +32,16 @@ public class AccountLogic : IAccountLogic
             Status = AccountStatus.Active,
             RegistrationDate = DateTime.Now
         });
-        if (responseFromCreate != UserConstants.Ok)
+        if (responseFromCreate != CustomerConstants.Ok)
             await GeneralMethods.CreateResponse(responseFromCreate);
 
-        return await GeneralMethods.CreateResponse(UserConstants.UserWasCreated);
+        return await GeneralMethods.CreateResponse(CustomerConstants.UserWasCreated);
     }
 
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
         var checkIfInRideResult = await CheckIfUserInRide(phoneNumber);
-        if (checkIfInRideResult != UserConstants.Ok)
+        if (checkIfInRideResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkIfInRideResult);
         
         return await GeneralMethods.CreateResponse(await _userRepository.RemoveUser(phoneNumber));
@@ -51,23 +51,23 @@ public class AccountLogic : IAccountLogic
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(model.PhoneNumber);
         if (userWithThisNumber == null)
-            return await GeneralMethods.CreateResponse(UserConstants.UserNotFound);
+            return await GeneralMethods.CreateResponse(CustomerConstants.UserNotFound);
         var updateResult = await _userRepository.UpdateUser(model, userWithThisNumber.PhoneNumber);
-        if (updateResult != UserConstants.Ok)
+        if (updateResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(updateResult);
-        return await GeneralMethods.CreateResponse(UserConstants.UserWasUpdated);
+        return await GeneralMethods.CreateResponse(CustomerConstants.UserWasUpdated);
     }
 
     public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal money)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(phoneNumber);
         if (userWithThisNumber == null)
-            return await GeneralMethods.CreateResponse(UserConstants.UserNotFound);
+            return await GeneralMethods.CreateResponse(CustomerConstants.UserNotFound);
         var addMoneyResult = await _userRepository.AddMoneyToAccount(phoneNumber, money);
-        if (addMoneyResult != UserConstants.Ok)
+        if (addMoneyResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(addMoneyResult);
 
-        return await GeneralMethods.CreateResponse(UserConstants.MoneyWasAdded);
+        return await GeneralMethods.CreateResponse(CustomerConstants.MoneyWasAdded);
     }
 
     private async Task<string> CheckIfUserInRide(string phoneNumber)
@@ -76,6 +76,6 @@ public class AccountLogic : IAccountLogic
         var rideWithThisNumber = allRides
             .FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber
                                  && x is { IsTaken: true, IsEnd: false });
-        return rideWithThisNumber == null ? UserConstants.Ok : UserConstants.UserIsInRide;
+        return rideWithThisNumber == null ? CustomerConstants.Ok : CustomerConstants.UserIsInRide;
     }
 }

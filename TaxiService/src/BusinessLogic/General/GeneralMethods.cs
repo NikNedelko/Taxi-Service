@@ -1,7 +1,5 @@
 using Entities.General;
-using TaxiService.Constants.Customer.Account;
-using TaxiService.Constants.Customer.General;
-using TaxiService.Constants.Customer.OrdersLogic;
+using TaxiService.Constants.Customer;
 using TaxiService.Constants.Driver.AccountConstants;
 using TaxiService.Constants.Driver.DriverConstants;
 
@@ -20,16 +18,16 @@ public static class GeneralMethods
     {
         return message switch
         {
-            UserConstants.UserWasCreated => UserConstants.SuccessfulCreate,
-            UserConstants.UserWasDeleted => UserConstants.UserWasUpdatedAdditionalText,
-            UserConstants.MoneyWasAdded =>"",
-            UserConstants.UserIsInRide => UserConstants.UserIsInRideAdditionalText,
+            CustomerConstants.UserWasCreated => CustomerConstants.SuccessfulCreate,
+            CustomerConstants.UserWasDeleted => CustomerConstants.UserWasUpdatedAdditionalText,
+            CustomerConstants.MoneyWasAdded =>"",
+            CustomerConstants.UserIsInRide => CustomerConstants.UserIsInRideAdditionalText,
             
-            ResponseConstants.ProblemWithUsersEntity => ResponseConstants.ProblemsWhenTryToTakeUser,
-            OrdersConstants.UserNotFound => OrdersConstants.UserNotFoundAdditionalText,
-            OrdersConstants.RideNotFound => OrdersConstants.RideNotFoundAdditionalText,
-            ResponseConstants.RideAccepted => ResponseConstants.RideAcceptedAdditionalText,
-            OrdersConstants.UserIsAlreadyHaveAOrder => OrdersConstants.UserIsAlreadyHaveAOrderAdditionalText,
+            CustomerConstants.ProblemWithUsersEntity => CustomerConstants.ProblemsWhenTryToTakeUser,
+            CustomerConstants.UserNotFound => CustomerConstants.UserNotFoundAdditionalText,
+            CustomerConstants.RideNotFound => CustomerConstants.RideNotFoundAdditionalText,
+            CustomerConstants.RideAccepted => CustomerConstants.RideAcceptedAdditionalText,
+            CustomerConstants.UserIsAlreadyHaveAOrder => CustomerConstants.UserIsAlreadyHaveAOrderAdditionalText,
             
             DriverConstants.OrderByIdIsNotExist => DriverConstants.OrderByIdIsNotExistAdditionalText,
             DriverConstants.OrderByNumberIsNotExist => DriverConstants.OrderByNumberIsNotExistAdditionalText,

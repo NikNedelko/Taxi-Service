@@ -3,8 +3,7 @@ using Entities.General;
 using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer.Interfaces;
 using TaxiService.BusinessLogic.General;
-using TaxiService.Constants.Customer.General;
-using TaxiService.Constants.Customer.OrdersLogic;
+using TaxiService.Constants.Customer;
 using TaxiService.Repository.Customer.Interfaces;
 
 namespace TaxiService.BusinessLogic.Customer;
@@ -23,22 +22,22 @@ public class OrdersLogic : IOrdersLogic
     public async Task<Response> BeginNewOrder(Order order)
     {
         var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
-        if (checkCustomerResult != OrdersConstants.Ok)
+        if (checkCustomerResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkCustomerResult);
 
         var checkIfUserAlreadyHaveARide = await CheckIsAlreadyHaveAOrder(order.PhoneNumber);
-        if (checkIfUserAlreadyHaveARide == OrdersConstants.UserIsAlreadyHaveAOrder)
-            return await GeneralMethods.CreateResponse(OrdersConstants.UserIsAlreadyHaveAOrder);
+        if (checkIfUserAlreadyHaveARide == CustomerConstants.UserIsAlreadyHaveAOrder)
+            return await GeneralMethods.CreateResponse(CustomerConstants.UserIsAlreadyHaveAOrder);
         
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
-            return await GeneralMethods.CreateResponse(ResponseConstants.ProblemWithUsersEntity);
+            return await GeneralMethods.CreateResponse(CustomerConstants.ProblemWithUsersEntity);
 
         var newOrderResponse = await CreateNewOrder(userAccount, order);
-        if (newOrderResponse != OrdersConstants.Ok)
+        if (newOrderResponse != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(newOrderResponse);
 
-        return await GeneralMethods.CreateResponse(ResponseConstants.RideAccepted);
+        return await GeneralMethods.CreateResponse(CustomerConstants.RideAccepted);
     }
 
     private async Task<string> CreateNewOrder(Entities.CustomerApi.CustomerData.Customer customer, Order order)
@@ -49,7 +48,7 @@ public class OrdersLogic : IOrdersLogic
     public async Task<Response> CancelOrder(string phoneNumber)
     {
         var checkResult = await _rideRepository.CheckRideForExistence(phoneNumber);
-        if (checkResult != OrdersConstants.Ok)
+        if (checkResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkResult);
 
         var cancelOrderResult = await _rideRepository.CancelOrder(phoneNumber);
@@ -73,7 +72,7 @@ public class OrdersLogic : IOrdersLogic
             .FirstOrDefault(ride => ride.CustomerPhoneNumber == phoneNumber
                                     && ride.IsEnd != true);
         
-        return rideEntity == null ? OrdersConstants.RideNotFound  : OrdersConstants.UserIsAlreadyHaveAOrder;
+        return rideEntity == null ? CustomerConstants.RideNotFound  : CustomerConstants.UserIsAlreadyHaveAOrder;
     }
 
     private async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByNumber(string number)
@@ -84,6 +83,6 @@ public class OrdersLogic : IOrdersLogic
     private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
     {
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
-        return entityOfUser == null ? OrdersConstants.UserNotFound : OrdersConstants.Ok;
+        return entityOfUser == null ? CustomerConstants.UserNotFound : CustomerConstants.Ok;
     }
 }
