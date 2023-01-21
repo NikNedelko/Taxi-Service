@@ -2,7 +2,7 @@ using Entities.DriverApi.Driver;
 using Entities.General;
 using TaxiService.BusinessLogic.Driver.Interface;
 using TaxiService.BusinessLogic.General;
-using TaxiService.Constants.Driver.AccountConstants;
+using TaxiService.Constants.Driver;
 using TaxiService.Repository.Driver.Interfaces;
 
 namespace TaxiService.BusinessLogic.Driver;
@@ -19,12 +19,12 @@ public class DriverAccountLogic : IDriverAccountLogic
     public async Task<Response> AddNewDriver(RegistrationForDriver registrationDriver)
     {
         var checkNumber = await CheckDriverByPhoneNumber(registrationDriver.PhoneNumber);
-        if (checkNumber == AccountConstants.DriverIsExist)
-            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
+        if (checkNumber == DriverConstants.DriverIsExist)
+            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
         
         var checkLicense = await CheckDriverByLicenseNumber(registrationDriver.DriverLicenseNumber);
-        if (checkLicense == AccountConstants.Ok)
-            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
+        if (checkLicense == DriverConstants.Ok)
+            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
         
         var addResult = await AddNewDriverToDatabase(registrationDriver);
         return await GeneralMethods.CreateResponse(addResult);
@@ -33,8 +33,8 @@ public class DriverAccountLogic : IDriverAccountLogic
     public async Task<Response> DeleteDriver(string phoneNumber)
     {
         var checkNumber = await CheckDriverByPhoneNumber(phoneNumber);
-        if (checkNumber == AccountConstants.DriverIsNotExist)
-            return await GeneralMethods.CreateResponse(AccountConstants.DriverIsExist);
+        if (checkNumber == DriverConstants.DriverIsNotExist)
+            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
         
         return await GeneralMethods.CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
     }
@@ -47,12 +47,12 @@ public class DriverAccountLogic : IDriverAccountLogic
     private async Task<string> CheckDriverByPhoneNumber(string phoneNumber)
     {
         var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
-        return driverEntity == null ? AccountConstants.DriverIsNotExist : AccountConstants.DriverIsExist;
+        return driverEntity == null ? DriverConstants.DriverIsNotExist : DriverConstants.DriverIsExist;
     }
     
     private async Task<string> CheckDriverByLicenseNumber(string licenseNumber)
     {
         var driverEntity = await _accountRepository.GetDriverByLicense(licenseNumber);
-        return driverEntity == null ? AccountConstants.DriverIsNotExist : AccountConstants.Ok;
+        return driverEntity == null ? DriverConstants.DriverIsNotExist : DriverConstants.Ok;
     }
 }

@@ -1,7 +1,6 @@
 using Entities.General;
 using TaxiService.Constants.Customer;
-using TaxiService.Constants.Driver.AccountConstants;
-using TaxiService.Constants.Driver.DriverConstants;
+using TaxiService.Constants.Driver;
 
 namespace TaxiService.BusinessLogic.General;
 
@@ -32,10 +31,10 @@ public static class GeneralMethods
             DriverConstants.OrderByIdIsNotExist => DriverConstants.OrderByIdIsNotExistAdditionalText,
             DriverConstants.OrderByNumberIsNotExist => DriverConstants.OrderByNumberIsNotExistAdditionalText,
             
-            AccountConstants.DriverIsExist => AccountConstants.DriverIsExistAdditionalInfo,
-            AccountConstants.DriverWasAdded => AccountConstants.DriverWasAddedAdditionalInfo,
-            AccountConstants.DriverIsNotExist => AccountConstants.DriverIsNotExistAdditionalInfo,
-            AccountConstants.DriverWasDeleted => AccountConstants.DriverWasDeletedAdditionalInfo
+            DriverConstants.DriverIsExist => DriverConstants.DriverIsExistAdditionalInfo,
+            DriverConstants.DriverWasAdded => DriverConstants.DriverWasAddedAdditionalInfo,
+            DriverConstants.DriverIsNotExist => DriverConstants.DriverIsNotExistAdditionalInfo,
+            DriverConstants.DriverWasDeleted => DriverConstants.DriverWasDeletedAdditionalInfo
             ,
             _ => "Something went wrong"
         };

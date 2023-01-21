@@ -1,6 +1,6 @@
 using Database.MockDatabase;
 using Entities.General.RideData;
-using TaxiService.Constants.Driver.DriverConstants;
+using TaxiService.Constants.Driver;
 using TaxiService.Repository.Driver.Interfaces;
 
 namespace TaxiService.Repository.Driver.MockRepository;

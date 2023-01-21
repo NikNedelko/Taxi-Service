@@ -2,7 +2,7 @@ using Database.MockDatabase;
 using Entities.DriverApi;
 using Entities.DriverApi.Driver;
 using Entities.General;
-using TaxiService.Constants.Driver.AccountConstants;
+using TaxiService.Constants.Driver;
 using TaxiService.Repository.Driver.Interfaces;
 
 namespace TaxiService.Repository.Driver.MockRepository;
@@ -25,7 +25,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
             Balance = 0
         };
         MockDatabases.DriverList.Add(await ConvertToDatabase(newDriver));
-        return AccountConstants.DriverWasAdded;
+        return DriverConstants.DriverWasAdded;
     }
 
     public async Task<Entities.DriverApi.Driver.Driver?> GetDriverByNumber(string phoneNumber)
@@ -45,13 +45,13 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         var oldEntity = await GetDriverByNumber(phoneNumber);
         _ = await DeleteDriver(oldEntity.PhoneNumber);
         MockDatabases.DriverList.Add(await ConvertToDatabase(newDriver));
-        return AccountConstants.Ok;
+        return DriverConstants.Ok;
     }
 
     public async Task<string> DeleteDriver(string phoneNumber)
     {
         MockDatabases.DriverList.Remove(MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!);
-        return AccountConstants.DriverWasDeleted;
+        return DriverConstants.DriverWasDeleted;
     }
 
     private async Task<List<DriverDb>> GetAllDriversWithId()
