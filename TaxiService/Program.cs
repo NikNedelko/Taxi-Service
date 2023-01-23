@@ -17,11 +17,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); 
 
 builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
-
+//customers dependencies 
 builder.Services.AddScoped<IOrdersLogic, OrdersLogic>();
 builder.Services.AddScoped<IAccountLogic, AccountLogic>();
 builder.Services.AddScoped<IRideRepository, MockRideRepository>();
 builder.Services.AddScoped<IUserRepository, MockUsersRepository>();
+//drivers dependencies
+builder.Services.AddScoped<IDriveLogic, DriveLogic>();
+builder.Services.AddScoped<IDriveRepository, MockDriveRepository>();
 builder.Services.AddScoped<IDriverAccountLogic, DriverAccountLogic>();
 builder.Services.AddScoped<IDriverAccountRepository, MockDriverAccountRepository>();
 
