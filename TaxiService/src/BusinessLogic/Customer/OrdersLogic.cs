@@ -65,14 +65,14 @@ public class OrdersLogic : IOrdersLogic
         return await _rideRepository.GetAllRides();
     }
 
-    private async Task<string> CheckIsAlreadyHaveAOrder(string phoneNumber)
+    private async Task<string> CheckIsAlreadyHaveAnOrder(string phoneNumber)
     {
         var allRides = await _rideRepository.GetAllRides();
         var rideEntity = allRides
             .FirstOrDefault(ride => ride.CustomerPhoneNumber == phoneNumber
                                     && ride.IsEnd != true);
-        
-        return rideEntity == null ? CustomerConstants.RideNotFound  : CustomerConstants.UserIsAlreadyHaveAOrder;
+
+        return rideEntity == null ? CustomerConstants.RideNotFound : CustomerConstants.UserIsAlreadyHaveAOrder;
     }
 
     private async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByNumber(string number)
@@ -80,7 +80,7 @@ public class OrdersLogic : IOrdersLogic
         return await _userRepository.GetUserByPhoneNumber(number);
     }
 
-    private async Task<string> CheckInformationAboutCustomer(string phoneNumber)
+    private async Task<string> CheckIsUserExist(string phoneNumber)
     {
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
         return entityOfUser == null ? CustomerConstants.UserNotFound : CustomerConstants.Ok;
