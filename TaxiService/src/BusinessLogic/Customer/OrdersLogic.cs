@@ -1,4 +1,5 @@
 using Entities.CustomerApi.Requests;
+using Entities.DriverApi;
 using Entities.General;
 using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer.Interfaces;
@@ -21,17 +22,25 @@ public class OrdersLogic : IOrdersLogic
 
     public async Task<Response> BeginNewOrder(Order order)
     {
-        var checkCustomerResult = await CheckInformationAboutCustomer(order.PhoneNumber);
+        var checkCustomerResult = await CheckIsUserExist(order.PhoneNumber);
         if (checkCustomerResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkCustomerResult);
 
-        var checkIfUserAlreadyHaveARide = await CheckIsAlreadyHaveAOrder(order.PhoneNumber);
+        var checkIfUserAlreadyHaveARide = await CheckIsAlreadyHaveAnOrder(order.PhoneNumber);
         if (checkIfUserAlreadyHaveARide == CustomerConstants.UserIsAlreadyHaveAOrder)
             return await GeneralMethods.CreateResponse(CustomerConstants.UserIsAlreadyHaveAOrder);
-        
+
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
             return await GeneralMethods.CreateResponse(CustomerConstants.ProblemWithUsersEntity);
+
+        var checkMoneyResult = await CheckMoneyForRide(order.PhoneNumber, order.Price);
+        if (checkMoneyResult != CustomerConstants.Ok)
+            return await GeneralMethods.CreateResponse(checkMoneyResult);
+        
+        var checkClassForMoney = await CheckMoneyForDriveClass(order.PhoneNumber, order.Price, order.DriveClass);
+        if (checkClassForMoney != CustomerConstants.Ok)
+            return await GeneralMethods.CreateResponse(checkClassForMoney);
 
         var newOrderResponse = await CreateNewOrder(userAccount, order);
         if (newOrderResponse != CustomerConstants.Ok)
@@ -39,6 +48,19 @@ public class OrdersLogic : IOrdersLogic
 
         return await GeneralMethods.CreateResponse(CustomerConstants.RideAccepted);
     }
+
+    private async Task<string> CheckMoneyForRide(string phoneNumber, decimal count)
+    {
+        var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
+        return userEntity.AvailableMoney >= count ? CustomerConstants.Ok : "Not enough money";
+    }
+
+    private async Task<string> CheckMoneyForDriveClass(string phoneNumber, decimal count, DriveClass driveClass)
+    {
+        var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
+        return userEntity.AvailableMoney >= (int)driveClass ? CustomerConstants.Ok : "Not enough money for this class of ride";
+    }
+
 
     private async Task<string> CreateNewOrder(Entities.CustomerApi.CustomerData.Customer customer, Order order)
     {
