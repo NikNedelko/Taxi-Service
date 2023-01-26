@@ -1,4 +1,6 @@
 
+using Entities.DriverApi;
+
 namespace Entities.General.RideData;
 
 public class Ride
@@ -6,6 +8,8 @@ public class Ride
     public string Id { get; set; }
     public string DriverPhoneNumber { get; set; }
     public string CustomerPhoneNumber { get; set; }
+    public decimal Price { get; set; }
+    public DriveClass DriveClass { get; set; }
     public bool IsTaken { get; set; }
     public bool IsOnRide { get; set; }
     public DateTime StartTime { get; set; }
