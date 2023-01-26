@@ -24,6 +24,11 @@ public class MockCustomerAdminRepository : ICustomerAdminRepository
         return MockDatabases.CustomerList.FirstOrDefault(x => x.Id == userId);
     }
 
+    public async Task<string> UpdateUserAsAdmin(Customer user, int existUserId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<string> ChangeCustomerStatus(string phoneNumber, AccountStatus newAccountStatus)
     {
         var entity = await GetCustomerDbByPhoneNumber(phoneNumber);
@@ -48,7 +53,7 @@ public class MockCustomerAdminRepository : ICustomerAdminRepository
         throw new NotImplementedException();
     }
 
-    async Task<Customer?> IUserRepository.GetUserByPhoneNumber(string number)
+    async Task<Customer> IUserRepository.GetUserByPhoneNumber(string number)
     {
         throw new NotImplementedException();
     }
