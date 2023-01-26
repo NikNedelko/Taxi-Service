@@ -38,11 +38,11 @@ public class OrdersLogic : IOrdersLogic
         if (checkMoneyResult != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkMoneyResult);
         
-        var checkClassForMoney = await CheckMoneyForDriveClass(order.PhoneNumber, order.Price, order.DriveClass);
+        var checkClassForMoney = await CheckMoneyForDriveClass(order.PhoneNumber, order.DriveClass);
         if (checkClassForMoney != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(checkClassForMoney);
 
-        var newOrderResponse = await CreateNewOrder(userAccount, order);
+        var newOrderResponse = await CreateNewOrder(order);
         if (newOrderResponse != CustomerConstants.Ok)
             return await GeneralMethods.CreateResponse(newOrderResponse);
 
@@ -55,16 +55,15 @@ public class OrdersLogic : IOrdersLogic
         return userEntity.AvailableMoney >= count ? CustomerConstants.Ok : "Not enough money";
     }
 
-    private async Task<string> CheckMoneyForDriveClass(string phoneNumber, decimal count, DriveClass driveClass)
+    private async Task<string> CheckMoneyForDriveClass(string phoneNumber, DriveClass driveClass)
     {
         var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
         return userEntity.AvailableMoney >= (int)driveClass ? CustomerConstants.Ok : "Not enough money for this class of ride";
     }
-
-
-    private async Task<string> CreateNewOrder(Entities.CustomerApi.CustomerData.Customer customer, Order order)
+    
+    private async Task<string> CreateNewOrder(Order order)
     {
-        return await _rideRepository.AddNewOrder(customer.PhoneNumber, order.RideEndPoint);
+        return await _rideRepository.AddNewOrder(order);
     }
 
     public async Task<Response> CancelOrder(string phoneNumber)
