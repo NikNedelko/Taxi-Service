@@ -1,4 +1,5 @@
 using Database.MockDatabase;
+using Entities.CustomerApi.Requests;
 using Entities.General;
 using Entities.General.RideData;
 using TaxiService.Constants.Customer;
@@ -8,9 +9,21 @@ namespace TaxiService.Repository.Customer.MockRepository;
 
 public class MockRideRepository : IRideRepository
 {
-    public async Task<string> AddNewOrder(string phoneNumber, string endPoint)
+    private readonly IUserRepository _userRepository;
+
+    public MockRideRepository(IUserRepository userRepository)
     {
-        MockDatabases.RideList.Add(await CreateRideEntityForDb(phoneNumber, endPoint));
+        _userRepository = userRepository;
+    }
+
+    public async Task<string> AddNewOrder(Order newOrder)
+    {
+        MockDatabases.RideList.Add(await CreateRideEntityForDb(newOrder));
+
+        var customerEntity = await _userRepository.GetUserByPhoneNumber(newOrder.PhoneNumber);
+        customerEntity.AvailableMoney -= newOrder.Price;
+        _ = _userRepository.UpdateUser(customerEntity, newOrder.PhoneNumber);
+
         return CustomerConstants.Ok;
     }
 
@@ -33,6 +46,12 @@ public class MockRideRepository : IRideRepository
         if (rideEntity == null)
             return CustomerConstants.RideNotFound;
         MockDatabases.RideList.Remove(rideEntity);
+
+        var customerEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
+
+        customerEntity.AvailableMoney += rideEntity.Price;
+        _ = _userRepository.UpdateUser(customerEntity, phoneNumber);
+
         return CustomerConstants.Ok;
     }
 
@@ -49,13 +68,15 @@ public class MockRideRepository : IRideRepository
         return MockDatabases.RideList;
     }
 
-    private async Task<RideDb> CreateRideEntityForDb(string phoneNumber, string endPoint)
+    private async Task<RideDb> CreateRideEntityForDb(Order order)
     {
         return new RideDb
         {
-            CustomerPhoneNumber = phoneNumber,
-            EndPointOfRide = endPoint,
-            RideDate = DateTime.Now
+            CustomerPhoneNumber = order.PhoneNumber,
+            EndPointOfRide = order.RideEndPoint,
+            RideDate = DateTime.Now,
+            Price = order.Price,
+            DriveClass = order.DriveClass
         };
     }
 
