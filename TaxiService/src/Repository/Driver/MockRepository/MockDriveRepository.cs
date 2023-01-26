@@ -1,4 +1,5 @@
 using Database.MockDatabase;
+using Entities.DriverApi;
 using Entities.General.RideData;
 using TaxiService.Constants.Driver;
 using TaxiService.Repository.Driver.Interfaces;
@@ -28,9 +29,9 @@ public class MockDriveRepository : IDriveRepository
         return await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
     }
 
-    public async Task<List<RideDb>> GetAllAvailableOrders(string phoneNumber)
+    public async Task<List<RideDb>> GetAllAvailableOrders(DriveClass driveClass)
     {
-        return MockDatabases.RideList;
+        return MockDatabases.RideList.Where(x=>x.DriveClass == driveClass).ToList();
     }
 
     public async Task<string> TakeOrderById(int rideId, string phoneNumber)
@@ -56,6 +57,11 @@ public class MockDriveRepository : IDriveRepository
             .Remove(MockDatabases.RideList
                 .FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber)!);
         MockDatabases.RideList.Add(rideEntity);
+
+        var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
+        riderEntity.Balance += rideEntity.Price;
+        _ = await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
+        
         return DriverConstants.Ok;
     }
 }
