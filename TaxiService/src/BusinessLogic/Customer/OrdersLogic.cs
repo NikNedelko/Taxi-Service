@@ -52,13 +52,13 @@ public class OrdersLogic : IOrdersLogic
     private async Task<string> CheckMoneyForRide(string phoneNumber, decimal count)
     {
         var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
-        return userEntity.AvailableMoney >= count ? CustomerConstants.Ok : "Not enough money";
+        return userEntity.AvailableMoney >= count ? CustomerConstants.Ok : CustomerConstants.NotEnoughMoney;
     }
 
     private async Task<string> CheckMoneyForDriveClass(string phoneNumber, DriveClass driveClass)
     {
         var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
-        return userEntity.AvailableMoney >= (int)driveClass ? CustomerConstants.Ok : "Not enough money for this class of ride";
+        return userEntity.AvailableMoney >= (int)driveClass ? CustomerConstants.Ok : CustomerConstants.NotEnoughMoneyForRideClass;
     }
     
     private async Task<string> CreateNewOrder(Order order)

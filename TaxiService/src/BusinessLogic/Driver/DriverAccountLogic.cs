@@ -21,11 +21,11 @@ public class DriverAccountLogic : IDriverAccountLogic
         var checkNumber = await CheckDriverByPhoneNumber(registrationDriver.PhoneNumber);
         if (checkNumber == DriverConstants.DriverIsExist)
             return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
-        
+
         var checkLicense = await CheckDriverByLicenseNumber(registrationDriver.DriverLicenseNumber);
         if (checkLicense == DriverConstants.Ok)
             return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
-        
+
         var addResult = await AddNewDriverToDatabase(registrationDriver);
         return await GeneralMethods.CreateResponse(addResult);
     }
@@ -35,7 +35,7 @@ public class DriverAccountLogic : IDriverAccountLogic
         var checkNumber = await CheckDriverByPhoneNumber(phoneNumber);
         if (checkNumber == DriverConstants.DriverIsNotExist)
             return await GeneralMethods.CreateResponse(DriverConstants.DriverIsExist);
-        
+
         return await GeneralMethods.CreateResponse(await _accountRepository.DeleteDriver(phoneNumber));
     }
 
@@ -49,7 +49,7 @@ public class DriverAccountLogic : IDriverAccountLogic
         var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
         return driverEntity == null ? DriverConstants.DriverIsNotExist : DriverConstants.DriverIsExist;
     }
-    
+
     private async Task<string> CheckDriverByLicenseNumber(string licenseNumber)
     {
         var driverEntity = await _accountRepository.GetDriverByLicense(licenseNumber);

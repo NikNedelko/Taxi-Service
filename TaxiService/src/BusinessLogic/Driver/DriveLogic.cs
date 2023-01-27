@@ -45,7 +45,7 @@ public class DriveLogic : IDriveLogic
         var ride = allRides.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
         if (ride != null)
             if (!ride.IsEnd)
-                return await GeneralMethods.CreateResponse("Can't end work while you are in ride");
+                return await GeneralMethods.CreateResponse(DriverConstants.CanNotEndWorkWhileInRide);
 
         return await GeneralMethods.CreateResponse(await _driveRepository.EndWork(phoneNumber));
     }
