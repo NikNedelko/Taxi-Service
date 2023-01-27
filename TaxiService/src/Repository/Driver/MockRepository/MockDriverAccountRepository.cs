@@ -75,7 +75,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
     {
         return new DriverDb
         {
-            Id = new Random().Next(1,99),
+            Id = new Random().Next(1, 99),
             Name = driver.Name,
             LastName = driver.LastName,
             PhoneNumber = driver.PhoneNumber,
@@ -94,7 +94,6 @@ public class MockDriverAccountRepository : IDriverAccountRepository
     {
         return new Entities.DriverApi.Driver.Driver
         {
-            
             Name = driverDb.Name,
             LastName = driverDb.LastName,
             PhoneNumber = driverDb.PhoneNumber,

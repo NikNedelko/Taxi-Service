@@ -31,7 +31,7 @@ public class MockDriveRepository : IDriveRepository
 
     public async Task<List<RideDb>> GetAllAvailableOrders(DriveClass driveClass)
     {
-        return MockDatabases.RideList.Where(x=>x.DriveClass == driveClass).ToList();
+        return MockDatabases.RideList.Where(x => x.DriveClass == driveClass).ToList();
     }
 
     public async Task<string> TakeOrderById(int rideId, string phoneNumber)
@@ -61,7 +61,7 @@ public class MockDriveRepository : IDriveRepository
         var riderEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
         riderEntity.Balance += rideEntity.Price;
         _ = await _accountRepository.UpdateDriver(riderEntity, phoneNumber);
-        
+
         return DriverConstants.Ok;
     }
 }
