@@ -1,4 +1,5 @@
 using AdminControlPanel.BL.Interfaces;
+using AdminControlPanel.Constants;
 using AdminControlPanel.Repository.Interfaces;
 using Entities.DriverApi.Driver;
 using Entities.General;
@@ -23,7 +24,7 @@ public class DriversControlLogic : IDriversLogicForAdmin
     public async Task<Response> DeleteDriverById(int id)
     {
         var checkIsExist = await CheckIsDriverExist(id);
-        if (checkIsExist != "User is exist")
+        if (checkIsExist != AdminConstants.UserIsExist)
             return await CreateResponse(checkIsExist);
 
         return await CreateResponse(await _driverAdminRepository.DeleteDriverById(id));
@@ -32,7 +33,7 @@ public class DriversControlLogic : IDriversLogicForAdmin
     private async Task<string> CheckIsDriverExist(int id)
     {
         var entity = await _driverAdminRepository.GetDriverById(id);
-        return entity == null ? "User not found" : "User is exist";
+        return entity == null ? AdminConstants.UserNotFound : AdminConstants.UserIsExist;
     }
 
     private async Task<Response> CreateResponse(string message)

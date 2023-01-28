@@ -1,4 +1,5 @@
 using AdminControlPanel.BL.Interfaces;
+using AdminControlPanel.Constants;
 using AdminControlPanel.Repository.Interfaces;
 using Entities.CustomerApi.CustomerData;
 using Entities.CustomerApi.Requests;
@@ -22,7 +23,7 @@ public class CustomerControlLogic : IAccountLogicForAdmin
     public async Task<Response> DeleteUserById(int id)
     {
         var isUserExist = await CheckUserIsExistById(id);
-        if (isUserExist != "Ok")
+        if (isUserExist != AdminConstants.Ok)
             return await CreateResponse(isUserExist);
         return await CreateResponse(await _customerAdminRepository.DeleteUserById(id));
     }
@@ -35,15 +36,15 @@ public class CustomerControlLogic : IAccountLogicForAdmin
     public async Task<Response> ChangeAccountStatus(string phoneNumber, AccountStatus newAccountStatus)
     {
         var userWithThisNumber = await _userRepository.CheckOfExist(phoneNumber);
-        if (userWithThisNumber == "User with this phone number is not exist")
-            return await CreateResponse("");
+        if (userWithThisNumber == AdminConstants.UserWithThisNumberIsNotExist)
+            return await CreateResponse(AdminConstants.UserWithThisNumberIsNotExist);
         return await CreateResponse(await _customerAdminRepository.ChangeCustomerStatus(phoneNumber, newAccountStatus));
     }
 
     private async Task<string> CheckUserIsExistById(int id)
     {
         var entity = await _customerAdminRepository.GetUserById(id);
-        return entity == null ? "User is not exist" : "Ok";
+        return entity == null ? AdminConstants.UserIsNotExist : AdminConstants.Ok;
     }
 
     private async Task<Response> CreateResponse(string message)
