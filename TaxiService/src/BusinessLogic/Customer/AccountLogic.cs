@@ -33,7 +33,7 @@ public class AccountLogic : IAccountLogic
             RegistrationDate = DateTime.Now
         });
         if (responseFromCreate != CustomerConstants.Ok)
-            await GeneralMethods.CreateResponse(responseFromCreate);
+            return await GeneralMethods.CreateResponse(responseFromCreate);
 
         return await GeneralMethods.CreateResponse(CustomerConstants.UserWasCreated);
     }
