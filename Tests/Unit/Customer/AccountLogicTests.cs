@@ -1,24 +1,31 @@
-using System.Runtime.CompilerServices;
-using Entities.CustomerApi.Requests;
-using TaxiService.BusinessLogic.Customer.Interfaces;
+using TaxiService.BusinessLogic.Customer;
+using TaxiService.Repository.Customer.Interfaces;
+using TaxiService.Repository.Customer.MockRepository;
 
 namespace Tests.Unit.Customer;
 
 [TestClass]
 public sealed class AccountLogicTests
 {
-    private readonly IAccountLogic _accountLogic;
+    //Temporarily
+    private readonly IAccountLogic _accountLogic = 
+        new AccountLogic(new MockUsersRepository(),new MockRideRepository(new MockUsersRepository()));
 
-    public AccountLogicTests(IAccountLogic accountLogic)
-    {
-        _accountLogic = accountLogic;
-    }
-
-    public async void CreateUserWithRegistration()
+    [TestMethod]
+    public async Task CreateUserByRegistration()
     {
         var entityForRegistration = await GetRegistrationAccount();
-        Assert.are
-        
+        var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
+        Assert.IsNotNull(registrationResult);
+        Assert.AreEqual(registrationResult.Message, CustomerConstants.UserWasCreated);
+        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.SuccessfulCreate);
+        var userInDb = MockDatabases.CustomerList
+            .FirstOrDefault(x => x.Name == entityForRegistration.Name
+                                 && x.LastName == entityForRegistration.LastName
+                                 && x.PhoneNumber == entityForRegistration.PhoneNumber
+                                 && x.Email == entityForRegistration.Email);
+        Assert.IsNotNull(userInDb);
+        MockDatabases.CustomerList.Remove(userInDb);
     }
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
