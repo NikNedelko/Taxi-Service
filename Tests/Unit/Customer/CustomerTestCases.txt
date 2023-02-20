@@ -1,0 +1,15 @@
+Test-Case 1
+Name : Create User By Registration
+Steps:
+1-
+2-
+3-
+4-
+Expected result:
+---------------
+Test-Case 2
+Name :
+Data:
+Steps:
+Expected result:
+---------------
