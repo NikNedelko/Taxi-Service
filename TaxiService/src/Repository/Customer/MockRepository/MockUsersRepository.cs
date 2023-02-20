@@ -100,6 +100,7 @@ public class MockUsersRepository : IUserRepository
             Name = customerDb.Name,
             LastName = customerDb.LastName,
             PhoneNumber = customerDb.PhoneNumber,
+            Email = customerDb.Email,
             FeedBack = (FeedBack)customerDb.FeedBack,
             Status = AccountStatus.NoData,
             RegistrationDate = customerDb.RegistrationDate,
@@ -114,6 +115,7 @@ public class MockUsersRepository : IUserRepository
             Name = customer.Name,
             LastName = customer.LastName,
             PhoneNumber = customer.PhoneNumber,
+            Email = customer.Email,
             FeedBack = Convert.ToInt32(customer.FeedBack),
             Status = Convert.ToInt32(customer.Status),
             AvailableMoney = customer.AvailableMoney

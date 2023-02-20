@@ -29,6 +29,7 @@ public class AccountLogic : IAccountLogic
             LastName = newUser.LastName,
             PhoneNumber = newUser.PhoneNumber,
             FeedBack = FeedBack.NoData,
+            Email = newUser.Email,
             Status = AccountStatus.Active,
             RegistrationDate = DateTime.Now
         });
