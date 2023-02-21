@@ -11,6 +11,8 @@ using TaxiService.Repository.Driver.MockRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IRideLogicForAdmin, RideControlLogic>();
+
 builder.Services.AddScoped<IUserRepository, MockUsersRepository>();
 builder.Services.AddScoped<IAccountLogicForAdmin, CustomerControlLogic>();
 
