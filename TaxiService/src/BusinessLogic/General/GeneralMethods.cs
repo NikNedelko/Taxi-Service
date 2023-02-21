@@ -19,7 +19,7 @@ public static class GeneralMethods
         {
             CustomerConstants.UserWasCreated => CustomerConstants.SuccessfulCreate,
             CustomerConstants.UserWasDeleted => CustomerConstants.UserWasUpdatedAdditionalText,
-            CustomerConstants.MoneyWasAdded =>"",
+            CustomerConstants.MoneyWasAdded => "",
             CustomerConstants.UserIsInRide => CustomerConstants.UserIsInRideAdditionalText,
             
             CustomerConstants.ProblemWithUsersEntity => CustomerConstants.ProblemsWhenTryToTakeUser,
@@ -36,7 +36,7 @@ public static class GeneralMethods
             DriverConstants.DriverIsNotExist => DriverConstants.DriverIsNotExistAdditionalInfo,
             DriverConstants.DriverWasDeleted => DriverConstants.DriverWasDeletedAdditionalInfo
             ,
-            _ => "Something went wrong"
+            _ => CustomerConstants.SomethingWentWrong
         };
     }
 }
