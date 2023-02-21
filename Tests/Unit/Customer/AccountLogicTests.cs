@@ -33,7 +33,35 @@ public sealed class AccountLogicTests
                                  && x.Email == entityForRegistration.Email));
     }
 
-    
+    [TestMethod]
+    public async Task CreateUserByRegistration_ExistedNumber()
+    {
+        //First registration
+        var entityForRegistration = await GetRegistrationAccount();
+        var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
+        Assert.IsNotNull(registrationResult);
+        Assert.AreEqual(registrationResult.Message, CustomerConstants.UserWasCreated);
+        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.SuccessfulCreate);
+        
+        var userInDb = MockDatabases.CustomerList
+            .FirstOrDefault(x => x.Name == entityForRegistration.Name
+                                 && x.LastName == entityForRegistration.LastName
+                                 && x.PhoneNumber == entityForRegistration.PhoneNumber
+                                 && x.Email == entityForRegistration.Email);
+        Assert.IsNotNull(userInDb);
+        //Second registration
+        var secondRegistrationResult = await _accountLogic.CreateAccount(entityForRegistration);
+        Assert.IsNotNull(secondRegistrationResult);
+        Assert.AreEqual(secondRegistrationResult.Message, CustomerConstants.UserIsAlreadyExist);
+        Assert.AreEqual(secondRegistrationResult.AdditionalInformation, CustomerConstants.SomethingWentWrong);
+        Assert.IsNotNull(userInDb);
+        MockDatabases.CustomerList.Remove(userInDb);
+        Assert.IsNull(MockDatabases.CustomerList
+            .FirstOrDefault(x => x.Name == entityForRegistration.Name
+                                 && x.LastName == entityForRegistration.LastName
+                                 && x.PhoneNumber == entityForRegistration.PhoneNumber
+                                 && x.Email == entityForRegistration.Email));
+    }
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
