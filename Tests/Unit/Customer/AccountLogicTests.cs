@@ -63,6 +63,38 @@ public sealed class AccountLogicTests
                                  && x.Email == entityForRegistration.Email));
     }
 
+    [TestMethod]
+    public async Task DeleteExistedUser()
+    {
+        var userEntity = await GetUserForDatabase();
+        MockDatabases.CustomerList.Add(userEntity);
+        var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
+        Assert.IsNotNull(deleteResult);
+        Assert.AreEqual(deleteResult.Message, CustomerConstants.UserWasDeleted);
+        Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.UserWasUpdatedAdditionalText);
+        var userInDb = MockDatabases.CustomerList
+            .FirstOrDefault(x => x.Name == userEntity.Name
+                                 && x.LastName == userEntity.LastName
+                                 && x.PhoneNumber == userEntity.PhoneNumber
+                                 && x.Email == userEntity.Email);
+        Assert.IsNull(userInDb);
+    }
+    
+    [TestMethod]
+    public async Task DeleteNotExistedUser()
+    {
+        var userEntity = await GetUserForDatabase();
+        var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
+        Assert.IsNotNull(deleteResult);
+        Assert.AreEqual(deleteResult.Message, CustomerConstants.UserNotFound);
+        Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
+        Assert.IsNull(MockDatabases.CustomerList
+            .FirstOrDefault(x => x.Name == userEntity.Name
+                                 && x.LastName == userEntity.LastName
+                                 && x.PhoneNumber == userEntity.PhoneNumber
+                                 && x.Email == userEntity.Email));
+    }
+
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
         Name = "TestNameForUnitTesting",
