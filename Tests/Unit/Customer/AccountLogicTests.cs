@@ -151,6 +151,42 @@ public sealed class AccountLogicTests
                                                                       && x.Email == userForUpdate.Email
                                                                       && x.PhoneNumber == userForUpdate.PhoneNumber));
     }
+    
+    [TestMethod]
+    public async Task UpdateNotExistedUser()
+    {
+        var userForUpdate = await GetUserForUpdate();
+        
+        var updateResult = await _accountLogic.UpdateAccount(userForUpdate);
+        Assert.AreEqual(updateResult.Message, CustomerConstants.UserNotFound);
+        Assert.AreEqual(updateResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
+        
+        Assert.IsNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userForUpdate.Name 
+                                                                   && x.LastName == userForUpdate.LastName
+                                                                   && x.Email == userForUpdate.Email
+                                                                   && x.PhoneNumber == userForUpdate.PhoneNumber));
+        
+    }
+    
+    [TestMethod]
+    public async Task AddMoneyToExistedUser()
+    {
+        var userEntity = await GetUserDbForDatabase();
+        MockDatabases.CustomerList.Add(userEntity);
+
+        var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
+        Assert.AreEqual(addMoneyResult.Message, CustomerConstants.MoneyWasAdded);
+        Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.Default);
+        
+        Assert.IsNotNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userEntity.Name 
+                                                                   && x.LastName == userEntity.LastName
+                                                                   && x.Email == userEntity.Email
+                                                                   && x.PhoneNumber == userEntity.PhoneNumber
+                                                                   && x.AvailableMoney == userEntity.AvailableMoney + 1000));
+        _ = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
+        //add check
+    }
+    
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
