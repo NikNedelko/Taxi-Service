@@ -1,4 +1,6 @@
 using Entities.CustomerApi.CustomerData;
+using Entities.DriverApi;
+using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer;
 using TaxiService.Repository.Customer.MockRepository;
 
@@ -94,6 +96,24 @@ public sealed class AccountLogicTests
                                  && x.PhoneNumber == userEntity.PhoneNumber
                                  && x.Email == userEntity.Email));
     }
+    
+    [TestMethod]
+    public async Task DeleteExistedUser_WhileOnRide()
+    {
+        var userEntity = await GetUserForDatabase();
+        var rideEntity = await GetRideDbEntity();
+        MockDatabases.RideList.Add(rideEntity);
+        var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
+        Assert.IsNotNull(deleteResult);
+        Assert.IsNotNull(MockDatabases.RideList
+            .FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber));
+        Assert.AreEqual(deleteResult.Message, CustomerConstants.UserIsInRide);
+        Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.UserIsInRideAdditionalText);
+        
+        MockDatabases.RideList.Remove(rideEntity);
+        Assert.IsNull(MockDatabases.RideList
+            .FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber));
+    }
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
@@ -114,5 +134,13 @@ public sealed class AccountLogicTests
         Status = 0,
         RegistrationDate = DateTime.Now,
         AvailableMoney = -1
+    };
+
+    private async Task<RideDb> GetRideDbEntity() => new RideDb
+    {
+        Id = -1,
+        CustomerPhoneNumber = "TestPhoneNumberForUnitTesting",
+        DriveClass = DriveClass.NoData,
+        IsTaken = true
     };
 }
