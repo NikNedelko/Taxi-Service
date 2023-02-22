@@ -187,6 +187,14 @@ public sealed class AccountLogicTests
         //add check
     }
     
+    [TestMethod]
+    public async Task AddMoneyToNotExistedUser()
+    {
+        var userEntity = await GetUserDbForDatabase();
+        var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
+        Assert.AreEqual(addMoneyResult.Message, CustomerConstants.UserNotFound);
+        Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
+    }
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
