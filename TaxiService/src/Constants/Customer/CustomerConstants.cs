@@ -3,6 +3,8 @@ namespace TaxiService.Constants.Customer;
 public static class CustomerConstants
 {
     public const string Ok = "Ok";
+    public const string Default = "";
+
     public const string SomethingWentWrong = "Something went wrong";
     public const string SuccessfulCreate =
         "Thank you for registration. Now you need to add money to account. After it you can request a taxi ride in our service";
