@@ -62,13 +62,14 @@ public class MockUsersRepository : IUserRepository
         {
             Name = user.Name,
             LastName = user.LastName,
+            Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             FeedBack = user.FeedBack,
             Status = user.Status,
             RegistrationDate = user.RegistrationDate,
             AvailableMoney = user.AvailableMoney
         };
-        MockDatabases.CustomerList.Remove(await ConvertUserToDatabase(user));
+        MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.FirstOrDefault(x=>x.PhoneNumber == existUserNumber));
 
         MockDatabases.CustomerList.Add(await ConvertUserToDatabase(updatedUser));
 

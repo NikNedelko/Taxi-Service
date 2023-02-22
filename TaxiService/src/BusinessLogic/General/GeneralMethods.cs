@@ -18,7 +18,8 @@ public static class GeneralMethods
         return message switch
         {
             CustomerConstants.UserWasCreated => CustomerConstants.SuccessfulCreate,
-            CustomerConstants.UserWasDeleted => CustomerConstants.UserWasUpdatedAdditionalText,
+            CustomerConstants.UserWasDeleted => CustomerConstants.Ok,
+            CustomerConstants.UserWasUpdated => CustomerConstants.UserWasUpdatedAdditionalText,
             CustomerConstants.MoneyWasAdded => "",
             CustomerConstants.UserIsInRide => CustomerConstants.UserIsInRideAdditionalText,
             
