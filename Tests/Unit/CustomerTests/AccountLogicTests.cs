@@ -79,7 +79,7 @@ public sealed class AccountLogicTests
         
         Assert.IsNotNull(deleteResult);
         Assert.AreEqual(deleteResult.Message, CustomerConstants.UserWasDeleted);
-        Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.Ok);
+        Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.Default);
         
         var userInDb = MockDatabases.CustomerList
             .FirstOrDefault(x => x.Name == userEntity.Name
