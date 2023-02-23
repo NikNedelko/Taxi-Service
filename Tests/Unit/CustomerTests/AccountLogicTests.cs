@@ -1,4 +1,5 @@
 using Entities.CustomerApi.CustomerData;
+using Entities.CustomerApi.CustomerData.Interface;
 using Entities.DriverApi;
 using Entities.General;
 using Entities.General.RideData;
@@ -23,19 +24,14 @@ public sealed class AccountLogicTests
         Assert.IsNotNull(registrationResult);
         Assert.AreEqual(registrationResult.Message, CustomerConstants.UserWasCreated);
         Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.SuccessfulCreate);
-        var userInDb = MockDatabases.CustomerList
-            .FirstOrDefault(x => x.Name == entityForRegistration.Name
-                                 && x.LastName == entityForRegistration.LastName
-                                 && x.PhoneNumber == entityForRegistration.PhoneNumber
-                                 && x.Email == entityForRegistration.Email);
         
-        Assert.IsNotNull(userInDb);
-        MockDatabases.CustomerList.Remove(userInDb);
-        Assert.IsNull(MockDatabases.CustomerList
+        Assert.IsNotNull(await FindUserInDatabase(entityForRegistration));
+        MockDatabases.CustomerList.Remove( MockDatabases.CustomerList
             .FirstOrDefault(x => x.Name == entityForRegistration.Name
                                  && x.LastName == entityForRegistration.LastName
                                  && x.PhoneNumber == entityForRegistration.PhoneNumber
-                                 && x.Email == entityForRegistration.Email));
+                                 && x.Email == entityForRegistration.Email)!);
+        Assert.IsNull(await FindUserInDatabase(entityForRegistration));
     }
 
     [TestMethod]
@@ -54,7 +50,7 @@ public sealed class AccountLogicTests
                                  && x.LastName == entityForRegistration.LastName
                                  && x.PhoneNumber == entityForRegistration.PhoneNumber
                                  && x.Email == entityForRegistration.Email);
-        Assert.IsNotNull(userInDb);
+        Assert.IsNotNull(await FindUserInDatabase(entityForRegistration));
         
         //Second registration
         var secondRegistrationResult = await _accountLogic.CreateAccount(entityForRegistration);
@@ -63,11 +59,7 @@ public sealed class AccountLogicTests
         Assert.AreEqual(secondRegistrationResult.AdditionalInformation, CustomerConstants.SomethingWentWrong);
         Assert.IsNotNull(userInDb);
         MockDatabases.CustomerList.Remove(userInDb);
-        Assert.IsNull(MockDatabases.CustomerList
-            .FirstOrDefault(x => x.Name == entityForRegistration.Name
-                                 && x.LastName == entityForRegistration.LastName
-                                 && x.PhoneNumber == entityForRegistration.PhoneNumber
-                                 && x.Email == entityForRegistration.Email));
+        Assert.IsNull(await FindUserInDatabase(entityForRegistration));
     }
 
     [TestMethod]
@@ -76,17 +68,10 @@ public sealed class AccountLogicTests
         var userEntity = await GetUserDbForDatabase();
         MockDatabases.CustomerList.Add(userEntity);
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
-        
         Assert.IsNotNull(deleteResult);
         Assert.AreEqual(deleteResult.Message, CustomerConstants.UserWasDeleted);
         Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.Default);
-        
-        var userInDb = MockDatabases.CustomerList
-            .FirstOrDefault(x => x.Name == userEntity.Name
-                                 && x.LastName == userEntity.LastName
-                                 && x.PhoneNumber == userEntity.PhoneNumber
-                                 && x.Email == userEntity.Email);
-        Assert.IsNull(userInDb);
+        Assert.IsNull(await FindUserInDatabase(userEntity));
     }
 
     [TestMethod]
@@ -98,11 +83,7 @@ public sealed class AccountLogicTests
         Assert.IsNotNull(deleteResult);
         Assert.AreEqual(deleteResult.Message, CustomerConstants.UserNotFound);
         Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
-        Assert.IsNull(MockDatabases.CustomerList
-            .FirstOrDefault(x => x.Name == userEntity.Name
-                                 && x.LastName == userEntity.LastName
-                                 && x.PhoneNumber == userEntity.PhoneNumber
-                                 && x.Email == userEntity.Email));
+        Assert.IsNull(await FindUserInDatabase(userEntity));
     }
 
     [TestMethod]
@@ -135,21 +116,10 @@ public sealed class AccountLogicTests
         Assert.AreEqual(updateResult.Message, CustomerConstants.UserWasUpdated);
         Assert.AreEqual(updateResult.AdditionalInformation, CustomerConstants.UserWasUpdatedAdditionalText);
         
-        Assert.IsNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userEntity.Name 
-                                                                   && x.LastName == userEntity.LastName
-                                                                   && x.Email == userEntity.Email
-                                                                   && x.PhoneNumber == userEntity.PhoneNumber));
-        
-        Assert.IsNotNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userForUpdate.Name 
-                                                                   && x.LastName == userForUpdate.LastName
-                                                                   && x.Email == userForUpdate.Email
-                                                                   && x.PhoneNumber == userForUpdate.PhoneNumber));
-        
+        Assert.IsNull(await FindUserInDatabase(userEntity));
+        Assert.IsNotNull(await FindUserInDatabase(userForUpdate));
         _ = await _accountLogic.DeleteAccount(userForUpdate.PhoneNumber);
-        Assert.IsNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userForUpdate.Name 
-                                                                      && x.LastName == userForUpdate.LastName
-                                                                      && x.Email == userForUpdate.Email
-                                                                      && x.PhoneNumber == userForUpdate.PhoneNumber));
+        Assert.IsNull(await FindUserInDatabase(userForUpdate));
     }
     
     [TestMethod]
@@ -161,11 +131,7 @@ public sealed class AccountLogicTests
         Assert.AreEqual(updateResult.Message, CustomerConstants.UserNotFound);
         Assert.AreEqual(updateResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
         
-        Assert.IsNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userForUpdate.Name 
-                                                                   && x.LastName == userForUpdate.LastName
-                                                                   && x.Email == userForUpdate.Email
-                                                                   && x.PhoneNumber == userForUpdate.PhoneNumber));
-        
+        Assert.IsNull( await FindUserInDatabase(userForUpdate));
     }
     
     [TestMethod]
@@ -177,14 +143,14 @@ public sealed class AccountLogicTests
         var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
         Assert.AreEqual(addMoneyResult.Message, CustomerConstants.MoneyWasAdded);
         Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.Default);
-        
+
         Assert.IsNotNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userEntity.Name 
                                                                    && x.LastName == userEntity.LastName
                                                                    && x.Email == userEntity.Email
                                                                    && x.PhoneNumber == userEntity.PhoneNumber
                                                                    && x.AvailableMoney == userEntity.AvailableMoney + 1000));
         _ = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
-        //add check
+        Assert.IsNull( await FindUserInDatabase(userEntity));
     }
     
     [TestMethod]
@@ -195,6 +161,12 @@ public sealed class AccountLogicTests
         Assert.AreEqual(addMoneyResult.Message, CustomerConstants.UserNotFound);
         Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
     }
+
+    private async Task<CustomerDB?> FindUserInDatabase(ICustomerBase customer) => MockDatabases.CustomerList
+        .FirstOrDefault(x => x.Name == customer.Name
+                             && x.LastName == customer.LastName
+                             && x.PhoneNumber == customer.PhoneNumber
+                             && x.Email == customer.Email);
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
