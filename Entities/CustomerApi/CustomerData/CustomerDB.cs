@@ -1,6 +1,8 @@
+using Entities.CustomerApi.CustomerData.Interface;
+
 namespace Entities.CustomerApi.CustomerData;
 
-public class CustomerDB
+public class CustomerDB : ICustomerBase
 {
     public int Id { get; set; }
     public string Name { get; set; }

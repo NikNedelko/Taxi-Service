@@ -1,8 +1,9 @@
+using Entities.CustomerApi.CustomerData.Interface;
 using Entities.General;
 
 namespace Entities.CustomerApi.CustomerData;
 
-public class Customer
+public class Customer : ICustomerBase
 {
     public string Name { get; set; }
     public string LastName { get; set; }

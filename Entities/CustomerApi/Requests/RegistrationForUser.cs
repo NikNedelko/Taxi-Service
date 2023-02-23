@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using Entities.CustomerApi.CustomerData.Interface;
 
 namespace Entities.CustomerApi.Requests;
 
 [Serializable]
-public class RegistrationForUser
+public class RegistrationForUser : ICustomerBase
 {
     [Required]
     [StringLength(15)]
