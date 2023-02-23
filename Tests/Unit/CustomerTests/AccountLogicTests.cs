@@ -170,19 +170,19 @@ public sealed class AccountLogicTests
 
     private async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
-        Name = "TestNameForUnitTesting",
-        LastName = "TestLastNameForUnitTesting",
-        PhoneNumber = "TestPhoneNumberForUnitTesting",
-        Email = "TestEmailForUnitTesting"
+        Name = CustomerTestsConstants.Registration_Name,
+        LastName = CustomerTestsConstants.Registration_LastName,
+        PhoneNumber = CustomerTestsConstants.Registration_Phonenumber,
+        Email = CustomerTestsConstants.Registration_Email
     };
 
     private async Task<CustomerDB> GetUserDbForDatabase() => new CustomerDB
     {
         Id = -1,
-        Name = "TestNameForUnitTesting",
-        LastName = "TestLastNameForUnitTesting",
-        PhoneNumber = "TestPhoneNumberForUnitTesting",
-        Email = "TestEmailForUnitTesting",
+        Name = CustomerTestsConstants.UserDb_Name,
+        LastName = CustomerTestsConstants.UserDb_LastName,
+        PhoneNumber = CustomerTestsConstants.UserDb_Phonenumber,
+        Email = CustomerTestsConstants.UserDb_Email,
         FeedBack = 0,
         Status = 0,
         RegistrationDate = DateTime.Now,
@@ -191,10 +191,10 @@ public sealed class AccountLogicTests
     
     private async Task<Customer> GetUserForUpdate() => new Customer
     {
-        Name = "Updated_TestNameForUnitTesting",
-        LastName = "Updated_TestLastNameForUnitTesting",
-        PhoneNumber = "TestPhoneNumberForUnitTesting",
-        Email = "Updated_TestEmailForUnitTesting",
+        Name = CustomerTestsConstants.Update_Name,
+        LastName = CustomerTestsConstants.Update_LastName,
+        PhoneNumber = CustomerTestsConstants.Update_Phonenumber,
+        Email = CustomerTestsConstants.Update_Email,
         FeedBack = FeedBack.Good,
         Status = AccountStatus.Active,
         RegistrationDate = DateTime.Today,
@@ -204,7 +204,7 @@ public sealed class AccountLogicTests
     private async Task<RideDb> GetRideDbEntity() => new RideDb
     {
         Id = -1,
-        CustomerPhoneNumber = "TestPhoneNumberForUnitTesting",
+        CustomerPhoneNumber = CustomerTestsConstants.UserDb_Email,
         DriveClass = DriveClass.NoData,
         IsTaken = true
     };
