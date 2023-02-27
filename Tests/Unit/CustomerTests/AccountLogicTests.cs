@@ -16,7 +16,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task CreateUserByRegistration()
     {
-        var entityForRegistration = await GeneralCustomerTestData.GetRegistrationAccount();
+        var entityForRegistration = await GeneralCustomerTestDataAndMethods.GetRegistrationAccount();
         var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
 
         Assert.IsNotNull(registrationResult);
@@ -36,7 +36,7 @@ public sealed class AccountLogicTests
     public async Task CreateUserByRegistration_ExistedNumber()
     {
         //First registration
-        var entityForRegistration = await GeneralCustomerTestData.GetRegistrationAccount();
+        var entityForRegistration = await GeneralCustomerTestDataAndMethods.GetRegistrationAccount();
         var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
         
         Assert.IsNotNull(registrationResult);
@@ -63,7 +63,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task DeleteExistedUser()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         MockDatabases.CustomerList.Add(userEntity);
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
         Assert.IsNotNull(deleteResult);
@@ -75,7 +75,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task DeleteNotExistedUser()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
         
         Assert.IsNotNull(deleteResult);
@@ -87,8 +87,8 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task DeleteExistedUser_WhileOnRide()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
-        var rideEntity = await GeneralCustomerTestData.GetRideDbEntity();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
+        var rideEntity = await GeneralCustomerTestDataAndMethods.GetRideDbEntity();
         MockDatabases.RideList.Add(rideEntity);
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
         
@@ -106,9 +106,9 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task UpdateExistedUser()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         MockDatabases.CustomerList.Add(userEntity);
-        var userForUpdate = await GeneralCustomerTestData.GetUserForUpdate();
+        var userForUpdate = await GeneralCustomerTestDataAndMethods.GetUserForUpdate();
         
         var updateResult = await _accountLogic.UpdateAccount(userForUpdate);
         Assert.AreEqual(updateResult.Message, CustomerConstants.UserWasUpdated);
@@ -123,7 +123,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task UpdateNotExistedUser()
     {
-        var userForUpdate = await GeneralCustomerTestData.GetUserForUpdate();
+        var userForUpdate = await GeneralCustomerTestDataAndMethods.GetUserForUpdate();
         
         var updateResult = await _accountLogic.UpdateAccount(userForUpdate);
         Assert.AreEqual(updateResult.Message, CustomerConstants.UserNotFound);
@@ -135,7 +135,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task AddMoneyToExistedUser()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         MockDatabases.CustomerList.Add(userEntity);
 
         var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
@@ -154,7 +154,7 @@ public sealed class AccountLogicTests
     [TestMethod]
     public async Task AddMoneyToNotExistedUser()
     {
-        var userEntity = await GeneralCustomerTestData.GetUserDbForDatabase();
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
         Assert.AreEqual(addMoneyResult.Message, CustomerConstants.UserNotFound);
         Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
