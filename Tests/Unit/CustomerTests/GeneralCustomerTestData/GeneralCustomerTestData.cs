@@ -6,7 +6,7 @@ using Tests.Unit.Constants;
 
 namespace Tests.Unit.CustomerTests.TestData;
 
-public static class GeneralCustomerTestData
+public static class GeneralCustomerTestDataAndMethods
 {
     public static async Task<RegistrationForUser> GetRegistrationAccount() => new RegistrationForUser
     {
@@ -48,4 +48,16 @@ public static class GeneralCustomerTestData
         DriveClass = DriveClass.NoData,
         IsTaken = true
     };
+    
+    public static async Task<Order> GetNewOrder() => new Order
+    {
+        PhoneNumber = CustomerTestsConstants.UserDb_Phonenumber,
+        RideEndPoint = "EndPlace",
+        Price = 30,
+        DriveClass = DriveClass.Economic
+    };
+
+    public static async Task<RideDb?> GetRideDbByUser(string phoneNumber, decimal price)
+        => MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber 
+                                                      && x.Price == price);
 }
