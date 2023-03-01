@@ -25,11 +25,24 @@ public class OrdersLogicTests
         
         Assert.AreEqual(newOrderResult.Message,CustomerConstants.RideAccepted);
         Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.RideAcceptedAdditionalText);
-        Assert.IsNotNull(GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+        Assert.IsNotNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
 
         MockDatabases.RideList.Remove(
             MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == userEntity.PhoneNumber 
                                                        && x.Price == rideRequest.Price)!);
+        Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+    }
+
+
+    [TestMethod]
+    public async Task CreateNewOrderWithoutUser()
+    {
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
+        var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
+        var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
+        
+        Assert.AreEqual(newOrderResult.Message,CustomerConstants.UserNotFound);
+        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.UserNotFoundAdditionalText);
         Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
     }
 }
