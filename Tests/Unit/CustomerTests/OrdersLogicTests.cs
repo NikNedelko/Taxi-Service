@@ -45,4 +45,35 @@ public class OrdersLogicTests
         Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.UserNotFoundAdditionalText);
         Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
     }
+    
+    [TestMethod]
+    public async Task CreateNewOrderWithoutMoney()
+    {
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
+        var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
+        
+        MockDatabases.CustomerList.Add(userEntity);
+        var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
+        
+        Assert.AreEqual(newOrderResult.Message,CustomerConstants.NotEnoughMoney);
+        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.Default);
+        Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+    }
+    
+    [TestMethod]
+    public async Task CreateNewOrderWithoutMoneyForClass()
+    {
+        var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
+        var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
+        rideRequest.DriveClass = DriveClass.Premium;
+        rideRequest.Price = 50;
+        userEntity.AvailableMoney = 50;
+        
+        MockDatabases.CustomerList.Add(userEntity);
+        var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
+        
+        Assert.AreEqual(newOrderResult.Message,CustomerConstants.NotEnoughMoneyForRideClass);
+        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.Default);
+        Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+    }
 }
