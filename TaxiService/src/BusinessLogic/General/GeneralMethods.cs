@@ -37,7 +37,7 @@ public static class GeneralMethods
             DriverConstants.DriverIsNotExist => DriverConstants.DriverIsNotExistAdditionalInfo,
             DriverConstants.DriverWasDeleted => DriverConstants.DriverWasDeletedAdditionalInfo
             ,
-            _ => CustomerConstants.SomethingWentWrong
+            _ => CustomerConstants.Default
         };
     }
 }
