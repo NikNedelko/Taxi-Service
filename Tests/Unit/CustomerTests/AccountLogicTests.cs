@@ -7,7 +7,7 @@ using Tests.Unit.CustomerTests.TestData;
 namespace Tests.Unit.CustomerTests;
 
 [TestClass]
-public sealed class AccountLogicTests
+public class AccountLogicTests : CleanupMockDatabase
 {
     //Temporarily
     private readonly IAccountLogic _accountLogic =
@@ -54,7 +54,7 @@ public sealed class AccountLogicTests
         var secondRegistrationResult = await _accountLogic.CreateAccount(entityForRegistration);
         Assert.IsNotNull(secondRegistrationResult);
         Assert.AreEqual(secondRegistrationResult.Message, CustomerConstants.UserIsAlreadyExist);
-        Assert.AreEqual(secondRegistrationResult.AdditionalInformation, CustomerConstants.SomethingWentWrong);
+        Assert.AreEqual(secondRegistrationResult.AdditionalInformation, CustomerConstants.Default);
         Assert.IsNotNull(userInDb);
         MockDatabases.CustomerList.Remove(userInDb);
         Assert.IsNull(await FindUserInDatabase(entityForRegistration));
@@ -89,6 +89,8 @@ public sealed class AccountLogicTests
     {
         var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         var rideEntity = await GeneralCustomerTestDataAndMethods.GetRideDbEntity();
+        rideEntity.IsTaken = true;
+        MockDatabases.CustomerList.Add(userEntity);
         MockDatabases.RideList.Add(rideEntity);
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
         

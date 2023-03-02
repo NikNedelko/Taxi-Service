@@ -8,7 +8,7 @@ using Tests.Unit.CustomerTests.TestData;
 namespace Tests.Unit.CustomerTests;
 
 [TestClass]
-public class OrdersLogicTests
+public class OrdersLogicTests : CleanupMockDatabase
 {
     private readonly IOrdersLogic _ordersLogic 
         = new OrdersLogic(new MockUsersRepository(),new MockRideRepository(new MockUsersRepository()));
@@ -75,5 +75,18 @@ public class OrdersLogicTests
         Assert.AreEqual(newOrderResult.Message,CustomerConstants.NotEnoughMoneyForRideClass);
         Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.Default);
         Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+    }
+
+    [TestMethod]
+    public async Task GetCountOfOrders()
+    {
+        var previousList = MockDatabases.RideList;
+        var newList = await GeneralCustomerTestDataAndMethods.GetRandomCountOfRides();
+        MockDatabases.RideList = newList;
+        var getResult = await _ordersLogic.GetAllRides();
+        Assert.AreEqual(newList.Count, getResult.Count);
+        MockDatabases.RideList = previousList;
+        var newGetResult = await _ordersLogic.GetAllRides();
+        Assert.AreEqual(previousList.Count, newGetResult.Count);
     }
 }
