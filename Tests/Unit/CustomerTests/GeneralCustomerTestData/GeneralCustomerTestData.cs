@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Entities.CustomerApi.CustomerData;
 using Entities.DriverApi;
 using Entities.General;
@@ -15,6 +16,14 @@ public static class GeneralCustomerTestDataAndMethods
         PhoneNumber = CustomerTestsConstants.Registration_Phonenumber,
         Email = CustomerTestsConstants.Registration_Email
     };
+
+    public async static Task<List<RideDb>> GetRandomCountOfRides()
+    {
+        var list = new List<RideDb>();
+        for (int i = 0; i < new Random().Next(1,10); i++)
+            list.Add(new RideDb());
+        return list;
+    }
 
     public static async Task<CustomerDB> GetUserDbForDatabase() => new CustomerDB
     {
