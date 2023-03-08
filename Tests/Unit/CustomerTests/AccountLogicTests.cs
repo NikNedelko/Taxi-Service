@@ -7,7 +7,7 @@ using Tests.Unit.CustomerTests.TestData;
 namespace Tests.Unit.CustomerTests;
 
 [TestClass]
-public class AccountLogicTests : CleanupMockDatabase
+public class AccountLogicTests
 {
     //Temporarily
     private readonly IAccountLogic _accountLogic =

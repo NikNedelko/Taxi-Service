@@ -6,7 +6,7 @@ using Tests.Unit.CustomerTests.TestData;
 namespace Tests.Unit.CustomerTests;
 
 [TestClass]
-public class OrdersLogicTests : CleanupMockDatabase
+public class OrdersLogicTests
 {
     private readonly IOrdersLogic _ordersLogic 
         = new OrdersLogic(new MockUsersRepository(),new MockRideRepository(new MockUsersRepository()));
