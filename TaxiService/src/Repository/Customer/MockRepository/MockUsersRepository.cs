@@ -14,7 +14,7 @@ public class MockUsersRepository : IUserRepository
         if (checkResult != CustomerConstants.UserNotFound)
             return checkResult;
 
-        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(customer));
+        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(customer, null));
 
         return CustomerConstants.Ok;
     }
@@ -69,9 +69,10 @@ public class MockUsersRepository : IUserRepository
             RegistrationDate = user.RegistrationDate,
             AvailableMoney = user.AvailableMoney
         };
+        var idForUpdate = MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == existUserNumber)!.Id;
         MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.FirstOrDefault(x=>x.PhoneNumber == existUserNumber));
 
-        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(updatedUser));
+        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(updatedUser,idForUpdate));
 
         return CustomerConstants.Ok;
     }
@@ -82,9 +83,10 @@ public class MockUsersRepository : IUserRepository
         if (userEntity == null)
             return CustomerConstants.UserNotFound;
         userEntity.AvailableMoney += money;
-
+        var idForUpdate = MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!.Id;
         MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.First(db => db.PhoneNumber == phoneNumber));
-        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(userEntity));
+
+        MockDatabases.CustomerList.Add(await ConvertUserToDatabase(userEntity,idForUpdate));
 
         return CustomerConstants.Ok;
     }
@@ -109,17 +111,19 @@ public class MockUsersRepository : IUserRepository
         };
     }
 
-    private async Task<CustomerDB> ConvertUserToDatabase(Entities.CustomerApi.CustomerData.Customer customer)
+    private async Task<CustomerDB> ConvertUserToDatabase(Entities.CustomerApi.CustomerData.Customer customer, int? Id)
     {
         return new CustomerDB
         {
+            Id = Id ?? default,
             Name = customer.Name,
             LastName = customer.LastName,
             PhoneNumber = customer.PhoneNumber,
             Email = customer.Email,
             FeedBack = Convert.ToInt32(customer.FeedBack),
             Status = Convert.ToInt32(customer.Status),
-            AvailableMoney = customer.AvailableMoney
+            AvailableMoney = customer.AvailableMoney,
+            RegistrationDate = customer.RegistrationDate
         };
     }
 }
