@@ -103,6 +103,7 @@ public class AccountLogicTests : CleanupMockDatabase
         MockDatabases.RideList.Remove(rideEntity);
         Assert.IsNull(MockDatabases.RideList
             .FirstOrDefault(x => x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber));
+        MockDatabases.CustomerList.Remove(userEntity);
     }
     
     [TestMethod]
