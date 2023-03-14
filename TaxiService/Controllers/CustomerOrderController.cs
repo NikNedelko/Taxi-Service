@@ -35,7 +35,7 @@ public class CustomerOrderController : ControllerBase
     }
     
     [HttpPost("/GetAllRIdes")]
-    public async Task<List<RideDb>> GetAllUsers()
+    public async Task<List<RideDb>> GetAllRides()
     {
         return await _createOrdersLogic.GetAllRides();
     }
