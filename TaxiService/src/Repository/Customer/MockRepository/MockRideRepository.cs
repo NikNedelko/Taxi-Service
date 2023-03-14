@@ -84,6 +84,7 @@ public class MockRideRepository : IRideRepository
     {
         return new Ride
         {
+            Id = rideDb.Id,
             CustomerPhoneNumber = rideDb.CustomerPhoneNumber,
             EndPointOfRide = rideDb.EndPointOfRide,
             RideDate = rideDb.RideDate,

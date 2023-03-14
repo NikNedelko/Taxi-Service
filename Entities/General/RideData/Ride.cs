@@ -5,7 +5,7 @@ namespace Entities.General.RideData;
 
 public class Ride
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string DriverPhoneNumber { get; set; }
     public string CustomerPhoneNumber { get; set; }
     public decimal Price { get; set; }
