@@ -79,15 +79,42 @@ public class OrdersLogicTests
         Assert.AreEqual(newOrderResult.Message, CustomerConstants.NotEnoughMoneyForRideClass);
         Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.Default);
         Assert.IsNull(
-            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+            await TestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
         MockDatabases.CustomerList.Remove(userEntity);
+    }
+
+    [TestMethod]
+    public async Task CancelExistedOrder()
+    {
+        var userEntity = await TestDataAndMethods.GetUserDbForDatabase();
+        var rideEntity = await TestDataAndMethods.GetRideDbEntity();
+        MockDatabases.CustomerList.Add(userEntity);
+        MockDatabases.RideList.Add(rideEntity);
+        var cancelResult = await _ordersLogic.CancelOrder(userEntity.PhoneNumber);
+        Assert.IsNotNull(cancelResult);
+        Assert.AreEqual(CustomerConstants.Ok, cancelResult.Message);
+        Assert.AreEqual( CustomerConstants.Default, cancelResult.AdditionalInformation);
+        Assert.IsNull(MockDatabases.RideList.FirstOrDefault(x=>x.Id == rideEntity.Id));
+        MockDatabases.CustomerList.Remove(userEntity);
+    }
+    
+    [TestMethod]
+    public async Task CancelNotExistedOrder()
+    {
+        var userEntity = await TestDataAndMethods.GetUserDbForDatabase();
+        var rideEntity = await TestDataAndMethods.GetRideDbEntity();
+        var cancelResult = await _ordersLogic.CancelOrder(userEntity.PhoneNumber);
+        Assert.IsNotNull(cancelResult);
+        Assert.AreEqual(CustomerConstants.RideNotFound, cancelResult.Message);
+        Assert.AreEqual( CustomerConstants.RideNotFoundAdditionalText, cancelResult.AdditionalInformation);
+        Assert.IsNull(MockDatabases.RideList.FirstOrDefault(x=>x.Id == rideEntity.Id));
     }
 
     [TestMethod]
     public async Task GetCountOfOrders()
     {
         var previousList = MockDatabases.RideList;
-        var newList = await GeneralCustomerTestDataAndMethods.GetRandomCountOfRides();
+        var newList = await TestDataAndMethods.GetRandomCountOfRides();
         MockDatabases.RideList = newList;
         var getResult = await _ordersLogic.GetAllRides();
         Assert.AreEqual(newList.Count, getResult.Count);
