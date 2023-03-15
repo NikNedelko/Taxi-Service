@@ -7,7 +7,7 @@ using Tests.Unit.Constants;
 
 namespace Tests.Unit.CustomerTests.TestData;
 
-public static class GeneralCustomerTestDataAndMethods
+public static class TestDataAndMethods
 {
     public static readonly List<RideDb> DefaultRideDbList = new List<RideDb>()
     {
