@@ -88,4 +88,26 @@ public class OrdersLogicTests
         var newGetResult = await _ordersLogic.GetAllRides();
         Assert.AreEqual(previousList.Count, newGetResult.Count);
     }
+
+    [TestMethod]
+    public async Task GetInfoAboutExistedRide()
+    {
+        var rideEntity = await GeneralCustomerTestDataAndMethods.GetRideDbEntity();
+        MockDatabases.RideList.Add(rideEntity);
+        var getInfoResult = await _ordersLogic.GetRideInfo(rideEntity.CustomerPhoneNumber);
+        Assert.IsNotNull(getInfoResult);
+        Assert.AreEqual(rideEntity.Id, getInfoResult.Id);
+        Assert.AreEqual(rideEntity.CustomerPhoneNumber, getInfoResult.CustomerPhoneNumber);
+        MockDatabases.RideList.Remove(rideEntity);
+    }
+
+    [TestMethod]
+    public async Task GetInfoAboutNotExistedRide()
+    {
+        var rideEntity = await GeneralCustomerTestDataAndMethods.GetRideDbEntity();
+        var getInfoResult = await _ordersLogic.GetRideInfo(rideEntity.CustomerPhoneNumber);
+        Assert.IsNull(getInfoResult);
+        Assert.IsNull(MockDatabases.RideList.FirstOrDefault(x =>
+            x.Id == rideEntity.Id || x.CustomerPhoneNumber == rideEntity.CustomerPhoneNumber));
+    }
 }
