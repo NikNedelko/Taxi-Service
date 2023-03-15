@@ -8,8 +8,8 @@ namespace Tests.Unit.CustomerTests;
 [TestClass]
 public class OrdersLogicTests
 {
-    private readonly IOrdersLogic _ordersLogic 
-        = new OrdersLogic(new MockUsersRepository(),new MockRideRepository(new MockUsersRepository()));
+    private readonly IOrdersLogic _ordersLogic
+        = new OrdersLogic(new MockUsersRepository(), new MockRideRepository(new MockUsersRepository()));
 
     [TestMethod]
     public async Task CreateNewOrder()
@@ -17,17 +17,21 @@ public class OrdersLogicTests
         var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         userEntity.AvailableMoney = 100;
         var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
-        
+
         MockDatabases.CustomerList.Add(userEntity);
         var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
-        
-        Assert.AreEqual(newOrderResult.Message,CustomerConstants.RideAccepted);
-        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.RideAcceptedAdditionalText);
-        Assert.IsNotNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+
+        Assert.AreEqual(newOrderResult.Message, CustomerConstants.RideAccepted);
+        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.RideAcceptedAdditionalText);
+        Assert.IsNotNull(
+            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
         userEntity.AvailableMoney -= rideRequest.Price;
-        Assert.IsNotNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
-        MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.FirstOrDefault(x=>x.PhoneNumber == userEntity.PhoneNumber)!);
-        MockDatabases.RideList.Remove(MockDatabases.RideList.FirstOrDefault(x=>x.CustomerPhoneNumber == rideRequest.PhoneNumber)!);
+        Assert.IsNotNull(
+            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+        MockDatabases.CustomerList.Remove(
+            MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == userEntity.PhoneNumber)!);
+        MockDatabases.RideList.Remove(
+            MockDatabases.RideList.FirstOrDefault(x => x.CustomerPhoneNumber == rideRequest.PhoneNumber)!);
     }
 
 
@@ -37,27 +41,29 @@ public class OrdersLogicTests
         var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
         var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
-        
-        Assert.AreEqual(newOrderResult.Message,CustomerConstants.UserNotFound);
-        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.UserNotFoundAdditionalText);
-        Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+
+        Assert.AreEqual(newOrderResult.Message, CustomerConstants.UserNotFound);
+        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.UserNotFoundAdditionalText);
+        Assert.IsNull(
+            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
     }
-    
+
     [TestMethod]
     public async Task CreateNewOrderWithoutMoney()
     {
         var userEntity = await GeneralCustomerTestDataAndMethods.GetUserDbForDatabase();
         var rideRequest = await GeneralCustomerTestDataAndMethods.GetNewOrder();
-        
+
         MockDatabases.CustomerList.Add(userEntity);
         var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
-        
-        Assert.AreEqual(newOrderResult.Message,CustomerConstants.NotEnoughMoney);
-        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.Default);
-        Assert.IsNull( await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+
+        Assert.AreEqual(newOrderResult.Message, CustomerConstants.NotEnoughMoney);
+        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.Default);
+        Assert.IsNull(
+            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
         MockDatabases.CustomerList.Remove(userEntity);
     }
-    
+
     [TestMethod]
     public async Task CreateNewOrderWithoutMoneyForClass()
     {
@@ -66,13 +72,14 @@ public class OrdersLogicTests
         rideRequest.DriveClass = DriveClass.Premium;
         rideRequest.Price = 50;
         userEntity.AvailableMoney = 50;
-        
+
         MockDatabases.CustomerList.Add(userEntity);
         var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
-        
-        Assert.AreEqual(newOrderResult.Message,CustomerConstants.NotEnoughMoneyForRideClass);
-        Assert.AreEqual(newOrderResult.AdditionalInformation,CustomerConstants.Default);
-        Assert.IsNull(await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
+
+        Assert.AreEqual(newOrderResult.Message, CustomerConstants.NotEnoughMoneyForRideClass);
+        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.Default);
+        Assert.IsNull(
+            await GeneralCustomerTestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
         MockDatabases.CustomerList.Remove(userEntity);
     }
 
