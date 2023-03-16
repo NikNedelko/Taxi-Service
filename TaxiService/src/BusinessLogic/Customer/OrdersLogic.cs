@@ -1,5 +1,6 @@
 using Entities.CustomerApi.Requests;
 using Entities.DriverApi;
+using Entities.DriverApi.DriverData;
 using Entities.General;
 using Entities.General.RideData;
 using TaxiService.BusinessLogic.Customer.Interfaces;

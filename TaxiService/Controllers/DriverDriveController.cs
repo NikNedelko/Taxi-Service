@@ -1,7 +1,7 @@
 using Entities.General;
 using Entities.General.RideData;
 using Microsoft.AspNetCore.Mvc;
-using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.BusinessLogic.DriverLogic.Interface;
 
 namespace TaxiService.Controllers;
 

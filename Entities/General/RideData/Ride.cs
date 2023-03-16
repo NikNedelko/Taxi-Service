@@ -1,5 +1,6 @@
 
 using Entities.DriverApi;
+using Entities.DriverApi.DriverData;
 
 namespace Entities.General.RideData;
 

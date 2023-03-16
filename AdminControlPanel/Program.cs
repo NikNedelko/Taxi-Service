@@ -5,8 +5,8 @@ using AdminControlPanel.Repository.Interfaces;
 using AdminControlPanel.Repository.Mock;
 using TaxiService.Repository.Customer.Interfaces;
 using TaxiService.Repository.Customer.MockRepository;
-using TaxiService.Repository.Driver.Interfaces;
-using TaxiService.Repository.Driver.MockRepository;
+using TaxiService.Repository.DriverRepository.Interfaces;
+using TaxiService.Repository.DriverRepository.MockRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);

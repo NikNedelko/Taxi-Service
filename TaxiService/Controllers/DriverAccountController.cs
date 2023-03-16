@@ -1,7 +1,7 @@
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
-using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.BusinessLogic.DriverLogic.Interface;
 
 namespace TaxiService.Controllers;
 

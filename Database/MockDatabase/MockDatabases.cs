@@ -1,5 +1,5 @@
 ﻿using Entities.CustomerApi.CustomerData;
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
 using Entities.General.RideData;
 

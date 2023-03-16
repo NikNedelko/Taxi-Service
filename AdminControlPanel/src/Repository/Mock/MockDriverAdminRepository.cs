@@ -1,9 +1,9 @@
 using AdminControlPanel.Repository.Interfaces;
 using Database.MockDatabase;
-using Entities.DriverApi.Driver;
-using TaxiService.Repository.Driver.Interfaces;
+using Entities.DriverApi.DriverData;
+using TaxiService.Repository.DriverRepository.Interfaces;
 
-namespace AdminControlPanel.Repository;
+namespace AdminControlPanel.Repository.Mock;
 
 public class MockDriverAdminRepository : IDriverAdminRepository
 {

@@ -1,6 +1,6 @@
 using Entities.General;
 using TaxiService.Constants.Customer;
-using TaxiService.Constants.Driver;
+using TaxiService.Constants.DriverConstants;
 
 namespace TaxiService.BusinessLogic.General;
 

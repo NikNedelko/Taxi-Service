@@ -1,6 +1,6 @@
 using Entities.General;
 
-namespace Entities.DriverApi.Driver;
+namespace Entities.DriverApi.DriverData;
 
 public class Driver
 {

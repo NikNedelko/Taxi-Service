@@ -1,17 +1,16 @@
 using Database.MockDatabase;
-using Entities.DriverApi;
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
-using TaxiService.Constants.Driver;
-using TaxiService.Repository.Driver.Interfaces;
+using TaxiService.Constants.DriverConstants;
+using TaxiService.Repository.DriverRepository.Interfaces;
 
-namespace TaxiService.Repository.Driver.MockRepository;
+namespace TaxiService.Repository.DriverRepository.MockRepository;
 
 public class MockDriverAccountRepository : IDriverAccountRepository
 {
     public async Task<string> AddNewDriver(RegistrationForDriver registrationForDriver)
     {
-        var newDriver = new Entities.DriverApi.Driver.Driver
+        var newDriver = new Driver
         {
             Name = registrationForDriver.Name,
             LastName = registrationForDriver.LastName,
@@ -28,19 +27,19 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         return DriverConstants.DriverWasAdded;
     }
 
-    public async Task<Entities.DriverApi.Driver.Driver?> GetDriverByNumber(string phoneNumber)
+    public async Task<Driver?> GetDriverByNumber(string phoneNumber)
     {
         var entity = MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public async Task<Entities.DriverApi.Driver.Driver?> GetDriverByLicense(string licenseNumber)
+    public async Task<Driver?> GetDriverByLicense(string licenseNumber)
     {
         var entity = MockDatabases.DriverList.FirstOrDefault(x => x.DriverLicenseNumber == licenseNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public async Task<string> UpdateDriver(Entities.DriverApi.Driver.Driver newDriver, string phoneNumber)
+    public async Task<string> UpdateDriver(Driver newDriver, string phoneNumber)
     {
         var oldEntity = await GetDriverByNumber(phoneNumber);
         _ = await DeleteDriver(oldEntity.PhoneNumber);
@@ -71,7 +70,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<DriverDb> ConvertToDatabase(Entities.DriverApi.Driver.Driver driver)
+    private async Task<DriverDb> ConvertToDatabase(Driver driver)
     {
         return new DriverDb
         {
@@ -90,9 +89,9 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<Entities.DriverApi.Driver.Driver> ConvertFromDatabase(DriverDb driverDb)
+    private async Task<Driver> ConvertFromDatabase(DriverDb driverDb)
     {
-        return new Entities.DriverApi.Driver.Driver
+        return new Driver
         {
             Name = driverDb.Name,
             LastName = driverDb.LastName,

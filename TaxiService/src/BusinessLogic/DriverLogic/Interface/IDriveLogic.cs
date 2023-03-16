@@ -1,7 +1,7 @@
 using Entities.General;
 using Entities.General.RideData;
 
-namespace TaxiService.BusinessLogic.Driver.Interface;
+namespace TaxiService.BusinessLogic.DriverLogic.Interface;
 
 public interface IDriveLogic
 {

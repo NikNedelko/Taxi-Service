@@ -1,4 +1,4 @@
-namespace Entities.DriverApi;
+namespace Entities.DriverApi.DriverData;
 
 public enum DriveClass
 {

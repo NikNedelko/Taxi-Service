@@ -1,6 +1,5 @@
-using System.Reflection.Metadata;
 using AdminControlPanel.BL.Interfaces;
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
 using Microsoft.AspNetCore.Mvc;
 

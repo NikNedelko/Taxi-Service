@@ -1,11 +1,11 @@
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
-using TaxiService.BusinessLogic.Driver.Interface;
+using TaxiService.BusinessLogic.DriverLogic.Interface;
 using TaxiService.BusinessLogic.General;
-using TaxiService.Constants.Driver;
-using TaxiService.Repository.Driver.Interfaces;
+using TaxiService.Constants.DriverConstants;
+using TaxiService.Repository.DriverRepository.Interfaces;
 
-namespace TaxiService.BusinessLogic.Driver;
+namespace TaxiService.BusinessLogic.DriverLogic;
 
 public class DriverAccountLogic : IDriverAccountLogic
 {
