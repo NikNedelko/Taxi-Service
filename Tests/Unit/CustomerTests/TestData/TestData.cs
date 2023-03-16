@@ -1,14 +1,23 @@
 using Entities.CustomerApi.CustomerData;
-using Entities.DriverApi;
-using Entities.DriverApi.Driver;
+using Entities.DriverApi.DriverData;
 using Entities.General;
 using Entities.General.RideData;
 using Tests.Unit.Constants;
+using Tests.Unit.Driver.Data;
 
 namespace Tests.Unit.CustomerTests.TestData;
 
 public static class TestDataAndMethods
 {
+    public static readonly RegistrationForDriver GetRegistrationForDriver = new RegistrationForDriver
+    {
+        Name = DriverTestConstants.DriverTestName,
+        LastName = ,
+        PhoneNumber = ,
+        DriverLicenseNumber = ,
+        Car = 
+    };
+    
     public static readonly List<RideDb> DefaultRideDbList = new List<RideDb>()
     {
         new RideDb
