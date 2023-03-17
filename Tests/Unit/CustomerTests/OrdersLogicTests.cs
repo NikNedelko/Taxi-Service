@@ -1,4 +1,4 @@
-using Entities.DriverApi;
+using Entities.DriverApi.DriverData;
 using TaxiService.BusinessLogic.Customer;
 using TaxiService.Repository.Customer.MockRepository;
 using Tests.Unit.CustomerTests.TestData;

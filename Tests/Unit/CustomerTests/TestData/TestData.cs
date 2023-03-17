@@ -12,10 +12,10 @@ public static class TestDataAndMethods
     public static readonly RegistrationForDriver GetRegistrationForDriver = new RegistrationForDriver
     {
         Name = DriverTestConstants.DriverTestName,
-        LastName = ,
-        PhoneNumber = ,
-        DriverLicenseNumber = ,
-        Car = 
+        LastName = DriverTestConstants.DriverTestLastName,
+        PhoneNumber = DriverTestConstants.DriverTestPhoneNumber,
+        DriverLicenseNumber = DriverTestConstants.DriverTestDriverLicenseNumber,
+        Car = nameof(DriverTestConstants.DriverTestCar)
     };
     
     public static readonly List<RideDb> DefaultRideDbList = new List<RideDb>()
