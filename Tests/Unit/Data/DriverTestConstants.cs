@@ -1,6 +1,6 @@
 using Entities.DriverApi.DriverData;
 
-namespace Tests.Unit.Driver.Data;
+namespace Tests.Unit.Data;
 
 public static class DriverTestConstants
 {

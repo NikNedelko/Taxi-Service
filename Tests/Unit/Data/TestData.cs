@@ -2,10 +2,8 @@ using Entities.CustomerApi.CustomerData;
 using Entities.DriverApi.DriverData;
 using Entities.General;
 using Entities.General.RideData;
-using Tests.Unit.Constants;
-using Tests.Unit.Driver.Data;
 
-namespace Tests.Unit.CustomerTests.TestData;
+namespace Tests.Unit.Data;
 
 public static class TestDataAndMethods
 {

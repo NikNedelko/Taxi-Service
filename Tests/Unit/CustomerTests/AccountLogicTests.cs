@@ -2,7 +2,7 @@ using Entities.CustomerApi.CustomerData;
 using Entities.CustomerApi.CustomerData.Interface;
 using TaxiService.BusinessLogic.Customer;
 using TaxiService.Repository.Customer.MockRepository;
-using Tests.Unit.CustomerTests.TestData;
+using Tests.Unit.Data;
 
 namespace Tests.Unit.CustomerTests;
 
