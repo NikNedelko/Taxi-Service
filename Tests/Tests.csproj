@@ -16,9 +16,5 @@
         <PackageReference Include="NSubstitute" Version="5.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Entities\Entities.csproj" />
-      <ProjectReference Include="..\TaxiService\TaxiService.csproj" />
-    </ItemGroup>
 
 </Project>
