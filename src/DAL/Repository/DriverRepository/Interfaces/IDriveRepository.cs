@@ -1,7 +1,7 @@
-using Entities.DriverApi.DriverData;
-using Entities.General.RideData;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General.RideData;
 
-namespace TaxiService.Repository.DriverRepository.Interfaces;
+namespace DAL.Repository.DriverRepository.Interfaces;
 
 public interface IDriveRepository
 {

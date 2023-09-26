@@ -1,7 +1,7 @@
-using Entities.CustomerApi.Requests;
-using Entities.General.RideData;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.General.RideData;
 
-namespace TaxiService.Repository.Customer.Interfaces;
+namespace DAL.Repository.Customer.Interfaces;
 
 public interface IRideRepository
 {

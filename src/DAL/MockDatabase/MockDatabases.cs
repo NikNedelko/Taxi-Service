@@ -1,9 +1,9 @@
-﻿using Entities.CustomerApi.CustomerData;
-using Entities.DriverApi.DriverData;
-using Entities.General;
-using Entities.General.RideData;
+﻿using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 
-namespace Database.MockDatabase;
+namespace DAL.MockDatabase;
 
 public static class MockDatabases
 {

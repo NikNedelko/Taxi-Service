@@ -1,11 +1,11 @@
-using Database.MockDatabase;
-using Entities.CustomerApi.Requests;
-using Entities.General;
-using Entities.General.RideData;
+using DAL.MockDatabase;
+using DAL.Repository.Customer.Interfaces;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 using TaxiService.Constants.Customer;
-using TaxiService.Repository.Customer.Interfaces;
 
-namespace TaxiService.Repository.Customer.MockRepository;
+namespace DAL.Repository.Customer.MockRepository;
 
 public class MockRideRepository : IRideRepository
 {

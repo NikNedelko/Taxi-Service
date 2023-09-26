@@ -1,14 +1,14 @@
-using Database.MockDatabase;
-using Entities.CustomerApi.CustomerData;
-using Entities.General;
+using DAL.MockDatabase;
+using DAL.Repository.Customer.Interfaces;
+using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.General;
 using TaxiService.Constants.Customer;
-using TaxiService.Repository.Customer.Interfaces;
 
-namespace TaxiService.Repository.Customer.MockRepository;
+namespace DAL.Repository.Customer.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {
-    public async Task<string> AddNewUser(Entities.CustomerApi.CustomerData.Customer customer)
+    public async Task<string> AddNewUser(CustomerModel customer)
     {
         var checkResult = await CheckOfExist(customer.PhoneNumber);
         if (checkResult != CustomerConstants.UserNotFound)
@@ -19,7 +19,7 @@ public class MockUsersRepository : IUserRepository
         return CustomerConstants.Ok;
     }
 
-    public async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByPhoneNumber(string number)
+    public async Task<CustomerModel?> GetUserByPhoneNumber(string number)
     {
         var userFromDb = MockDatabases.CustomerList.FirstOrDefault(x => x.PhoneNumber == number);
         return userFromDb == null ? null : await ConvertUserFromDatabase(userFromDb);
@@ -52,13 +52,13 @@ public class MockUsersRepository : IUserRepository
         return userEntity == null ? CustomerConstants.UserNotFound : CustomerConstants.Ok;
     }
 
-    public async Task<string> UpdateUser(Entities.CustomerApi.CustomerData.Customer user, string existUserNumber)
+    public async Task<string> UpdateUser(CustomerModel user, string existUserNumber)
     {
         var userEntity = await GetUserByPhoneNumber(existUserNumber);
         if (userEntity == null)
             return CustomerConstants.UserNotFound;
 
-        var updatedUser = new Entities.CustomerApi.CustomerData.Customer
+        var updatedUser = new CustomerModel
         {
             Name = user.Name,
             LastName = user.LastName,
@@ -96,9 +96,9 @@ public class MockUsersRepository : IUserRepository
         return MockDatabases.CustomerList;
     }
 
-    private async Task<Entities.CustomerApi.CustomerData.Customer?> ConvertUserFromDatabase(CustomerDB customerDb)
+    private async Task<CustomerModel?> ConvertUserFromDatabase(CustomerDB customerDb)
     {
-        return new Entities.CustomerApi.CustomerData.Customer
+        return new CustomerModel
         {
             Name = customerDb.Name,
             LastName = customerDb.LastName,
@@ -111,7 +111,7 @@ public class MockUsersRepository : IUserRepository
         };
     }
 
-    private async Task<CustomerDB> ConvertUserToDatabase(Entities.CustomerApi.CustomerData.Customer customer, int? Id)
+    private async Task<CustomerDB> ConvertUserToDatabase(CustomerModel customer, int? Id)
     {
         return new CustomerDB
         {

@@ -1,10 +1,10 @@
-using Database.MockDatabase;
-using Entities.DriverApi.DriverData;
-using Entities.General.RideData;
+using DAL.MockDatabase;
+using DAL.Repository.DriverRepository.Interfaces;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General.RideData;
 using TaxiService.Constants.DriverConstants;
-using TaxiService.Repository.DriverRepository.Interfaces;
 
-namespace TaxiService.Repository.DriverRepository.MockRepository;
+namespace DAL.Repository.DriverRepository.MockRepository;
 
 public class MockDriveRepository : IDriveRepository
 {
