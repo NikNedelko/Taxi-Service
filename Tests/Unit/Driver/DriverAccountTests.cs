@@ -1,6 +1,7 @@
-using TaxiService.BusinessLogic.DriverLogic;
-using TaxiService.BusinessLogic.DriverLogic.Interface;
-using TaxiService.Repository.DriverRepository.MockRepository;
+
+using Application.BL.DriverLogic;
+using Application.BL.DriverLogic.Interface;
+using DAL.Repository.DriverRepository.MockRepository;
 
 namespace Tests.Unit.Driver;
 

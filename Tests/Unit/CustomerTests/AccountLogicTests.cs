@@ -1,7 +1,9 @@
-using Entities.CustomerApi.CustomerData;
-using Entities.CustomerApi.CustomerData.Interface;
-using TaxiService.BusinessLogic.Customer;
-using TaxiService.Repository.Customer.MockRepository;
+using Application.BL.Customer;
+using Application.BL.Customer.Interfaces;
+using DAL.MockDatabase;
+using DAL.Repository.Customer.MockRepository;
+using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.CustomerApi.CustomerData.Interface;
 using Tests.Unit.Data;
 
 namespace Tests.Unit.CustomerTests;

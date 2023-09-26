@@ -1,7 +1,9 @@
-using Entities.CustomerApi.CustomerData;
-using Entities.DriverApi.DriverData;
-using Entities.General;
-using Entities.General.RideData;
+using DAL.MockDatabase;
+using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 
 namespace Tests.Unit.Data;
 
@@ -95,7 +97,7 @@ public static class TestDataAndMethods
         AvailableMoney = -1
     };
     
-    public static async Task<Customer> GetUserForUpdate() => new Customer
+    public static async Task<CustomerModel> GetUserForUpdate() => new CustomerModel
     {
         Name = CustomerTestsConstants.Update_Name,
         LastName = CustomerTestsConstants.Update_LastName,
