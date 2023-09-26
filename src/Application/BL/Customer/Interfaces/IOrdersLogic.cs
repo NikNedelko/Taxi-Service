@@ -1,8 +1,8 @@
-using Entities.CustomerApi.Requests;
-using Entities.General;
-using Entities.General.RideData;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 
-namespace TaxiService.BusinessLogic.Customer.Interfaces;
+namespace Application.BL.Customer.Interfaces;
 
 public interface IOrdersLogic
 {

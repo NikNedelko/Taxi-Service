@@ -1,7 +1,8 @@
-using Entities.General;
-using Entities.General.RideData;
 
-namespace TaxiService.BusinessLogic.DriverLogic.Interface;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
+
+namespace Application.BL.DriverLogic.Interface;
 
 public interface IDriveLogic
 {

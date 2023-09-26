@@ -1,14 +1,14 @@
-using Entities.CustomerApi.Requests;
-using Entities.DriverApi;
-using Entities.DriverApi.DriverData;
-using Entities.General;
-using Entities.General.RideData;
-using TaxiService.BusinessLogic.Customer.Interfaces;
-using TaxiService.BusinessLogic.General;
+using Application.BL.Customer.Interfaces;
+using Application.BL.General;
+using DAL.Repository.Customer.Interfaces;
+using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 using TaxiService.Constants.Customer;
-using TaxiService.Repository.Customer.Interfaces;
 
-namespace TaxiService.BusinessLogic.Customer;
+namespace Application.BL.Customer;
 
 public class OrdersLogic : IOrdersLogic
 {
@@ -97,7 +97,7 @@ public class OrdersLogic : IOrdersLogic
         return rideEntity == null ? CustomerConstants.RideNotFound : CustomerConstants.UserIsAlreadyHaveAOrder;
     }
 
-    private async Task<Entities.CustomerApi.CustomerData.Customer?> GetUserByNumber(string number)
+    private async Task<CustomerModel?> GetUserByNumber(string number)
     {
         return await _userRepository.GetUserByPhoneNumber(number);
     }

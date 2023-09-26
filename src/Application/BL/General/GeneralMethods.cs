@@ -1,8 +1,8 @@
-using Entities.General;
+using Domain.Entities.General;
 using TaxiService.Constants.Customer;
 using TaxiService.Constants.DriverConstants;
 
-namespace TaxiService.BusinessLogic.General;
+namespace Application.BL.General;
 
 public static class GeneralMethods
 {

@@ -1,7 +1,7 @@
-using Entities.DriverApi.DriverData;
-using Entities.General;
+using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.General;
 
-namespace TaxiService.BusinessLogic.DriverLogic.Interface;
+namespace Application.BL.DriverLogic.Interface;
 
 public interface IDriverAccountLogic
 {
