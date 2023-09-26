@@ -1,9 +1,9 @@
-using Entities.General;
-using Entities.General.RideData;
+using Application.BL.DriverLogic.Interface;
+using Domain.Entities.General;
+using Domain.Entities.General.RideData;
 using Microsoft.AspNetCore.Mvc;
-using TaxiService.BusinessLogic.DriverLogic.Interface;
 
-namespace TaxiService.Controllers;
+namespace WebAPI.Controllers;
 
 [ApiController]
 public class DriverDriveController : ControllerBase

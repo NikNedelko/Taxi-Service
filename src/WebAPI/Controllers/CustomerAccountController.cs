@@ -1,10 +1,10 @@
-using Entities.CustomerApi.CustomerData;
-using Entities.CustomerApi.Requests;
-using Entities.General;
+using Application.BL.Customer.Interfaces;
+using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.General;
 using Microsoft.AspNetCore.Mvc;
-using TaxiService.BusinessLogic.Customer.Interfaces;
 
-namespace TaxiService.Controllers;
+namespace WebAPI.Controllers;
 
 [ApiController]
 public class CustomerAccountController : ControllerBase
@@ -29,7 +29,7 @@ public class CustomerAccountController : ControllerBase
     }
 
     [HttpPost("/UpdateAccount")]
-    public async Task<Response> UpdateAccount(Customer customerEntity)
+    public async Task<Response> UpdateAccount(CustomerModel customerEntity)
     {
         return await _accountLogic.UpdateAccount(customerEntity);
     }
