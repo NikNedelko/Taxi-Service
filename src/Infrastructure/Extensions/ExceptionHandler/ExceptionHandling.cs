@@ -1,9 +1,11 @@
 using System.Net;
-using Entities.General;
+using Domain.Entities.General;
+using Infrastructure.Extensions.ExceptionHandler.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
-using TaxiService.Extensions.ExceptionHandler.Interfaces;
+using Microsoft.AspNetCore.Http;
 
-namespace TaxiService.Extensions.ExceptionHandler;
+namespace Infrastructure.Extensions.ExceptionHandler;
 
 public static class ExceptionHandling
 {

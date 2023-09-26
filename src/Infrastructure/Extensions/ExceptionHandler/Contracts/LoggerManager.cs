@@ -1,8 +1,8 @@
+using Infrastructure.Extensions.ExceptionHandler.Interfaces;
 using NLog;
-using TaxiService.Extensions.ExceptionHandler.Interfaces;
 using ILogger = NLog.ILogger;
 
-namespace TaxiService.Extensions.ExceptionHandler.Contracts;
+namespace Infrastructure.Extensions.ExceptionHandler.Contracts;
 
 public class LoggerManager: ILoggerManager
 {
