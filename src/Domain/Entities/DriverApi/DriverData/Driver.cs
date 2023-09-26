@@ -1,5 +1,4 @@
 using Domain.Entities.General;
-using Entities.General;
 
 namespace Domain.Entities.DriverApi.DriverData;
 

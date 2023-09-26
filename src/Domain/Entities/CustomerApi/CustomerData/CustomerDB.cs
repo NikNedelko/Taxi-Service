@@ -1,4 +1,4 @@
-using Entities.CustomerApi.CustomerData.Interface;
+using Domain.Entities.CustomerApi.CustomerData.Interface;
 
 namespace Domain.Entities.CustomerApi.CustomerData;
 

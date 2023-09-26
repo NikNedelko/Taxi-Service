@@ -1,10 +1,9 @@
+using Domain.Entities.CustomerApi.CustomerData.Interface;
 using Domain.Entities.General;
-using Entities.CustomerApi.CustomerData.Interface;
-using Entities.General;
 
 namespace Domain.Entities.CustomerApi.CustomerData;
 
-public class Customer : ICustomerBase
+public class CustomerModel : ICustomerBase
 {
     public string Name { get; set; }
     public string LastName { get; set; }
