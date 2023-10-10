@@ -18,16 +18,10 @@ public abstract class GeneralMethods
     {
         return Task.FromResult(message switch
         {
-            CustomerConstants.UserWasCreated => CustomerConstants.SuccessfulCreate,
-            CustomerConstants.UserWasDeleted => CustomerConstants.Default,
-            CustomerConstants.UserWasUpdated => CustomerConstants.UserWasUpdatedAdditionalText,
-            CustomerConstants.MoneyWasAdded => CustomerConstants.Default,
             CustomerConstants.UserIsInRide => CustomerConstants.UserIsInRideAdditionalText,
             
-            CustomerConstants.ProblemWithUsersEntity => CustomerConstants.ProblemsWhenTryToTakeUser,
             CustomerConstants.UserNotFound => CustomerConstants.UserNotFoundAdditionalText,
             CustomerConstants.RideNotFound => CustomerConstants.RideNotFoundAdditionalText,
-            CustomerConstants.RideAccepted => CustomerConstants.RideAcceptedAdditionalText,
             CustomerConstants.UserIsAlreadyHaveAOrder => CustomerConstants.UserIsAlreadyHaveAOrderAdditionalText,
             
             DriverConstants.OrderByIdIsNotExist => DriverConstants.OrderByIdIsNotExistAdditionalText,
