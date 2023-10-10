@@ -12,19 +12,22 @@ public class AccountLogic : IAccountLogic
 {
     private readonly IUserRepository _userRepository;
     private readonly IRideRepository _rideRepository;
+    private readonly GeneralMethods _generalMethods;
 
-    public AccountLogic(IUserRepository userRepository, IRideRepository rideRepository)
+    public AccountLogic(IUserRepository userRepository, IRideRepository rideRepository, GeneralMethods generalMethods)
     {
         _userRepository = userRepository;
         _rideRepository = rideRepository;
+        _generalMethods = generalMethods;
     }
 
     public async Task<Response> CreateAccount(RegistrationForUser newUser)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(newUser.PhoneNumber);
         if (userWithThisNumber != null)
-            return await GeneralMethods.CreateResponse(CustomerConstants.UserIsAlreadyExist);
-        var responseFromCreate = await _userRepository.AddNewUser(new CustomerModel()
+            return await _generalMethods.CreateResponse(CustomerConstants.UserIsAlreadyExist);
+
+        var responseFromCreate = await _userRepository.AddNewUser(new CustomerModel
         {
             Name = newUser.Name,
             LastName = newUser.LastName,
@@ -34,47 +37,57 @@ public class AccountLogic : IAccountLogic
             Status = AccountStatus.Active,
             RegistrationDate = DateTime.Now
         });
-        if (responseFromCreate != CustomerConstants.Ok)
-            return await GeneralMethods.CreateResponse(responseFromCreate);
 
-        return await GeneralMethods.CreateResponse(CustomerConstants.UserWasCreated);
+        if (responseFromCreate != CustomerConstants.Ok)
+            return await _generalMethods.CreateResponse(responseFromCreate);
+
+        return await _generalMethods.CreateResponse(CustomerConstants.Ok);
     }
 
     public async Task<Response> DeleteAccount(string phoneNumber)
     {
         var checkIfInRideResult = await CheckIfUserInRide(phoneNumber);
         if (checkIfInRideResult != CustomerConstants.Ok)
-            return await GeneralMethods.CreateResponse(checkIfInRideResult);
+            return await _generalMethods.CreateResponse(checkIfInRideResult);
         
-        return await GeneralMethods.CreateResponse(await _userRepository.RemoveUser(phoneNumber));
+        var deleteResult = await _userRepository.RemoveUser(phoneNumber);
+
+        return await _generalMethods.CreateResponse(deleteResult);
     }
 
     public async Task<Response> UpdateAccount(CustomerModel model)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(model.PhoneNumber);
+
         if (userWithThisNumber == null)
-            return await GeneralMethods.CreateResponse(CustomerConstants.UserNotFound);
+            return await _generalMethods.CreateResponse(CustomerConstants.UserNotFound);
+        
         var updateResult = await _userRepository.UpdateUser(model, userWithThisNumber.PhoneNumber);
         if (updateResult != CustomerConstants.Ok)
-            return await GeneralMethods.CreateResponse(updateResult);
-        return await GeneralMethods.CreateResponse(CustomerConstants.UserWasUpdated);
+            return await _generalMethods.CreateResponse(updateResult);
+
+        return await _generalMethods.CreateResponse(CustomerConstants.Ok);
     }
 
     public async Task<Response> AddMoneyToAccount(string phoneNumber, decimal money)
     {
         var userWithThisNumber = await _userRepository.GetUserByPhoneNumber(phoneNumber);
-        if (userWithThisNumber == null)
-            return await GeneralMethods.CreateResponse(CustomerConstants.UserNotFound);
-        var addMoneyResult = await _userRepository.AddMoneyToAccount(phoneNumber, money);
-        if (addMoneyResult != CustomerConstants.Ok)
-            return await GeneralMethods.CreateResponse(addMoneyResult);
 
-        return await GeneralMethods.CreateResponse(CustomerConstants.MoneyWasAdded);
+        if (userWithThisNumber == null)
+            return await _generalMethods.CreateResponse(CustomerConstants.UserNotFound);
+
+        var addMoneyResult = await _userRepository.AddMoneyToAccount(phoneNumber, money);
+
+        if (addMoneyResult != CustomerConstants.Ok)
+            return await _generalMethods.CreateResponse(addMoneyResult);
+
+        return await _generalMethods.CreateResponse(CustomerConstants.Ok);
     }
 
     private async Task<string> CheckIfUserInRide(string phoneNumber)
     {
         var allRides = await _rideRepository.GetAllRides();
+
         var rideWithThisNumber = allRides
             .FirstOrDefault(x => x.CustomerPhoneNumber == phoneNumber
                                  && x is { IsTaken: true, IsEnd: false });

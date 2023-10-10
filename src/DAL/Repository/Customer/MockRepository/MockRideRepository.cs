@@ -16,7 +16,7 @@ public class MockRideRepository : IRideRepository
         _userRepository = userRepository;
     }
 
-    public async Task<string> AddNewOrder(Order newOrder)
+    public async Task<string> AddOrderToDatabase(Order newOrder)
     {
         MockDatabases.RideList.Add(await CreateRideEntityForDb(newOrder));
 

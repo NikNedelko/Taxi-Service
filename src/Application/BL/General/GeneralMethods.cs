@@ -4,18 +4,19 @@ using TaxiService.Constants.DriverConstants;
 
 namespace Application.BL.General;
 
-public static class GeneralMethods
+public abstract class GeneralMethods
 {
-    public static async Task<Response> CreateResponse(string message)
+    public async Task<Response> CreateResponse(string message)
         => new Response
         {
             Message = message,
-            AdditionalInformation = await TakeAdditionalInfoByMessage(message) ?? ""
+            IsSuccess = message == CustomerConstants.Ok,
+            AdditionalInformation = await TakeAdditionalInfoByMessage(message)
         };
 
-    private static async Task<string?> TakeAdditionalInfoByMessage(string message)
+    private Task<string> TakeAdditionalInfoByMessage(string message)
     {
-        return message switch
+        return Task.FromResult(message switch
         {
             CustomerConstants.UserWasCreated => CustomerConstants.SuccessfulCreate,
             CustomerConstants.UserWasDeleted => CustomerConstants.Default,
@@ -38,6 +39,6 @@ public static class GeneralMethods
             DriverConstants.DriverWasDeleted => DriverConstants.DriverWasDeletedAdditionalInfo
             ,
             _ => CustomerConstants.Default
-        };
+        });
     }
 }

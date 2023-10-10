@@ -33,7 +33,7 @@ public class MockUsersRepository : IUserRepository
 
         MockDatabases.CustomerList.Remove(MockDatabases.CustomerList.First(x => x.PhoneNumber == phoneNumber));
 
-        return CustomerConstants.UserWasDeleted;
+        return CustomerConstants.Ok;
     }
 
     public async Task<string?> PermissionToRide(string phoneNumber)
