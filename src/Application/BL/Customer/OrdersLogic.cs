@@ -37,7 +37,7 @@ public class OrdersLogic : IOrdersLogic
 
         var userAccount = await GetUserByNumber(order.PhoneNumber);
         if (userAccount == null)
-            return await _generalMethods.CreateResponse(CustomerConstants.ProblemWithUsersEntity);
+            return await _generalMethods.CreateResponse(CustomerConstants.UserNotFound);
 
         var checkMoneyResult = await CheckMoneyForRide(order.PhoneNumber, order.Price);
         if (checkMoneyResult != CustomerConstants.Ok)

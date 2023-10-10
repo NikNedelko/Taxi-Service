@@ -24,7 +24,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
             Balance = 0
         };
         MockDatabases.DriverList.Add(await ConvertToDatabase(newDriver));
-        return DriverConstants.DriverWasAdded;
+        return DriverConstants.Ok;
     }
 
     public async Task<Driver?> GetDriverByNumber(string phoneNumber)
@@ -50,7 +50,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
     public async Task<string> DeleteDriver(string phoneNumber)
     {
         MockDatabases.DriverList.Remove(MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber)!);
-        return DriverConstants.DriverWasDeleted;
+        return DriverConstants.Ok;
     }
 
     private async Task<List<DriverDb>> GetAllDriversWithId()

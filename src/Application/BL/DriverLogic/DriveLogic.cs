@@ -12,42 +12,44 @@ public class DriveLogic : IDriveLogic
 {
     private readonly IDriveRepository _driveRepository;
     private readonly IDriverAccountRepository _accountRepository;
+    private readonly GeneralMethods _generalMethods;
 
-    public DriveLogic(IDriveRepository driveRepository, IDriverAccountRepository accountRepository)
+    public DriveLogic(IDriveRepository driveRepository, IDriverAccountRepository accountRepository, GeneralMethods generalMethods)
     {
         _driveRepository = driveRepository;
         _accountRepository = accountRepository;
+        _generalMethods = generalMethods;
     }
 
     public async Task<Response> StartWork(string phoneNumber)
     {
         var checkExistence = await CheckDriverForExistence(phoneNumber);
         if (checkExistence == DriverConstants.DriverIsNotExist)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsNotExist);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsNotExist);
 
         var checkDriverIsWorkingNow = await CheckIsDriverWorkNow(phoneNumber);
         if (checkDriverIsWorkingNow == DriverConstants.DriverIsAlreadyWorking)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsAlreadyWorking);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsAlreadyWorking);
 
-        return await GeneralMethods.CreateResponse(await _driveRepository.StartWork(phoneNumber));
+        return await _generalMethods.CreateResponse(await _driveRepository.StartWork(phoneNumber));
     }
 
     public async Task<Response> EndWork(string phoneNumber)
     {
         var checkExistence = await CheckDriverForExistence(phoneNumber);
         if (checkExistence == DriverConstants.DriverIsNotExist)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsNotExist);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsNotExist);
 
         if (await CheckIsDriverWorkNow(phoneNumber) == DriverConstants.DriverIsNotWorking)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsNotWorking);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsNotWorking);
 
         var allRides = await GetAllAvailableOrders(phoneNumber);
         var ride = allRides.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
         if (ride != null)
             if (!ride.IsEnd)
-                return await GeneralMethods.CreateResponse(DriverConstants.CanNotEndWorkWhileInRide);
+                return await _generalMethods.CreateResponse(DriverConstants.CanNotEndWorkWhileInRide);
 
-        return await GeneralMethods.CreateResponse(await _driveRepository.EndWork(phoneNumber));
+        return await _generalMethods.CreateResponse(await _driveRepository.EndWork(phoneNumber));
     }
 
     private async Task<string> CheckDriverForExistence(string phoneNumber)
@@ -72,20 +74,20 @@ public class DriveLogic : IDriveLogic
     {
         var driverEntity = await _accountRepository.GetDriverByNumber(phoneNumber);
         if (driverEntity == null)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsNotExist);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsNotExist);
 
         if (!driverEntity.IsWorking)
-            return await GeneralMethods.CreateResponse(DriverConstants.DriverIsNotWorking);
+            return await _generalMethods.CreateResponse(DriverConstants.DriverIsNotWorking);
 
         var rideEntities = await GetAllAvailableOrders(phoneNumber);
         var rideEntity = rideEntities.FirstOrDefault(x => x.Id == rideId);
         if (rideEntity == null)
-            return await GeneralMethods.CreateResponse(DriverConstants.OrderByIdIsNotExist);
+            return await _generalMethods.CreateResponse(DriverConstants.OrderByIdIsNotExist);
 
         if (rideEntity.IsTaken)
-            return await GeneralMethods.CreateResponse(DriverConstants.OrderIsAlreadyTaken);
+            return await _generalMethods.CreateResponse(DriverConstants.OrderIsAlreadyTaken);
 
-        return await GeneralMethods.CreateResponse(await _driveRepository.TakeOrderById(rideId, phoneNumber));
+        return await _generalMethods.CreateResponse(await _driveRepository.TakeOrderById(rideId, phoneNumber));
     }
 
     public async Task<Response> EndOrder(string phoneNumber)
@@ -94,8 +96,8 @@ public class DriveLogic : IDriveLogic
         var rideEntity = rideEntities.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
 
         if (rideEntity == null)
-            return await GeneralMethods.CreateResponse(DriverConstants.OrderByNumberIsNotExist);
+            return await _generalMethods.CreateResponse(DriverConstants.OrderByNumberIsNotExist);
 
-        return await GeneralMethods.CreateResponse(await _driveRepository.EndOrder(phoneNumber));
+        return await _generalMethods.CreateResponse(await _driveRepository.EndOrder(phoneNumber));
     }
 }
