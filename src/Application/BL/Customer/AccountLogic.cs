@@ -49,7 +49,7 @@ public class AccountLogic : IAccountLogic
         var checkIfInRideResult = await CheckIfUserInRide(phoneNumber);
         if (checkIfInRideResult != CustomerConstants.Ok)
             return await _generalMethods.CreateResponse(checkIfInRideResult);
-        
+
         var deleteResult = await _userRepository.RemoveUser(phoneNumber);
 
         return await _generalMethods.CreateResponse(deleteResult);
@@ -61,7 +61,7 @@ public class AccountLogic : IAccountLogic
 
         if (userWithThisNumber == null)
             return await _generalMethods.CreateResponse(CustomerConstants.UserNotFound);
-        
+
         var updateResult = await _userRepository.UpdateUser(model, userWithThisNumber.PhoneNumber);
         if (updateResult != CustomerConstants.Ok)
             return await _generalMethods.CreateResponse(updateResult);

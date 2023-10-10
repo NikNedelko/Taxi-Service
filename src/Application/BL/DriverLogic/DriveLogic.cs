@@ -14,7 +14,8 @@ public class DriveLogic : IDriveLogic
     private readonly IDriverAccountRepository _accountRepository;
     private readonly GeneralMethods _generalMethods;
 
-    public DriveLogic(IDriveRepository driveRepository, IDriverAccountRepository accountRepository, GeneralMethods generalMethods)
+    public DriveLogic(IDriveRepository driveRepository, IDriverAccountRepository accountRepository,
+        GeneralMethods generalMethods)
     {
         _driveRepository = driveRepository;
         _accountRepository = accountRepository;
@@ -45,9 +46,11 @@ public class DriveLogic : IDriveLogic
 
         var allRides = await GetAllAvailableOrders(phoneNumber);
         var ride = allRides.FirstOrDefault(x => x.DriverPhoneNumber == phoneNumber);
-        if (ride != null)
-            if (!ride.IsEnd)
-                return await _generalMethods.CreateResponse(DriverConstants.CanNotEndWorkWhileInRide);
+        if (ride is null)
+            return await _generalMethods.CreateResponse(await _driveRepository.EndWork(phoneNumber));
+
+        if (!ride.IsEnd)
+            return await _generalMethods.CreateResponse(DriverConstants.CanNotEndWorkWhileInRide);
 
         return await _generalMethods.CreateResponse(await _driveRepository.EndWork(phoneNumber));
     }
@@ -61,6 +64,9 @@ public class DriveLogic : IDriveLogic
     private async Task<string> CheckIsDriverWorkNow(string phoneNumber)
     {
         var entity = await _accountRepository.GetDriverByNumber(phoneNumber);
+        if (entity is null)
+            return DriverConstants.DriverIsNotExist;
+
         return entity.IsWorking ? DriverConstants.DriverIsAlreadyWorking : DriverConstants.DriverIsNotWorking;
     }
 

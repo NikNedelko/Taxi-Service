@@ -22,7 +22,7 @@ public class OrdersLogic : IOrdersLogic
         _rideRepository = rideRepository;
         _generalMethods = generalMethods;
     }
-    
+
     #region NewOrder
 
     public async Task<Response> BeginNewOrder(Order order)
@@ -42,7 +42,7 @@ public class OrdersLogic : IOrdersLogic
         var checkMoneyResult = await CheckMoneyForRide(order.PhoneNumber, order.Price);
         if (checkMoneyResult != CustomerConstants.Ok)
             return await _generalMethods.CreateResponse(checkMoneyResult);
-        
+
         var checkClassForMoney = await CheckMoneyForDriveClass(order.PhoneNumber, order.DriveClass);
         if (checkClassForMoney != CustomerConstants.Ok)
             return await _generalMethods.CreateResponse(checkClassForMoney);
@@ -62,13 +62,21 @@ public class OrdersLogic : IOrdersLogic
     private async Task<string> CheckMoneyForRide(string phoneNumber, decimal count)
     {
         var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
+        if (userEntity is null)
+            return CustomerConstants.UserNotFound;
+
         return userEntity.AvailableMoney >= count ? CustomerConstants.Ok : CustomerConstants.NotEnoughMoney;
     }
 
     private async Task<string> CheckMoneyForDriveClass(string phoneNumber, DriveClass driveClass)
     {
         var userEntity = await _userRepository.GetUserByPhoneNumber(phoneNumber);
-        return userEntity.AvailableMoney >= (int)driveClass ? CustomerConstants.Ok : CustomerConstants.NotEnoughMoneyForRideClass;
+        if (userEntity is null)
+            return CustomerConstants.UserNotFound;
+
+        return userEntity.AvailableMoney >= (int)driveClass
+            ? CustomerConstants.Ok
+            : CustomerConstants.NotEnoughMoneyForRideClass;
     }
 
     private async Task<string> CheckIsAlreadyHaveAnOrder(string phoneNumber)
@@ -91,7 +99,7 @@ public class OrdersLogic : IOrdersLogic
         var entityOfUser = await _userRepository.PermissionToRide(phoneNumber);
         return entityOfUser == null ? CustomerConstants.UserNotFound : CustomerConstants.Ok;
     }
-    
+
     #endregion
 
     public async Task<Response> CancelOrder(string phoneNumber)
