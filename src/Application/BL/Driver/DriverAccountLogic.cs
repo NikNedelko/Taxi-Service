@@ -1,5 +1,5 @@
-using Application.BL.DriverLogic.Interface;
 using Application.BL.General;
+using DAL.Interfaces.Driver;
 using DAL.Repository.DriverRepository.Interfaces;
 using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;

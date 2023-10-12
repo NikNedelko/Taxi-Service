@@ -2,7 +2,7 @@ using Domain.Entities.CustomerApi.Requests;
 using Domain.Entities.General;
 using Domain.Entities.General.RideData;
 
-namespace Application.BL.Customer.Interfaces;
+namespace DAL.Interfaces.Customer;
 
 public interface IOrdersLogic
 {
