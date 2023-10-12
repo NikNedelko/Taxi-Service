@@ -1,10 +1,10 @@
-using DAL.MockDatabase;
+using DAL.Mock.MockDatabase;
 using DAL.Repository.DriverRepository.Interfaces;
 using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;
 using TaxiService.Constants.DriverConstants;
 
-namespace DAL.Repository.DriverRepository.MockRepository;
+namespace DAL.Mock.MockRepository;
 
 public class MockDriverAccountRepository : IDriverAccountRepository
 {

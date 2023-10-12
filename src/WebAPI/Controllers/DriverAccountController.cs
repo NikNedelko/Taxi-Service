@@ -1,4 +1,4 @@
-using Application.BL.DriverLogic.Interface;
+using DAL.Interfaces.Driver;
 using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;
 using Microsoft.AspNetCore.Mvc;

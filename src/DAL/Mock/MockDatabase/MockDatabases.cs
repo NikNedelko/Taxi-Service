@@ -3,7 +3,7 @@ using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;
 using Domain.Entities.General.RideData;
 
-namespace DAL.MockDatabase;
+namespace DAL.Mock.MockDatabase;
 
 public static class MockDatabases
 {

@@ -1,7 +1,7 @@
 using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;
 
-namespace Application.BL.DriverLogic.Interface;
+namespace DAL.Interfaces.Driver;
 
 public interface IDriverAccountLogic
 {

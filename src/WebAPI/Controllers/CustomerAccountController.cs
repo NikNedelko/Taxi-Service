@@ -1,4 +1,4 @@
-using Application.BL.Customer.Interfaces;
+using DAL.Interfaces.Customer;
 using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerApi.Requests;
 using Domain.Entities.General;

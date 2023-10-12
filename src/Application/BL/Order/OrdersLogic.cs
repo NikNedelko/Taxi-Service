@@ -1,5 +1,6 @@
-using Application.BL.Customer.Interfaces;
 using Application.BL.General;
+using DAL.Interfaces.Customer;
+using DAL.Interfaces.Order;
 using DAL.Repository.Customer.Interfaces;
 using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerApi.Requests;
@@ -8,7 +9,7 @@ using Domain.Entities.General;
 using Domain.Entities.General.RideData;
 using TaxiService.Constants.Customer;
 
-namespace Application.BL.Customer;
+namespace Application.BL.Order;
 
 public class OrdersLogic : IOrdersLogic
 {
@@ -25,7 +26,7 @@ public class OrdersLogic : IOrdersLogic
 
     #region NewOrder
 
-    public async Task<Response> BeginNewOrder(Order order)
+    public async Task<Response> BeginNewOrder(OrderEntity order)
     {
         var checkCustomerResult = await CheckIsUserExist(order.PhoneNumber);
         if (checkCustomerResult != CustomerConstants.Ok)
@@ -54,7 +55,7 @@ public class OrdersLogic : IOrdersLogic
         return await _generalMethods.CreateResponse(CustomerConstants.Ok);
     }
 
-    private async Task<string> AddOrderToDatabase(Order order)
+    private async Task<string> AddOrderToDatabase(OrderEntity order)
     {
         return await _rideRepository.AddOrderToDatabase(order);
     }

@@ -1,10 +1,10 @@
-using DAL.MockDatabase;
+using DAL.Mock.MockDatabase;
 using DAL.Repository.Customer.Interfaces;
 using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.General;
 using TaxiService.Constants.Customer;
 
-namespace DAL.Repository.Customer.MockRepository;
+namespace DAL.Mock.MockRepository;
 
 public class MockUsersRepository : IUserRepository
 {

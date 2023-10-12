@@ -1,8 +1,7 @@
-
 using Domain.Entities.General;
 using Domain.Entities.General.RideData;
 
-namespace Application.BL.DriverLogic.Interface;
+namespace DAL.Interfaces.Drive;
 
 public interface IDriveLogic
 {

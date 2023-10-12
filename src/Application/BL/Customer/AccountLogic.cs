@@ -1,5 +1,5 @@
-using Application.BL.Customer.Interfaces;
 using Application.BL.General;
+using DAL.Interfaces.Customer;
 using DAL.Repository.Customer.Interfaces;
 using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerApi.Requests;

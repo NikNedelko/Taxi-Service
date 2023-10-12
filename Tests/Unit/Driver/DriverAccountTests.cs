@@ -1,8 +1,8 @@
 
 using Application.BL.DriverLogic;
-using Application.BL.DriverLogic.Interface;
 using Application.BL.General;
-using DAL.Repository.DriverRepository.MockRepository;
+using DAL.Interfaces.Driver;
+using DAL.Mock.MockRepository;
 
 namespace Tests.Unit.Driver;
 

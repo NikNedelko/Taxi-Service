@@ -1,11 +1,14 @@
 using Application.BL.Customer;
-using Application.BL.Customer.Interfaces;
+using Application.BL.Drive;
 using Application.BL.DriverLogic;
-using Application.BL.DriverLogic.Interface;
+using Application.BL.Order;
+using DAL.Interfaces.Customer;
+using DAL.Interfaces.Drive;
+using DAL.Interfaces.Driver;
+using DAL.Interfaces.Order;
+using DAL.Mock.MockRepository;
 using DAL.Repository.Customer.Interfaces;
-using DAL.Repository.Customer.MockRepository;
 using DAL.Repository.DriverRepository.Interfaces;
-using DAL.Repository.DriverRepository.MockRepository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;

@@ -4,7 +4,7 @@ using Domain.Entities.DriverApi.DriverData;
 namespace Domain.Entities.CustomerApi.Requests;
 
 [Serializable]
-public class Order
+public class OrderEntity
 {
     [Required]
     public string PhoneNumber { get; set; }

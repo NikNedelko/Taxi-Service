@@ -1,8 +1,8 @@
 using Application.BL.Customer;
-using Application.BL.Customer.Interfaces;
 using Application.BL.General;
-using DAL.MockDatabase;
-using DAL.Repository.Customer.MockRepository;
+using DAL.Interfaces.Customer;
+using DAL.Mock.MockDatabase;
+using DAL.Mock.MockRepository;
 using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerApi.CustomerData.Interface;
 using Tests.Unit.Data;

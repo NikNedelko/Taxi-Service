@@ -1,12 +1,12 @@
-using Application.BL.DriverLogic.Interface;
 using Application.BL.General;
+using DAL.Interfaces.Drive;
 using DAL.Repository.DriverRepository.Interfaces;
 using Domain.Entities.DriverApi.DriverData;
 using Domain.Entities.General;
 using Domain.Entities.General.RideData;
 using TaxiService.Constants.DriverConstants;
 
-namespace Application.BL.DriverLogic;
+namespace Application.BL.Drive;
 
 public class DriveLogic : IDriveLogic
 {

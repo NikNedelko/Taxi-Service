@@ -1,8 +1,10 @@
 using Application.BL.Customer;
-using Application.BL.Customer.Interfaces;
 using Application.BL.General;
-using DAL.MockDatabase;
-using DAL.Repository.Customer.MockRepository;
+using Application.BL.Order;
+using DAL.Interfaces.Customer;
+using DAL.Interfaces.Order;
+using DAL.Mock.MockDatabase;
+using DAL.Mock.MockRepository;
 using Domain.Entities.DriverApi.DriverData;
 using Tests.Unit.Data;
 

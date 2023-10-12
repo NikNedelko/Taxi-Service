@@ -1,4 +1,5 @@
-using Application.BL.Customer.Interfaces;
+using DAL.Interfaces.Customer;
+using DAL.Interfaces.Order;
 using Domain.Entities.CustomerApi.Requests;
 using Domain.Entities.General;
 using Domain.Entities.General.RideData;
@@ -17,7 +18,7 @@ public class CustomerOrderController : ControllerBase
     }
 
     [HttpPost("/RequestARide")]
-    public async Task<Response> CreateOrder(Order order)
+    public async Task<Response> CreateOrder(OrderEntity order)
     {
         return await _createOrdersLogic.BeginNewOrder(order);
     }
