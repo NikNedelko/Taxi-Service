@@ -1,5 +1,6 @@
 using Application.BL.Customer;
 using Application.BL.Customer.Interfaces;
+using Application.BL.General;
 using DAL.MockDatabase;
 using DAL.Repository.Customer.MockRepository;
 using Domain.Entities.DriverApi.DriverData;
@@ -11,7 +12,7 @@ namespace Tests.Unit.CustomerTests;
 public class OrdersLogicTests
 {
     private readonly IOrdersLogic _ordersLogic
-        = new OrdersLogic(new MockUsersRepository(), new MockRideRepository(new MockUsersRepository()));
+        = new OrdersLogic(new MockUsersRepository(), new MockRideRepository(new MockUsersRepository()), new GeneralMethods());
 
     [TestMethod]
     public async Task CreateNewOrder()
@@ -23,8 +24,8 @@ public class OrdersLogicTests
         MockDatabases.CustomerList.Add(userEntity);
         var newOrderResult = await _ordersLogic.BeginNewOrder(rideRequest);
 
-        Assert.AreEqual(newOrderResult.Message, CustomerConstants.RideAccepted);
-        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.RideAcceptedAdditionalText);
+        Assert.AreEqual(newOrderResult.Message, CustomerConstants.Ok);
+        Assert.AreEqual(newOrderResult.AdditionalInformation, CustomerConstants.Default);
         Assert.IsNotNull(
             await TestDataAndMethods.GetRideDbByUser(userEntity.PhoneNumber, rideRequest.Price));
         userEntity.AvailableMoney -= rideRequest.Price;

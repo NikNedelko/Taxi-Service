@@ -4,7 +4,7 @@ using TaxiService.Constants.DriverConstants;
 
 namespace Application.BL.General;
 
-public abstract class GeneralMethods
+public class GeneralMethods
 {
     public async Task<Response> CreateResponse(string message)
         => new Response

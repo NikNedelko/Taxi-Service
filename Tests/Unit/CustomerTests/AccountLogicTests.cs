@@ -1,5 +1,6 @@
 using Application.BL.Customer;
 using Application.BL.Customer.Interfaces;
+using Application.BL.General;
 using DAL.MockDatabase;
 using DAL.Repository.Customer.MockRepository;
 using Domain.Entities.CustomerApi.CustomerData;
@@ -13,7 +14,7 @@ public class AccountLogicTests
 {
     //Temporarily
     private readonly IAccountLogic _accountLogic =
-        new AccountLogic(new MockUsersRepository(), new MockRideRepository(new MockUsersRepository()));
+        new AccountLogic(new MockUsersRepository(), new MockRideRepository(new MockUsersRepository()), new GeneralMethods());
 
     [TestMethod]
     public async Task CreateUserByRegistration()
@@ -22,8 +23,8 @@ public class AccountLogicTests
         var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
 
         Assert.IsNotNull(registrationResult);
-        Assert.AreEqual(registrationResult.Message, CustomerConstants.UserWasCreated);
-        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.SuccessfulCreate);
+        Assert.AreEqual(registrationResult.Message, CustomerConstants.Ok);
+        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.Default);
         
         Assert.IsNotNull(await FindUserInDatabase(entityForRegistration));
         MockDatabases.CustomerList.Remove( MockDatabases.CustomerList
@@ -42,8 +43,8 @@ public class AccountLogicTests
         var registrationResult = await _accountLogic.CreateAccount(entityForRegistration);
         
         Assert.IsNotNull(registrationResult);
-        Assert.AreEqual(registrationResult.Message, CustomerConstants.UserWasCreated);
-        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.SuccessfulCreate);
+        Assert.AreEqual(registrationResult.Message, CustomerConstants.Ok);
+        Assert.AreEqual(registrationResult.AdditionalInformation, CustomerConstants.Default);
 
         var userInDb = MockDatabases.CustomerList
             .FirstOrDefault(x => x.Name == entityForRegistration.Name
@@ -69,7 +70,7 @@ public class AccountLogicTests
         MockDatabases.CustomerList.Add(userEntity);
         var deleteResult = await _accountLogic.DeleteAccount(userEntity.PhoneNumber);
         Assert.IsNotNull(deleteResult);
-        Assert.AreEqual(deleteResult.Message, CustomerConstants.UserWasDeleted);
+        Assert.AreEqual(deleteResult.Message, CustomerConstants.Ok);
         Assert.AreEqual(deleteResult.AdditionalInformation, CustomerConstants.Default);
         Assert.IsNull(await FindUserInDatabase(userEntity));
     }
@@ -116,8 +117,8 @@ public class AccountLogicTests
         var userForUpdate = await TestDataAndMethods.GetUserForUpdate();
         
         var updateResult = await _accountLogic.UpdateAccount(userForUpdate);
-        Assert.AreEqual(updateResult.Message, CustomerConstants.UserWasUpdated);
-        Assert.AreEqual(updateResult.AdditionalInformation, CustomerConstants.UserWasUpdatedAdditionalText);
+        Assert.AreEqual(updateResult.Message, CustomerConstants.Ok);
+        Assert.AreEqual(updateResult.AdditionalInformation, CustomerConstants.Default);
         
         Assert.IsNull(await FindUserInDatabase(userEntity));
         Assert.IsNotNull(await FindUserInDatabase(userForUpdate));
@@ -144,7 +145,7 @@ public class AccountLogicTests
         MockDatabases.CustomerList.Add(userEntity);
 
         var addMoneyResult = await _accountLogic.AddMoneyToAccount(userEntity.PhoneNumber, 1000);
-        Assert.AreEqual(addMoneyResult.Message, CustomerConstants.MoneyWasAdded);
+        Assert.AreEqual(addMoneyResult.Message, CustomerConstants.Ok);
         Assert.AreEqual(addMoneyResult.AdditionalInformation, CustomerConstants.Default);
 
         Assert.IsNotNull(MockDatabases.CustomerList.FirstOrDefault(x=>x.Name == userEntity.Name 
