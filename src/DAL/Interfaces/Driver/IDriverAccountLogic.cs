@@ -1,4 +1,4 @@
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriverData;
 using Domain.Entities.General;
 
 namespace DAL.Interfaces.Driver;

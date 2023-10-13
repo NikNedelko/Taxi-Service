@@ -1,5 +1,6 @@
-using Domain.Entities.DriverApi.DriverData;
-using Domain.Entities.General.RideData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
+using Domain.Entities.RideData;
 
 namespace DAL.Repository.DriverRepository.Interfaces;
 

@@ -1,5 +1,4 @@
-
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriverData;
 
 namespace Tests.Unit.Data;
 

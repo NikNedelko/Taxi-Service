@@ -1,6 +1,6 @@
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriveData;
 
-namespace Domain.Entities.General.RideData;
+namespace Domain.Entities.RideData;
 
 public class RideDb
 {

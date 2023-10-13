@@ -1,5 +1,5 @@
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 
 namespace DAL.Interfaces.Drive;
 

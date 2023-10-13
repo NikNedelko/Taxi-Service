@@ -5,7 +5,8 @@ using DAL.Interfaces.Customer;
 using DAL.Interfaces.Order;
 using DAL.Mock.MockDatabase;
 using DAL.Mock.MockRepository;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
 using Tests.Unit.Data;
 
 namespace Tests.Unit.CustomerTests;

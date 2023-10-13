@@ -1,8 +1,8 @@
 using DAL.Mock.MockDatabase;
 using DAL.Repository.Customer.Interfaces;
-using Domain.Entities.CustomerApi.Requests;
+using Domain.Entities.CustomerData.Requests;
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 using TaxiService.Constants.Customer;
 
 namespace DAL.Mock.MockRepository;
@@ -16,7 +16,7 @@ public class MockRideRepository : IRideRepository
         _userRepository = userRepository;
     }
 
-    public async Task<string> AddOrderToDatabase(OrderEntity newOrder)
+    public async Task<string> AddOrderToDatabase(OrderModel newOrder)
     {
         MockDatabases.RideList.Add(await CreateRideEntityForDb(newOrder));
 
@@ -68,7 +68,7 @@ public class MockRideRepository : IRideRepository
         return MockDatabases.RideList;
     }
 
-    private async Task<RideDb> CreateRideEntityForDb(OrderEntity order)
+    private async Task<RideDb> CreateRideEntityForDb(OrderModel order)
     {
         return new RideDb
         {

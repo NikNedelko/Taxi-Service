@@ -1,7 +1,8 @@
 ﻿using Domain.Entities.CustomerApi.CustomerData;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.CustomerData;
+using Domain.Entities.DriverData;
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 
 namespace DAL.Mock.MockDatabase;
 

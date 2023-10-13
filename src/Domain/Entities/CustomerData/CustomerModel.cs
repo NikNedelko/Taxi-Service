@@ -1,16 +1,17 @@
-using Domain.Entities.CustomerApi.CustomerData.Interface;
+using Domain.Entities.CustomerData.Interface;
+using Domain.Entities.General;
 
-namespace Domain.Entities.CustomerApi.CustomerData;
+namespace Domain.Entities.CustomerData;
 
-public class CustomerDB : ICustomerBase
+public class CustomerModel : ICustomerBase
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
-    public int FeedBack { get; set; }
-    public int Status { get; set; }
+
+    public FeedBack FeedBack { get; set; }
+    public AccountStatus Status { get; set; }
     public DateTime RegistrationDate { get; set; }
     public decimal AvailableMoney { get; set; }
 }

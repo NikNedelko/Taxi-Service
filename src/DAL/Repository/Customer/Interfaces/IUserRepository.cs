@@ -1,4 +1,5 @@
 using Domain.Entities.CustomerApi.CustomerData;
+using Domain.Entities.CustomerData;
 
 namespace DAL.Repository.Customer.Interfaces;
 

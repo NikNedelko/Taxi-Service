@@ -1,4 +1,4 @@
-namespace Domain.Entities.CustomerApi.CustomerData.Interface;
+namespace Domain.Entities.CustomerData.Interface;
 
 public interface ICustomerBase
 {

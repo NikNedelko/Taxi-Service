@@ -1,8 +1,9 @@
+using Domain.Entities.DriveData;
 using Domain.Entities.General;
 
-namespace Domain.Entities.DriverApi.DriverData;
+namespace Domain.Entities.DriverData;
 
-public class Driver
+public class DriverModel
 {
     public string Name { get; set; }
     public string LastName { get; set; }

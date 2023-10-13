@@ -1,6 +1,7 @@
 using DAL.Mock.MockDatabase;
 using DAL.Repository.DriverRepository.Interfaces;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
 using Domain.Entities.General;
 using TaxiService.Constants.DriverConstants;
 
@@ -10,7 +11,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
 {
     public async Task<string> AddNewDriver(RegistrationForDriver registrationForDriver)
     {
-        var newDriver = new Driver
+        var newDriver = new DriverModel
         {
             Name = registrationForDriver.Name,
             LastName = registrationForDriver.LastName,
@@ -27,19 +28,19 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         return DriverConstants.Ok;
     }
 
-    public async Task<Driver?> GetDriverByNumber(string phoneNumber)
+    public async Task<DriverModel?> GetDriverByNumber(string phoneNumber)
     {
         var entity = MockDatabases.DriverList.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public async Task<Driver?> GetDriverByLicense(string licenseNumber)
+    public async Task<DriverModel?> GetDriverByLicense(string licenseNumber)
     {
         var entity = MockDatabases.DriverList.FirstOrDefault(x => x.DriverLicenseNumber == licenseNumber);
         return entity == null ? null : await ConvertFromDatabase(entity);
     }
 
-    public async Task<string> UpdateDriver(Driver newDriver, string phoneNumber)
+    public async Task<string> UpdateDriver(DriverModel newDriver, string phoneNumber)
     {
         var oldEntity = await GetDriverByNumber(phoneNumber);
         _ = await DeleteDriver(oldEntity.PhoneNumber);
@@ -70,7 +71,7 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<DriverDb> ConvertToDatabase(Driver driver)
+    private async Task<DriverDb> ConvertToDatabase(DriverModel driver)
     {
         return new DriverDb
         {
@@ -89,9 +90,9 @@ public class MockDriverAccountRepository : IDriverAccountRepository
         };
     }
 
-    private async Task<Driver> ConvertFromDatabase(DriverDb driverDb)
+    private async Task<DriverModel> ConvertFromDatabase(DriverDb driverDb)
     {
-        return new Driver
+        return new DriverModel
         {
             Name = driverDb.Name,
             LastName = driverDb.LastName,

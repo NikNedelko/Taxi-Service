@@ -1,9 +1,10 @@
 using Application.BL.General;
 using DAL.Interfaces.Drive;
 using DAL.Repository.DriverRepository.Interfaces;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 using TaxiService.Constants.DriverConstants;
 
 namespace Application.BL.Drive;

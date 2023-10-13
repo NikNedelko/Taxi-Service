@@ -1,12 +1,12 @@
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriverData;
 
 namespace DAL.Repository.DriverRepository.Interfaces;
 
 public interface IDriverAccountRepository
 {
     public Task<string> AddNewDriver(RegistrationForDriver registrationForDriver);
-    public Task<Driver?> GetDriverByNumber(string phoneNumber);
-    public Task<Driver?> GetDriverByLicense(string licenseNumber);
-    public Task<string> UpdateDriver(Driver newDriver, string phoneNumber);
+    public Task<DriverModel?> GetDriverByNumber(string phoneNumber);
+    public Task<DriverModel?> GetDriverByLicense(string licenseNumber);
+    public Task<string> UpdateDriver(DriverModel newDriver, string phoneNumber);
     public Task<string> DeleteDriver(string phoneNumber);
 }

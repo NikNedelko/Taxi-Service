@@ -1,9 +1,11 @@
 using DAL.Mock.MockDatabase;
 using Domain.Entities.CustomerApi.CustomerData;
-using Domain.Entities.CustomerApi.Requests;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.CustomerData;
+using Domain.Entities.CustomerData.Requests;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 
 namespace Tests.Unit.Data;
 
@@ -117,7 +119,7 @@ public static class TestDataAndMethods
         IsTaken = true
     };
     
-    public static async Task<OrderEntity> GetNewOrder() => new OrderEntity
+    public static async Task<OrderModel> GetNewOrder() => new OrderModel
     {
         PhoneNumber = CustomerTestsConstants.UserDb_Phonenumber,
         RideEndPoint = "EndPlace",

@@ -1,6 +1,6 @@
 using DAL.Interfaces.Drive;
 using Domain.Entities.General;
-using Domain.Entities.General.RideData;
+using Domain.Entities.RideData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;

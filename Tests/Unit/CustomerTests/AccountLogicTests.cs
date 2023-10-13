@@ -4,7 +4,8 @@ using DAL.Interfaces.Customer;
 using DAL.Mock.MockDatabase;
 using DAL.Mock.MockRepository;
 using Domain.Entities.CustomerApi.CustomerData;
-using Domain.Entities.CustomerApi.CustomerData.Interface;
+using Domain.Entities.CustomerData;
+using Domain.Entities.CustomerData.Interface;
 using Tests.Unit.Data;
 
 namespace Tests.Unit.CustomerTests;

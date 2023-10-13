@@ -1,7 +1,8 @@
 using DAL.Mock.MockDatabase;
 using DAL.Repository.DriverRepository.Interfaces;
-using Domain.Entities.DriverApi.DriverData;
-using Domain.Entities.General.RideData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
+using Domain.Entities.RideData;
 using TaxiService.Constants.DriverConstants;
 
 namespace DAL.Mock.MockRepository;

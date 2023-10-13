@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Domain.Entities.CustomerApi.CustomerData.Interface;
+using Domain.Entities.CustomerData.Interface;
 
-namespace Domain.Entities.CustomerApi.Requests;
+namespace Domain.Entities.CustomerData.Requests;
 
 [Serializable]
 public class RegistrationForUser : ICustomerBase

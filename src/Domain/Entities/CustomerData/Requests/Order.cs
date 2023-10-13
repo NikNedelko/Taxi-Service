@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using Domain.Entities.DriverApi.DriverData;
+using Domain.Entities.DriveData;
+using Domain.Entities.DriverData;
 
-namespace Domain.Entities.CustomerApi.Requests;
+namespace Domain.Entities.CustomerData.Requests;
 
 [Serializable]
-public class OrderEntity
+public class OrderModel
 {
     [Required]
     public string PhoneNumber { get; set; }
