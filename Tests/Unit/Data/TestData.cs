@@ -1,5 +1,4 @@
 using DAL.Mock.MockDatabase;
-using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerData;
 using Domain.Entities.CustomerData.Requests;
 using Domain.Entities.DriveData;
