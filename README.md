@@ -1,11 +1,7 @@
 # Taxi-Service
 
 ## Goal
-- Develop a simple taxi service
-## Structure
-- Taxi service
-- Admin tools 
-- Database
-- Entities
+- Develop a simple taxi service backend
+- Modify it with new technologies
 ## Stack
-- C# 6
+- C# 6, Entity Framework Core, MsTest
