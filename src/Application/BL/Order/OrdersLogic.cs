@@ -1,12 +1,9 @@
 using Application.BL.General;
-using DAL.Interfaces.Customer;
 using DAL.Interfaces.Order;
 using DAL.Repository.Customer.Interfaces;
-using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerData;
 using Domain.Entities.CustomerData.Requests;
 using Domain.Entities.DriveData;
-using Domain.Entities.DriverData;
 using Domain.Entities.General;
 using Domain.Entities.RideData;
 using TaxiService.Constants.Customer;

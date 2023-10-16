@@ -1,5 +1,4 @@
-﻿using Domain.Entities.CustomerApi.CustomerData;
-using Domain.Entities.CustomerData;
+﻿using Domain.Entities.CustomerData;
 using Domain.Entities.DriverData;
 using Domain.Entities.General;
 using Domain.Entities.RideData;

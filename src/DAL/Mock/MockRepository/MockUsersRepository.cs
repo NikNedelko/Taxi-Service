@@ -1,6 +1,5 @@
 using DAL.Mock.MockDatabase;
 using DAL.Repository.Customer.Interfaces;
-using Domain.Entities.CustomerApi.CustomerData;
 using Domain.Entities.CustomerData;
 using Domain.Entities.General;
 using TaxiService.Constants.Customer;
