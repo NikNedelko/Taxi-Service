@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <Folder Include="Mock\" />
+      <Folder Include="Repository\Interfaces\" />
     </ItemGroup>
 
 </Project>
