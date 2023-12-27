@@ -1,5 +1,5 @@
 using DAL.Mock.MockDatabase;
-using DAL.Repository.DriverRepository.Interfaces;
+using DAL.Repository.Interfaces.DriverRepository;
 using Domain.Entities.DriveData;
 using Domain.Entities.DriverData;
 using Domain.Entities.RideData;

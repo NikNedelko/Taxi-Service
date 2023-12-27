@@ -7,8 +7,8 @@ using DAL.Interfaces.Drive;
 using DAL.Interfaces.Driver;
 using DAL.Interfaces.Order;
 using DAL.Mock.MockRepository;
-using DAL.Repository.Customer.Interfaces;
-using DAL.Repository.DriverRepository.Interfaces;
+using DAL.Repository.Interfaces.CustomerRepository;
+using DAL.Repository.Interfaces.DriverRepository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;

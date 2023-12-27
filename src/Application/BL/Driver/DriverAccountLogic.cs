@@ -1,6 +1,6 @@
 using Application.BL.General;
 using DAL.Interfaces.Driver;
-using DAL.Repository.DriverRepository.Interfaces;
+using DAL.Repository.Interfaces.DriverRepository;
 using Domain.Entities.DriverData;
 using Domain.Entities.General;
 using TaxiService.Constants.DriverConstants;

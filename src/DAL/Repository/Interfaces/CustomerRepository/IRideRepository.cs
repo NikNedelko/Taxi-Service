@@ -1,7 +1,7 @@
 using Domain.Entities.CustomerData.Requests;
 using Domain.Entities.RideData;
 
-namespace DAL.Repository.Customer.Interfaces;
+namespace DAL.Repository.Interfaces.CustomerRepository;
 
 public interface IRideRepository
 {

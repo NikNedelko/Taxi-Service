@@ -1,6 +1,6 @@
 using Domain.Entities.DriverData;
 
-namespace DAL.Repository.DriverRepository.Interfaces;
+namespace DAL.Repository.Interfaces.DriverRepository;
 
 public interface IDriverAccountRepository
 {

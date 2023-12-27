@@ -1,8 +1,7 @@
 using Domain.Entities.DriveData;
-using Domain.Entities.DriverData;
 using Domain.Entities.RideData;
 
-namespace DAL.Repository.DriverRepository.Interfaces;
+namespace DAL.Repository.Interfaces.DriverRepository;
 
 public interface IDriveRepository
 {

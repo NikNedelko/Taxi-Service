@@ -1,5 +1,5 @@
 using DAL.Mock.MockDatabase;
-using DAL.Repository.Customer.Interfaces;
+using DAL.Repository.Interfaces.CustomerRepository;
 using Domain.Entities.CustomerData.Requests;
 using Domain.Entities.General;
 using Domain.Entities.RideData;
